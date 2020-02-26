@@ -15,7 +15,7 @@ export default {
   },
 
   created: function init () {
-    fetch('http://localhost:8080/image/'+this.collection.imageId)
+    fetch('http://ec2-13-58-76-77.us-east-2.compute.amazonaws.com:8080/image/'+this.collection.imageId)
       .then(response => response.json())
       // eslint-disable-next-line
       .then(commits => this.imagePatch = commits)

@@ -17,7 +17,7 @@ export default {
   },
   components: {CollectionsCaruselUnit},
   created: function init () {
-    fetch('http://localhost:8080/collection/all')
+    fetch('http://ec2-13-58-76-77.us-east-2.compute.amazonaws.com:8080/collection/all')
       .then(response => response.json())
       // eslint-disable-next-line
       .then(commits => this.collections = commits)
