@@ -165,31 +165,37 @@ main {
     height: 200px;
     border-radius: 50%;
     background: #C1CBEE;
-    margin-right: 1%;
-    margin-bottom: 1%;
-    margin-top: 7%;
     display: flex;
     align-items: center;
     overflow: hidden;
+  padding-inline-start: 0px;
+  list-style-type: none;
 }
 
 .triangle_top {
     width: 0;
     height: 0;
-    border-left: 35px solid transparent;
-    border-right: 40px solid transparent;
+  border-left: 35px solid #c3e2e4;
+  border-right: 40px solid #c3e2e4;
     border-bottom: 43px solid #bfbfbf;
-    margin-left: 23%;
+    margin-left: 32%;
+  border-top-width: 0px;
+  padding-left: 0px;
+  padding-right: 0px;
 }
 
 .triangle_bottom {
     width: 0;
     height: 0;
-    border-left: 35px solid transparent;
-    border-right: 40px solid transparent;
+    border-left: 35px solid #c3e2e4;
+    border-right: 40px solid #c3e2e4;
     border-top: 43px solid #bfbfbf;
-    margin-left: 23%;
+    margin-left: 32%;
     margin-top: 7%;
+  border-bottom-width: 0px;
+  padding-right: 0px;
+  padding-left: 0px;
+
 }
 .carousel,
 .row {
@@ -259,7 +265,7 @@ main {
 
 }
 .container_banner_small{
-    margin-left: 6%;
+    margin-left: 3%;
     z-index: 100;
 
 }
@@ -302,19 +308,23 @@ main {
 .article_child_left{
     width: 0;
     height: 0;
-    border-top: 35px solid transparent;
+    border-top: 35px solid #c3e2e4;;
     border-right: 40px solid #bfbfbf;
-    border-bottom: 43px solid transparent;
-    margin-top: 8%;
+    border-bottom: 43px solid #c3e2e4;;
+    margin-top: 16%;
+    padding: 0px;
+    border-left-width: 0px;
 }
 .carousel_article_right,
 .article_child_right{
     width: 0;
     height: 0;
-    border-top: 35px solid transparent;
+    border-top: 35px solid #c3e2e4;;
     border-left: 40px solid #bfbfbf;
-    border-bottom: 43px solid transparent;
-    margin-top: 8%;
+    border-bottom: 43px solid #c3e2e4;;
+    margin-top: 16%;
+    padding: 0px;
+    border-right-width: 0px;
 }
 .footer{
     background: linear-gradient(180deg, #53E88E 0%, rgba(141, 228, 176, 0) 100%), #23C1C1;
@@ -353,7 +363,18 @@ main {
     width: 100%;
 }
 .article_pictures{
-    width: 60%;
+    width: 100%;
+  height: 100%;
+}
+.gallery{
+  height: 500px;
+  overflow: hidden;
+}
+.gallery ul {
+  heighte: 9999px;
+  padding: 0;
+  list-style: none;
+  transition: margin-left 250ms;
 }
 .pictures_banner_red{
     height: 410px;

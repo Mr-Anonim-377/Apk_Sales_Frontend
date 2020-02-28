@@ -1,10 +1,10 @@
 <template>
   <div class="container_circle">
-    <div class="triangle_top"></div>
-    <div>
+    <button class="triangle_top"></button>
+    <div class="gallery">
       <CollectionsCaruselUnit v-for = "collection in collections" :collection="collection"></CollectionsCaruselUnit>
     </div>
-    <div class="triangle_bottom"></div>
+    <button class="triangle_bottom"></button>
   </div>
 </template>
 <script>
