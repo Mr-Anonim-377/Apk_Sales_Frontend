@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="mainPageComponent">
     <Header/>
     <Navigation/>
     <CurrentBaner/>
@@ -9,10 +9,10 @@
 </template>
 <script>
 import Header from '@/components/unitComponents/Header'
-import Footer from '@/components/unitComponents/Footer'
 import Navigation from '@/components/unitComponents/Navigation'
 import CurrentBaner from '@/components/unitComponents/CurrentBaner'
 import BodyPage from '@/components/unitComponents/BodyPage'
+import Footer from '@/components/unitComponents/Footer'
 export default {
   name: 'mainPageComponent',
   components: {

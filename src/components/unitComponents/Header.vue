@@ -3,7 +3,7 @@
     <div class="head_body">
       <div class="head_logo"></div>
       <div class="container">
-        <div class="row">
+        <div class="row_news">
           <p class="row_logo">
             <img
               class="logo_pictures"
