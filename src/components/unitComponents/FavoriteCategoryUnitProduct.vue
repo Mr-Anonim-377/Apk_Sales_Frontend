@@ -1,45 +1,46 @@
 <template>
-    <div class="card-carousel-wrapper">
+<!--  <div>-->
+    <div class="row row_product_child">
       <div class="card-carousel--nav__left" @click="moveCarousel(-1)" :disabled="atHeadOfList"></div>
-        <div class="card-carousel">
-        <div class="card-carousel--overflow-container">
-          <div class="card-carousel-cards" :style="{ transform: 'translateX' + '(' + currentOffset + 'px' + ')'}">
-            <div class="card-carousel--card" v-for="item in items"> <img v-bind:src="favoriteProduct.image.imagePatch">
-              <div class="card-carousel--card--footer">
-                <p>{{ item.name }}</p>
-                <p class="tag" v-for="(tag,index) in item.tag" :class="index &gt; 0 ? 'secondary' : ''">{{ tag }}</p>
+      <div class="card-carousel-wrapper" :style="{ transform: 'translateX' + '(' + currentOffset + 'px' + ')'}" >
+        <ul v-for="item in products">
+          <li>
+            <div class="card-carousel">
+              <div class="card-carousel--overflow-container">
+                <div class="card-carousel-cards">
+                  <div class="card-carousel--card">
+                    <img v-bind:src="item.image.imagePatch">
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
+          </li>
+        </ul>
       </div>
       <div class="card-carousel--nav__right" @click="moveCarousel(1)" :disabled="atEndOfList"></div>
     </div>
+<!--  </div>-->
 </template>
 
 <script>
   export default {
     props: {
-      favoriteProduct: {},
+      products: []
     },
     data() {
       return {
         currentOffset: 0,
         windowSize: 3,
-        paginationFactor: 220,
-        items: [
-          {name: 'Kin Khao', tag: ["Thai"]},
-
-        ]
+        paginationFactor: 220
       }
     },
     computed: {
       atEndOfList() {
-        return this.currentOffset <= (this.paginationFactor * -1) * (this.items.length - this.windowSize);
+        return this.currentOffset <= (this.paginationFactor * -1) * (this.products.length - this.windowSize);
       },
       atHeadOfList() {
         return this.currentOffset === 0;
-      },
+      }
     },
     methods: {
       moveCarousel(direction) {
@@ -49,7 +50,7 @@
         } else if (direction === -1 && !this.atHeadOfList) {
           this.currentOffset += this.paginationFactor;
         }
-      },
+      }
     }
   }
 </script>
@@ -68,9 +69,11 @@
     justify-content: center;
     width: 200px;
   }
+
   .card-carousel--overflow-container {
     overflow: hidden;
   }
+
   .card-carousel--nav__left, .card-carousel--nav__right {
     display: inline-block;
     width: 15px;
@@ -83,19 +86,24 @@
     margin: 0 20px;
     transition: transform 150ms linear;
   }
+
   .card-carousel--nav__left[disabled], .card-carousel--nav__right[disabled] {
     opacity: 0.2;
     border-color: black;
   }
+
   .card-carousel--nav__left {
     transform: rotate(-135deg);
   }
+
   .card-carousel--nav__left:active {
     transform: rotate(-135deg) scale(0.9);
   }
+
   .card-carousel--nav__right {
     transform: rotate(45deg);
   }
+
   .card-carousel--nav__right:active {
     transform: rotate(45deg) scale(0.9);
   }
@@ -105,6 +113,7 @@
     transition: transform 150ms ease-out;
     transform: translatex(0px);
   }
+
   .card-carousel-cards .card-carousel--card {
     margin: 0 10px;
     cursor: pointer;
@@ -115,12 +124,15 @@
     margin-bottom: 2px;
 
   }
+
   .card-carousel-cards .card-carousel--card:first-child {
     margin-left: 0;
   }
+
   .card-carousel-cards .card-carousel--card:last-child {
     margin-right: 0;
   }
+
   .card-carousel-cards .card-carousel--card img {
     vertical-align: bottom;
     border-top-left-radius: 4px;
@@ -130,13 +142,16 @@
     width: 200px;
     height: 200px;
   }
+
   .card-carousel-cards .card-carousel--card img:hover {
     opacity: 0.5;
   }
+
   .card-carousel-cards .card-carousel--card--footer {
     border-top: 0;
     padding: 7px 15px;
   }
+
   .card-carousel-cards .card-carousel--card--footer p {
     padding: 3px 0;
     margin: 0;
@@ -146,6 +161,7 @@
     color: #2c3e50;
     user-select: none;
   }
+
   .card-carousel-cards .card-carousel--card--footer p.tag {
     font-size: 11px;
     font-weight: 300;
@@ -156,6 +172,7 @@
     margin-left: 4px;
     color: #666a73;
   }
+
   .card-carousel-cards .card-carousel--card--footer p.tag:before {
     content: "";
     float: left;
@@ -168,13 +185,16 @@
     border-style: solid;
     border-width: 8px 12px 12px 0;
   }
+
   .card-carousel-cards .card-carousel--card--footer {
     margin-left: 0;
     border-left: 1.45px dashed white;
   }
-  .card-carousel-cards .card-carousel--card--footer  {
+
+  .card-carousel-cards .card-carousel--card--footer {
     display: none !important;
   }
+
   .card-carousel-cards .card-carousel--card--footer {
     content: "";
     position: absolute;

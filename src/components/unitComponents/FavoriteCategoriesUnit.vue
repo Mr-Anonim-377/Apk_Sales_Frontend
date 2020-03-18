@@ -7,18 +7,15 @@
     </div>
     <br>
     <div class=" main_container_banner favorite_category_product">
-      <div class="row row_product_child ">
 <!--        <button class="article_child_left"></button>-->
-
-          <ul>
-          <FavoriteCategoryUnitProduct
-            v-for="favoriteProduct in favoriteCategory.products"
-            :favoriteProduct="favoriteProduct"/>
-
-          </ul>
+<!--          <FavoriteCategoryUnitProduct-->
+<!--            v-for="favoriteProduct in favoriteCategory.products"-->
+<!--            :favoriteProduct="favoriteProduct"/>-->
+            <FavoriteCategoryUnitProduct
+              :products="favoriteCategory.products"/>
 <!--          <button class="article_child_right"></button>-->
-      </div>
     </div>
+<!--    {{favoriteCategory}}-->
   </div>
 </template>
 
@@ -27,7 +24,7 @@ import FavoriteCategoryUnitProduct from './FavoriteCategoryUnitProduct'
 export default {
   name: 'FavoriteCategoryUnit',
   props: {
-    favoriteCategory: {},
+    favoriteCategory: {}
   },
   components: { FavoriteCategoryUnitProduct}
 }
