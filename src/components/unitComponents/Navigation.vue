@@ -13,21 +13,8 @@
                 <div class="nav_list_circle_top"></div>
                 <div class="nav_list_circle_bottom"></div>
               </div>
-              <li class="nav_product_name">
-                <a class="naw_other" href>Электроника</a>
-              </li>
-              <li class="nav_product_name">
-                <a class="naw_other" href>Компьютеры</a>
-              </li>
-              <li class="nav_product_name">
-                <a class="naw_other" href>Электроника</a>
-              </li>
-              <li class="nav_product_name">
-                <a class="naw_other" href>Компьютеры</a>
-              </li>
-              <li class="nav_product_name">
-                <a class="naw_other" href>Компьютеры</a>
-              </li>
+              <NavigationUnit v-for="favoriteCategory in navigtion.favoriteCategories"
+                                      :favoriteCategory="favoriteCategory"></NavigationUnit>
             </ul>
           </nav>
         </div>
@@ -36,7 +23,22 @@
   </section>
 </template>
 <script>
-export default {}
+  import NavigationUnit from './NavigationUnit'
+export default {
+  data () {
+    return {
+      navigtion: {}
+    }
+  },
+  components: {NavigationUnit},
+  created: function init () {
+    fetch('http://ec2-13-58-76-77.us-east-2.compute.amazonaws.com:8080/navigation', {
+      method: 'get'
+    }).then(response => response.json())
+      // eslint-disable-next-line
+      .then(commits => this.navigtion = commits)
+  }
+}
 </script>
 <style>
 </style>

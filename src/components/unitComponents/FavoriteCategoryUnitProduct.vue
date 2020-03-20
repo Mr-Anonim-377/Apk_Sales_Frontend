@@ -1,7 +1,8 @@
 <template>
 <!--  <div>-->
-    <div class="row row_product_child">
-      <div class="card-carousel--nav__left" @click="moveCarousel(-1)" :disabled="atHeadOfList"></div>
+  <div class=" main_container_banner favorite_category_product">
+  <div class="card-carousel--nav__left" @click="moveCarousel(-1)" :disabled="atHeadOfList"></div>
+  <div class="row row_product_child">
       <div class="card-carousel-wrapper" :style="{ transform: 'translateX' + '(' + currentOffset + 'px' + ')'}" >
         <ul v-for="item in products">
           <li>
@@ -17,9 +18,9 @@
           </li>
         </ul>
       </div>
-      <div class="card-carousel--nav__right" @click="moveCarousel(1)" :disabled="atEndOfList"></div>
     </div>
-<!--  </div>-->
+  <div class="card-carousel--nav__right" @click="moveCarousel(1)" :disabled="atEndOfList"></div>
+    </div>
 </template>
 
 <script>
@@ -83,7 +84,7 @@
     border-top: 2px solid #42b883;
     border-right: 2px solid #42b883;
     cursor: pointer;
-    margin: 0 20px;
+    margin: auto 20px;
     transition: transform 150ms linear;
   }
 
@@ -94,6 +95,7 @@
 
   .card-carousel--nav__left {
     transform: rotate(-135deg);
+    margin: auto 20px;
   }
 
   .card-carousel--nav__left:active {
@@ -102,6 +104,7 @@
 
   .card-carousel--nav__right {
     transform: rotate(45deg);
+    margin: auto 20px;
   }
 
   .card-carousel--nav__right:active {

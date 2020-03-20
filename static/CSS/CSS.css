@@ -111,7 +111,7 @@ body {
     text-decoration: none;
     font-family: Roboto;
     font-size: 33px;
-    padding-right: 48px;
+    padding-right: 20px;
     color: #08303D;
 }
 
@@ -297,6 +297,8 @@ main {
     margin-top: 1%;
 }
 .text{
+    margin-left: auto;
+    margin-right: auto;
     font-family: Roboto Condensed;
     font-style: normal;
     font-weight: normal;
@@ -386,8 +388,9 @@ main {
     height: 261px;
 }
 .nav_list{
-    margin-left: -4%;
+    margin-left: -2%;
     margin-top: -1%;
+    margin-right: 2%;
 }
 .nav_list_circle_top{
     width: 0;
@@ -875,7 +878,7 @@ main {
 /*}*/
 
 .row_product_child {
-margin-bottom: 5%;
+/*margin-bottom: 5%;*/
   /*width: 100%;*/
   width: 600px;
   padding: 0;
