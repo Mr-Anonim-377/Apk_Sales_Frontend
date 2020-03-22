@@ -32,7 +32,7 @@ export default {
           "banerId": 2,
           "image": {
             "imageId": "e9ee5032-e87a-4ab8-bdba-2ee521b0f349",
-            "imagePatch": "https://c7.hotpng.com/preview/193/1023/594/corn-on-the-cob-sweet-corn-clip-art-corn.jpg"
+            "imagePatch": "https://img08.rl0.ru/afisha/c1200x600/daily.afisha.ru/uploads/images/5/cd/5cd921a30fd7f4e6b82f6602493fc787.jpg"
           },
           "title": "Банер банерный",
           "page": "MAIN",
@@ -43,7 +43,7 @@ export default {
           "banerId": 3,
           "image": {
             "imageId": "e9ee5032-e87a-4ab8-bdba-2ee521b0f349",
-            "imagePatch": "https://mr-anonim-377.github.io/Sales/src/main/resources/static/CSS/pictures/Rick and Morty.png"
+            "imagePatch": "https://www.ridus.ru/images/2019/12/16/1022839/in_article_b8ebe3cc8b.jpg_large"
           },
           "title": "Банер банерный",
           "page": "MAIN",
@@ -54,7 +54,7 @@ export default {
           "banerId": 4,
           "image": {
             "imageId": "e9ee5032-e87a-4ab8-bdba-2ee521b0f349",
-            "imagePatch": "https://mr-anonim-377.github.io/Sales/src/main/resources/static/CSS/pictures/Rick and Morty.png"
+            "imagePatch": "https://mr-anonim-377.github.io/Sales/src/main/resources/static/CSS/pictures/Banner_red.png"
           },
           "title": "Банер банерный",
           "page": "MAIN",
@@ -65,7 +65,7 @@ export default {
           "banerId": 5,
           "image": {
             "imageId": "e9ee5032-e87a-4ab8-bdba-2ee521b0f349",
-            "imagePatch": "https://mr-anonim-377.github.io/Sales/src/main/resources/static/CSS/pictures/Rick and Morty.png"
+            "imagePatch": "https://mr-anonim-377.github.io/Sales/src/main/resources/static/CSS/pictures/baner_small.png"
           },
           "title": "Банер банерный",
           "page": "MAIN",
@@ -98,7 +98,7 @@ export default {
           "banerId": 8,
           "image": {
             "imageId": "e9ee5032-e87a-4ab8-bdba-2ee521b0f349",
-            "imagePatch": "https://mr-anonim-377.github.io/Sales/src/main/resources/static/CSS/pictures/Rick and Morty.png"
+            "imagePatch": "https://mr-anonim-377.github.io/Sales/src/main/resources/static/CSS/pictures/product.png"
           },
           "title": "Банер банерный",
           "page": "MAIN",

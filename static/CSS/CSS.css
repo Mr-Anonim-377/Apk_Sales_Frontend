@@ -82,20 +82,21 @@ body {
 
 .basket_regist {
   padding-left: 4%;
-  height: 47px;
-  margin-top: 9%;
+  height: 63px;
+  margin-top: 8%;
   margin-bottom: 10%;
   display: flex;
 }
 
 .basket_regist img {
   position: relative;
-  height: 100%
+  height: 100%;
+  z-index: 1;
 }
 
 .nav_product {
   height: 100%;
-  margin: 2% 0 0;
+  margin: 1% 0 0;
   display: flex;
   text-decoration: none;
   color: #333;
@@ -116,8 +117,8 @@ body {
 .naw_categor {
   text-decoration: none;
   font-family: Roboto;
-  font-size: 33px;
-  padding-right: 20px;
+  font-size: 25px;
+  padding-right: 24px;
   color: #08303D;
 }
 
@@ -167,6 +168,10 @@ main {
   text-align: center;
 }
 
+/*.article img {*/
+/*  border-radius: 50%;*/
+/*}*/
+
 .circle {
   position: relative;
   width: 170px;
@@ -178,6 +183,7 @@ main {
   overflow: hidden;
   padding-inline-start: 0px;
   list-style-type: none;
+  margin-bottom: 6%;
 }
 
 .triangle_top {
@@ -310,7 +316,7 @@ main {
 }
 
 .container_banner_small_left {
-  margin-left: 1%;
+  margin-left: 3%;
   z-index: 100;
 
 }
@@ -405,6 +411,7 @@ main {
 .row_logo {
   margin-left: 1%;
   width: 30%;
+  height: 190px;
 }
 
 .section_footer_size {
@@ -433,14 +440,13 @@ main {
 }
 
 .article_pictures {
-  width: 90%;
+  width: 75%;
   height: 90%;
 }
 
 .gallery {
-  height: 560px;
+  height: 530px;
   overflow: hidden;
-  margin-top: 7%;
 }
 
 .gallery ul {
@@ -462,7 +468,7 @@ main {
 
 .nav_list {
   margin-left: -2%;
-  margin-top: -1%;
+  /*margin-top: -1%;*/
   margin-right: 2%;
 }
 
@@ -815,7 +821,7 @@ main {
 .main_container_product {
   display: block;
   text-align: center;
-  margin-left: 29%;
+    margin-left: 22%;
 }
 
 .main_container_also {
@@ -1010,7 +1016,7 @@ main {
   padding: 0;
   display: flex;
   overflow: hidden;
-  margin-left: 10px;
+  margin: 0 10px 0 10px;
 }
 
 /*.favorite_category_product li {*/
@@ -1031,7 +1037,7 @@ main {
 .row_product_child {
   /*margin-bottom: 5%;*/
   /*width: 100%;*/
-  width: 600px;
+  width: 660px;
   padding: 0;
   display: flex;
   overflow: hidden;
@@ -1065,13 +1071,14 @@ main {
 
 .basket_product_count {
   position: relative;
-  left: calc(100% - 7px);
-  top: calc(100% - 55px);
+  left: calc(100% - 15px);
+  top: calc(100% - 71px);
   border-radius: 100%;
   background-color: rgb(236, 138, 67);
-  height: 25px;
+  height: 38%;
   width: 19px;
   text-align: center;
+  z-index: 99;
 }
 
 .banener_small_bottom {
