@@ -8,19 +8,17 @@
             <div class="main_banners_circle_left"></div>
             <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
               <ol class="carousel-indicators">
-                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                <li data-target="#carouselExampleIndicators"
+                    v-for="(index) in banersBig"
+                    :class="{ 'active': index === 0 }"
+                    :data-slide-to=index
+                ></li>
               </ol>
               <div class="carousel-inner">
-                <div class="carousel-item active">
-                  <img src="https://mr-anonim-377.github.io/Sales/src/main/resources/static/CSS/pictures/Rick and Morty.png" class="d-block w-100" alt="...">
-                </div>
-                <div class="carousel-item">
-                  <img src="https://mr-anonim-377.github.io/Sales/src/main/resources/static/CSS/pictures/Rick and Morty.png" class="d-block w-100" alt="...">
-                </div>
-                <div class="carousel-item">
-                  <img src="https://mr-anonim-377.github.io/Sales/src/main/resources/static/CSS/pictures/Rick and Morty.png" class="d-block w-100" alt="...">
+                <div class="carousel-item container_banner_Img"
+                     v-for="(item_img,index) in banersBig"
+                     :class="{ 'active': index === 0 }">
+                  <img v-bind:src="item_img.image.imagePatch" class="d-block w-100" alt="...">
                 </div>
               </div>
               <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -40,8 +38,48 @@
   </section>
 </template>
 <script>
-export default {
-}
+  export default {
+    props: {
+      baners: []
+    },
+    data() {
+      return {
+        banersBig: []
+      }
+    },
+    created: function init () {
+      this.banersBig = this.baners.filter(function (baner) {
+        return baner.pageLocation === 'MAIN_CENTRAL'
+      })
+    }
+  }
 </script>
 <style>
 </style>
+
+<!--<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">-->
+<!--  <ol class="carousel-indicators">-->
+<!--    <li data-target="#carouselExampleIndicators" data-slide-to="0"></li>-->
+<!--    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>-->
+<!--    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>-->
+<!--  </ol>-->
+<!--  <div class="carousel-inner">-->
+<!--    <div class="carousel-item active">-->
+<!--      <img src="https://mr-anonim-377.github.io/Sales/src/main/resources/static/CSS/pictures/Rick and Morty.png" class="d-block w-100" alt="...">-->
+<!--    </div>-->
+<!--    <div class="carousel-item">-->
+<!--      <img src="https://mr-anonim-377.github.io/Sales/src/main/resources/static/CSS/pictures/Rick and Morty.png" class="d-block w-100" alt="...">-->
+<!--    </div>-->
+<!--    <div class="carousel-item">-->
+<!--      <img src="https://mr-anonim-377.github.io/Sales/src/main/resources/static/CSS/pictures/Rick and Morty.png" class="d-block w-100" alt="...">-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">-->
+<!--    <span class="carousel-control-prev-icon" aria-hidden="true"></span>-->
+<!--    <span class="sr-only">Previous</span>-->
+<!--  </a>-->
+<!--  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">-->
+<!--    <span class="carousel-control-next-icon" aria-hidden="true"></span>-->
+<!--    <span class="sr-only">Next</span>-->
+<!--  </a>-->
+<!--</div>-->

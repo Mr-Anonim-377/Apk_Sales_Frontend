@@ -1,9 +1,9 @@
 <template>
-<!--  <div>-->
+  <!--  <div>-->
   <div class=" main_container_banner favorite_category_product">
-  <div class="card-carousel--nav__left" @click="moveCarousel(-1)" :disabled="atHeadOfList"></div>
-  <div class="row row_product_child">
-      <div class="card-carousel-wrapper" :style="{ transform: 'translateX' + '(' + currentOffset + 'px' + ')'}" >
+    <div class="card-carousel--nav__left" @click="moveCarousel(-1)" :disabled="atHeadOfList"></div>
+    <div class="row row_product_child">
+      <div class="card-carousel-wrapper" :style="{ transform: 'translateX' + '(' + currentOffset + 'px' + ')'}">
         <ul v-for="item in products">
           <li>
             <div class="card-carousel">
@@ -19,8 +19,8 @@
         </ul>
       </div>
     </div>
-  <div class="card-carousel--nav__right" @click="moveCarousel(1)" :disabled="atEndOfList"></div>
-    </div>
+    <div class="card-carousel--nav__right" @click="moveCarousel(1)" :disabled="atEndOfList"></div>
+  </div>
 </template>
 
 <script>
@@ -45,7 +45,6 @@
     },
     methods: {
       moveCarousel(direction) {
-        // Find a more elegant way to express the :style. consider using props to make it truly generic
         if (direction === 1 && !this.atEndOfList) {
           this.currentOffset -= this.paginationFactor;
         } else if (direction === -1 && !this.atHeadOfList) {
@@ -122,12 +121,10 @@
     cursor: pointer;
     box-shadow: 0 4px 15px 0 rgba(40, 44, 53, 0.06), 0 2px 2px 0 rgba(40, 44, 53, 0.08);
     background-color: #fff;
-    border-radius: 4px;
+    border-radius: 50px;
     z-index: 3;
     margin-bottom: 2px;
-
   }
-
   .card-carousel-cards .card-carousel--card:first-child {
     margin-left: 0;
   }
@@ -138,8 +135,6 @@
 
   .card-carousel-cards .card-carousel--card img {
     vertical-align: bottom;
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
     transition: opacity 150ms linear;
     user-select: none;
     width: 200px;

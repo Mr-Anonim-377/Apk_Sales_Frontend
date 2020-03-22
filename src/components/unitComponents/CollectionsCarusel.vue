@@ -1,5 +1,5 @@
 <template>
-  <div id="container_circle" class="container_circle">
+  <div id="container_circle" class="container_circle collections_carousel">
     <button class="triangle_top"></button>
     <div class="gallery">
       <CollectionsCaruselUnit v-for = "collection in collections" :collection="collection"></CollectionsCaruselUnit>
