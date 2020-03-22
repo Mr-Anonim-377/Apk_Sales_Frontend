@@ -172,6 +172,7 @@ main {
     overflow: hidden;
   padding-inline-start: 0px;
   list-style-type: none;
+  margin-bottom: 6%;
 }
 
 .triangle_top {
@@ -370,9 +371,8 @@ main {
   height: 90%;
 }
 .gallery{
-  height: 560px;
+  height: 530px;
   overflow: hidden;
-  margin-top: 7%;
 }
 .gallery ul {
   heighte: 9999px;
@@ -693,7 +693,7 @@ main {
 .main_container_product{
     display: block;
     text-align: center;
-    margin-left: 27%;
+    margin-left: 22%;
 }
 .main_container_also{
     margin-top: 4%;
@@ -860,7 +860,7 @@ main {
   padding: 0;
   display: flex;
   overflow: hidden;
-  margin-left: 10px;
+  margin: 0 10px 0 10px;
 }
 /*.favorite_category_product li {*/
 /*  height: 130px;*/
@@ -880,7 +880,7 @@ main {
 .row_product_child {
 /*margin-bottom: 5%;*/
   /*width: 100%;*/
-  width: 600px;
+  width: 660px;
   padding: 0;
   display: flex;
   overflow: hidden;

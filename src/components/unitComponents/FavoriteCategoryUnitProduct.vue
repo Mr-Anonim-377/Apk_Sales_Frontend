@@ -3,7 +3,7 @@
   <div class=" main_container_banner favorite_category_product">
   <div class="card-carousel--nav__left" @click="moveCarousel(-1)" :disabled="atHeadOfList"></div>
   <div class="row row_product_child">
-      <div class="card-carousel-wrapper" :style="{ transform: 'translateX' + '(' + currentOffset + 'px' + ')'}" >
+      <div class="card-carousel-wrapper" :style="{ transform: 'translateX' + '(' + currentOffset + 'px' + ')',  transition: 'transform ' + settings.timing + ' ' + settings.speed + 'ms'}" >
         <ul v-for="item in products">
           <li>
             <div class="card-carousel">
@@ -24,36 +24,51 @@
 </template>
 
 <script>
-  export default {
-    props: {
-      products: []
+export default {
+  props: {
+    products: [],
+    // Скорость перелистывания (мс)
+    speed: {
+      type: Number,
+      default: 500
     },
-    data() {
-      return {
-        currentOffset: 0,
-        windowSize: 3,
-        paginationFactor: 220
+
+    // Анимация перехода (linear, ease-in, ease-out, ease-in-out)
+    timing: {
+      type: String,
+      default: 'ease'
+    }
+  },
+  data () {
+    return {
+      currentOffset: 0,
+      windowSize: 3,
+      paginationFactor: 220,
+      settings: {
+        speed: this.speed,
+        timing: this.timing
       }
+    }
+  },
+  computed: {
+    atEndOfList () {
+      return this.currentOffset <= (this.paginationFactor * -1) * (this.products.length - this.windowSize)
     },
-    computed: {
-      atEndOfList() {
-        return this.currentOffset <= (this.paginationFactor * -1) * (this.products.length - this.windowSize);
-      },
-      atHeadOfList() {
-        return this.currentOffset === 0;
-      }
-    },
-    methods: {
-      moveCarousel(direction) {
-        // Find a more elegant way to express the :style. consider using props to make it truly generic
-        if (direction === 1 && !this.atEndOfList) {
-          this.currentOffset -= this.paginationFactor;
-        } else if (direction === -1 && !this.atHeadOfList) {
-          this.currentOffset += this.paginationFactor;
-        }
+    atHeadOfList () {
+      return this.currentOffset === 0
+    }
+  },
+  methods: {
+    moveCarousel (direction) {
+      // Find a more elegant way to express the :style. consider using props to make it truly generic
+      if (direction === 1 && !this.atEndOfList) {
+        this.currentOffset -= this.paginationFactor
+      } else if (direction === -1 && !this.atHeadOfList) {
+        this.currentOffset += this.paginationFactor
       }
     }
   }
+}
 </script>
 
 <style>

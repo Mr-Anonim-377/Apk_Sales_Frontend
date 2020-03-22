@@ -1,17 +1,21 @@
 <template>
-  <ul class = "circle">
-  <li class="article" href=""> <img class="article_pictures"  v-bind:src="imagePatch.imagePatch"  />
+  <div class = "circle">
+  <div class="article">
+    <img
+      class="article_pictures"
+      :src="imagePatch.imagePatch"
+    />
     <br>
     {{collection.collectionName}}
-  </li>
-  </ul>
+  </div>
+  </div>
 </template>
 
 <script>
 
 export default {
   props: {
-    collection: {},
+    collection: [],
     imagePatch: String
   },
 
