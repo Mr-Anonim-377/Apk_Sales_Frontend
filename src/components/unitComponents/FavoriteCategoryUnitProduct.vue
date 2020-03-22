@@ -1,8 +1,8 @@
 <template>
-<!--  <div>-->
+  <!--  <div>-->
   <div class=" main_container_banner favorite_category_product">
-  <div class="card-carousel--nav__left" @click="moveCarousel(-1)" :disabled="atHeadOfList"></div>
-  <div class="row row_product_child">
+    <div class="card-carousel--nav__left" @click="moveCarousel(-1)" :disabled="atHeadOfList"></div>
+    <div class="row row_product_child">
       <div class="card-carousel-wrapper" :style="{ transform: 'translateX' + '(' + currentOffset + 'px' + ')',  transition: 'transform ' + settings.timing + ' ' + settings.speed + 'ms'}" >
         <ul v-for="item in products">
           <li>
@@ -19,13 +19,13 @@
         </ul>
       </div>
     </div>
-  <div class="card-carousel--nav__right" @click="moveCarousel(1)" :disabled="atEndOfList"></div>
-    </div>
+    <div class="card-carousel--nav__right" @click="moveCarousel(1)" :disabled="atEndOfList"></div>
+  </div>
 </template>
 
 <script>
-export default {
-  props: {
+  export default {
+    props: {
     products: [],
     // Скорость перелистывания (мс)
     speed: {
@@ -38,37 +38,37 @@ export default {
       type: String,
       default: 'ease'
     }
-  },
-  data () {
-    return {
-      currentOffset: 0,
-      windowSize: 3,
+    },
+    data() {
+      return {
+        currentOffset: 0,
+        windowSize: 3,
       paginationFactor: 220,
       settings: {
         speed: this.speed,
         timing: this.timing
       }
-    }
-  },
-  computed: {
-    atEndOfList () {
-      return this.currentOffset <= (this.paginationFactor * -1) * (this.products.length - this.windowSize)
+      }
     },
-    atHeadOfList () {
+    computed: {
+      atEndOfList() {
+      return this.currentOffset <= (this.paginationFactor * -1) * (this.products.length - this.windowSize)
+      },
+      atHeadOfList() {
       return this.currentOffset === 0
-    }
-  },
-  methods: {
-    moveCarousel (direction) {
+      }
+    },
+    methods: {
+      moveCarousel(direction) {
       // Find a more elegant way to express the :style. consider using props to make it truly generic
-      if (direction === 1 && !this.atEndOfList) {
+        if (direction === 1 && !this.atEndOfList) {
         this.currentOffset -= this.paginationFactor
-      } else if (direction === -1 && !this.atHeadOfList) {
+        } else if (direction === -1 && !this.atHeadOfList) {
         this.currentOffset += this.paginationFactor
+        }
       }
     }
   }
-}
 </script>
 
 <style>
@@ -137,7 +137,7 @@ export default {
     cursor: pointer;
     box-shadow: 0 4px 15px 0 rgba(40, 44, 53, 0.06), 0 2px 2px 0 rgba(40, 44, 53, 0.08);
     background-color: #fff;
-    border-radius: 4px;
+    border-radius: 50px;
     z-index: 3;
     margin-bottom: 2px;
 
@@ -153,8 +153,6 @@ export default {
 
   .card-carousel-cards .card-carousel--card img {
     vertical-align: bottom;
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
     transition: opacity 150ms linear;
     user-select: none;
     width: 200px;

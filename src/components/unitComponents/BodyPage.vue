@@ -3,12 +3,12 @@
     <div class="section_main">
       <div class="main"></div>
       <div class="main_container">
-        <div class="row">
+        <div class="row_custom">
           <div class="row_carousel">
             <CollectionsCarusel/>
           </div>
           <div class="main_container_also">
-            <BanersBodyPage/>
+            <BanersBodyPage :baners="baners"/>
             <FavoriteCategoriesCarusel/>
           </div>
         </div>
@@ -21,6 +21,9 @@ import CollectionsCarusel from './CollectionsCarusel'
 import BanersBodyPage from './BanersBodyPage'
 import FavoriteCategoriesCarusel from './FavoriteCategoriesCarusel'
 export default {
+  props: {
+    baners: []
+  },
   components: { CollectionsCarusel, BanersBodyPage, FavoriteCategoriesCarusel }
 }
 </script>

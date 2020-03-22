@@ -14,28 +14,45 @@
             <input class="input_search" type="search" name="q" placeholder="Искать здесь..">
             <input class="input_botton" type="button">
           </form>
-          <p class="basket_regist">
-            <img
-              class="basket"
-              src="https://mr-anonim-377.github.io/Sales/src/main/resources/static/CSS/pictures/Korzina.png"
-              href
-            >
-            <img
-              class="login_picture"
-              src="https://mr-anonim-377.github.io/Sales/src/main/resources/static/CSS/pictures/log_in 1.png"
-              href
-            >
-          </p>
+          <div class="basket_regist">
+            <div class="basket">
+              <div class="basket_product_count">
+                {{shopingCart.countProducts === null || shopingCart.countProducts === "0"
+                ?0
+                :shopingCart.countProducts}}
+              </div>
+              <img src="https://mr-anonim-377.github.io/Sales/src/main/resources/static/CSS/pictures/Korzina.png"
+              >
+            </div>
+            <div class="login_picture">
+              <img src="https://mr-anonim-377.github.io/Sales/src/main/resources/static/CSS/pictures/log_in 1.png"
+              >
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </header>
 </template>
 
-<script>
-export default {
 
-}
+
+<script>
+  export default {
+    data() {
+      return {
+        shopingCart: {}
+      }
+    },
+    created: function init() {
+      fetch('http://localhost:8080/shoppingCart/cart', {
+        method: 'get',
+        credentials: 'include'
+      }).then(response => response.json())
+      // eslint-disable-next-line
+        .then(commits => this.shopingCart = commits)
+    }
+  }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

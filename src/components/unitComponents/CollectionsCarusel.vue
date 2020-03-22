@@ -4,14 +4,14 @@
     <div class="gallery">
       <div class="card-carousel-wrapping" :style="{ transform: 'translateY' + '(' + currentOffset + 'px' + ')',  transition: 'transform ' + settings.timing + ' ' + settings.speed + 'ms'}" >
         <ul>
-          <li v-for="item in collections">
+          <li >
             <CollectionsCaruselUnit
               v-for = "collection in collections"
               :collection="collection"
             />
           </li>
         </ul>
-      </div>
+    </div>
     </div>
     <div class="card-carousel--nav__bottom" @click="moveCarousel(1)" :disabled="atEndOfList"></div>
   </div>
