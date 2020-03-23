@@ -16,7 +16,7 @@ export default {
   },
   components: {FavoriteCategoriesUnit},
   created: function init () {
-    fetch('http://ec2-13-58-76-77.us-east-2.compute.amazonaws.com:8080/products/favorites?countFavoriteCategries=5', {
+    fetch(HOST+'/products/favorites?countFavoriteCategries=5', {
       method: 'post',
       headers: {
         'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'

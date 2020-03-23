@@ -1,8 +1,8 @@
-'use strict'
-const merge = require('webpack-merge')
-const prodEnv = require('./prod.env')
-const host = 'http://ec2-13-58-76-77.us-east-2.compute.amazonaws.com:8080/collection/all';
+'use strict';
+const merge = require('webpack-merge');
+const prodEnv = require('./prod.env');
 
 module.exports = merge(prodEnv, {
-  NODE_ENV: '"development"'
-})
+  NODE_ENV: '"development"',
+  HOST: 'http://localhost:8080'
+});

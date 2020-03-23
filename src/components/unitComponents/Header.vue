@@ -36,7 +36,6 @@
 </template>
 
 
-
 <script>
   export default {
     data() {
@@ -45,7 +44,7 @@
       }
     },
     created: function init() {
-      fetch('http://localhost:8080/shoppingCart/cart', {
+      fetch(HOST + '/shoppingCart/cart', {
         method: 'get',
         credentials: 'include'
       }).then(response => response.json())
