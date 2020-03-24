@@ -1,5 +1,6 @@
 <template>
-    <div class="main-catalog">
+    <div id="main-catalog">
+      {{i}}
       <Header/>
       <Navigation/>
       <CatalogItem/>
@@ -10,10 +11,11 @@
 <script>
   import Header from '@/components/unitComponents/Header'
   import Navigation from '@/components/unitComponents/Navigation'
-  import CatalogItem from "../unitComponents/CatalogItem"
+  import CatalogItem from '../unitComponents/CatalogItem'
   import Footer from '@/components/unitComponents/Footer'
     export default {
-        name: "main-catalog",
+    props: ['i'],
+        name: 'main-catalog',
       components: {
         Header,
         Navigation,
@@ -23,6 +25,6 @@
     }
 </script>
 
-<style scoped>
-
+<style>
+  @import '../../../static/CSS/CSS.css';
 </style>

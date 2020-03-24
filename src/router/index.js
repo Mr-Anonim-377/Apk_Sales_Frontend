@@ -1,15 +1,21 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import mainPageComponent from '@/components/routComponents/mainPageComponent'
-Vue.use(Router)
+import mainPageComponent from '../components/routComponents/mainPageComponent'
+import catalog from '../components/routComponents/main-catalog'
+
+Vue.use(Router);
 
 export default new Router({
+  mode: 'history',
   routes: [
-    {path: '/',
-      name: 'mainPage',
-      component: mainPageComponent},
-    {path: '/r',
-      name: 'mainPager',
-      component: mainPageComponent}
+    {
+      path: '/',
+      component: mainPageComponent
+    },
+    {
+      path: '/catalog/:i',
+      component: catalog,
+      props: true
+    }
   ]
 })

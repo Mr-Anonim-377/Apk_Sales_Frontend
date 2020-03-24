@@ -98,12 +98,6 @@
             </div>
           </div>
           <div class="main_section">
-            <CatalogItemProduct
-            v-for="product in PRODUCTS"
-            :key="product.id"
-            :product_data="product"
-            @SendToDataParent="showChaildArticleInConsole"
-            />
           </div>
         </div>
       </div>
@@ -113,41 +107,8 @@
 </template>
 
 <script>
-  import CatalogItemProduct from './CatalogItemProduct'
-  import {mapActions, mapGetters} from 'vuex'
     export default {
-        name: "CatalogItem",
-        components: {
-          CatalogItemProduct
-        },
-      data() {
-          return {
-
-          }
-      },
-      computed: {
-        ...mapGetters([
-          'PRODUCTS'
-        ]),
-      },
-      methods: {
-          ...mapActions([
-            'GET_PRODUCTS_FROM_API'
-          ]),
-      },
-
-        showChaildArticleInConsole (data) {
-          console.log(data)
-        },
-      mounted() {
-          this.GET_PRODUCTS_FROM_API()
-            .then((response) => {
-              if (response.data) {
-                console.log ('Data arrived!')
-              }
-              }
-            )
-      }
+        name: "CatalogItem"
     }
 </script>
 

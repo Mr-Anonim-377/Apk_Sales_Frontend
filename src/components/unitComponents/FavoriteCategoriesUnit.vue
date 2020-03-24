@@ -17,10 +17,10 @@ export default {
   props: {
     favoriteCategory: {}
   },
-  components: { FavoriteCategoryUnitProduct}
+  components: {FavoriteCategoryUnitProduct}
 }
 </script>
 
-<style>
+<style scoped>
 
 </style>

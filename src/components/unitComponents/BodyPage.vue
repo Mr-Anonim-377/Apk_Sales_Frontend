@@ -27,5 +27,5 @@ export default {
   components: { CollectionsCarusel, BanersBodyPage, FavoriteCategoriesCarusel }
 }
 </script>
-<style>
+<style scoped>
 </style>

@@ -36,7 +36,6 @@
 </template>
 
 
-
 <script>
   export default {
     data() {
@@ -45,7 +44,7 @@
       }
     },
     created: function init() {
-      fetch('http://localhost:8080/shoppingCart/cart', {
+      fetch(process.env.HOST + '/shoppingCart/cart', {
         method: 'get',
         credentials: 'include'
       }).then(response => response.json())
@@ -56,6 +55,6 @@
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style>
+<style scoped>
 
 </style>

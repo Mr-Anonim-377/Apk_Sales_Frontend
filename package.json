@@ -6,7 +6,9 @@
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
-    "start": "npm install -g degit && npm run dev",
+    "prod": "webpack-dev-server --inline --progress --config build/webpack.prod.conf.js",
+    "startProd": "npm install -g degit && npm run prod",
+    "startDev": "npm install -g degit && npm run dev",
     "unit": "jest --config test/unit/jest.conf.js --coverage",
     "e2e": "node test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
