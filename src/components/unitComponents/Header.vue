@@ -12,7 +12,7 @@
           </p>
           <form action method="get" class="input">
             <input class="input_search" type="search" name="q" placeholder="Искать здесь..">
-            <input class="input_botton" type="button">
+            <input class="input_botton" v-model="searchStr" @click="displaySearhcResult()" type="button">
           </form>
           <div class="basket_regist">
             <div class="basket">
@@ -40,7 +40,9 @@
   export default {
     data() {
       return {
-        shopingCart: {}
+        shopingCart: {},
+        searchStr: '',
+        searchResult:{}
       }
     },
     created: function init() {
@@ -50,6 +52,16 @@
       }).then(response => response.json())
       // eslint-disable-next-line
         .then(commits => this.shopingCart = commits)
+    },
+    methods: {
+      // displaySearhcResult() {
+      //   fetch(process.env.HOST + '/search/onProducts?page=0&searchString=' + this.searchStr + '&searchType=ALL', {
+      //     method: 'get',
+      //     credentials: 'include'
+      //   }).then(response => response.json()).then(commits => this.searchResult = commits);
+      //   Vue.compile()
+      // }
+
     }
   }
 </script>

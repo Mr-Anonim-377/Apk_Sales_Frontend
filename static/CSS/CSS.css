@@ -347,7 +347,7 @@ main {
   display: flow-root;
 }
 
-.product{
+.product {
   height: 188px;
   margin-top: 1%;
   width: 186px;
@@ -467,9 +467,8 @@ main {
 }
 
 .nav_list {
-  margin-left: -2%;
-  /*margin-top: -1%;*/
-  margin-right: 2%;
+  margin-left: -1%;
+  padding-right: 5%;
 }
 
 .nav_list_circle_top {
@@ -821,7 +820,7 @@ main {
 .main_container_product {
   display: block;
   text-align: center;
-    margin-left: 22%;
+  margin-left: 22%;
 }
 
 .main_container_also {
@@ -1092,5 +1091,48 @@ main {
 }
 
 .collections_carousel {
-padding-left: 0;
+  padding-left: 0;
+}
+
+.carousel-product-name {
+  font-family: Roboto, serif;
+  font-style: unset;
+  font-weight: normal;
+  font-size: 18px;
+  height: 86px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.carousel-product-title {
+  display: grid;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: start;
+  font-weight: 700;
+  color: rgba(77,63,91,0.78);
+}
+
+.carousel-product-price-num {
+  font-family: Alef, serif;
+  font-style: normal;
+  font-size: 18px;
+  margin: 0;
+}
+
+.carousel-product-price-currents {
+  font-size: 80%;
+}
+
+.tttt {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  max-height: none;
 }

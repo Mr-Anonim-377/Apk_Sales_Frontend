@@ -1,16 +1,26 @@
 <template>
-  <!--  <div>-->
   <div class=" main_container_banner favorite_category_product">
     <div class="card-carousel--nav__left" @click="moveCarousel(-1)" :disabled="atHeadOfList"></div>
     <div class="row row_product_child">
-      <div class="card-carousel-wrapper" :style="{ transform: 'translateX' + '(' + currentOffset + 'px' + ')',  transition: 'transform ' + settings.timing + ' ' + settings.speed + 'ms'}" >
+      <div class="card-carousel-wrapper"
+           :style="{ transform: 'translateX' + '(' + currentOffset + 'px' + ')',  transition: 'transform ' + settings.timing + ' ' + settings.speed + 'ms'}">
         <ul v-for="item in products">
           <li>
             <div class="card-carousel">
               <div class="card-carousel--overflow-container">
                 <div class="card-carousel-cards">
                   <div class="card-carousel--card">
+                    <div>
                     <img v-bind:src="item.image.imagePatch">
+                    </div>
+                    <div class="carousel-product-title">
+                      <span class="carousel-product-price-num">{{item.price}}
+                      <span class="carousel-product-price-currents">₽</span>
+                      </span>
+                      <div class="carousel-product-name">
+                      <span>{{item.nameProduct}}</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -26,45 +36,45 @@
 <script>
   export default {
     props: {
-    products: [],
-    // Скорость перелистывания (мс)
-    speed: {
-      type: Number,
-      default: 500
-    },
+      products: [],
+      // Скорость перелистывания (мс)
+      speed: {
+        type: Number,
+        default: 500
+      },
 
-    // Анимация перехода (linear, ease-in, ease-out, ease-in-out)
-    timing: {
-      type: String,
-      default: 'ease'
-    }
+      // Анимация перехода (linear, ease-in, ease-out, ease-in-out)
+      timing: {
+        type: String,
+        default: 'ease'
+      }
     },
     data() {
       return {
         currentOffset: 0,
         windowSize: 3,
-      paginationFactor: 220,
-      settings: {
-        speed: this.speed,
-        timing: this.timing
-      }
+        paginationFactor: 220,
+        settings: {
+          speed: this.speed,
+          timing: this.timing
+        }
       }
     },
     computed: {
       atEndOfList() {
-      return this.currentOffset <= (this.paginationFactor * -1) * (this.products.length - this.windowSize)
+        return this.currentOffset <= (this.paginationFactor * -1) * (this.products.length - this.windowSize)
       },
       atHeadOfList() {
-      return this.currentOffset === 0
+        return this.currentOffset === 0
       }
     },
     methods: {
       moveCarousel(direction) {
-      // Find a more elegant way to express the :style. consider using props to make it truly generic
+        // Find a more elegant way to express the :style. consider using props to make it truly generic
         if (direction === 1 && !this.atEndOfList) {
-        this.currentOffset -= this.paginationFactor
+          this.currentOffset -= this.paginationFactor
         } else if (direction === -1 && !this.atHeadOfList) {
-        this.currentOffset += this.paginationFactor
+          this.currentOffset += this.paginationFactor
         }
       }
     }
@@ -99,7 +109,7 @@
     border-top: 2px solid #42b883;
     border-right: 2px solid #42b883;
     cursor: pointer;
-    margin: auto 20px;
+    margin: 20% 20px auto 20px;
     transition: transform 150ms linear;
   }
 
@@ -110,7 +120,7 @@
 
   .card-carousel--nav__left {
     transform: rotate(-135deg);
-    margin: auto 20px;
+    margin: 20% 20px auto 20px;
   }
 
   .card-carousel--nav__left:active {
@@ -119,7 +129,7 @@
 
   .card-carousel--nav__right {
     transform: rotate(45deg);
-    margin: auto 20px;
+    margin: 20% 20px auto 20px;
   }
 
   .card-carousel--nav__right:active {
@@ -135,8 +145,8 @@
   .card-carousel-cards .card-carousel--card {
     margin: 0 10px;
     cursor: pointer;
-    box-shadow: 0 4px 15px 0 rgba(40, 44, 53, 0.06), 0 2px 2px 0 rgba(40, 44, 53, 0.08);
-    background-color: #fff;
+    /*box-shadow: 0 4px 15px 0 rgba(40, 44, 53, 0.06), 0 2px 2px 0 rgba(40, 44, 53, 0.08);*/
+    /*background-color: #fff;*/
     border-radius: 50px;
     z-index: 3;
     margin-bottom: 2px;

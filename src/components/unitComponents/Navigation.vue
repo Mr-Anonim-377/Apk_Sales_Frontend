@@ -13,8 +13,8 @@
                 <div class="nav_list_circle_top"></div>
                 <div class="nav_list_circle_bottom"></div>
               </div>
-              <NavigationUnit v-for="favoriteCategory in navigtion.favoriteCategories"
-                                      :favoriteCategory="favoriteCategory"></NavigationUnit>
+              <NavigationUnit v-for="(favoriteCategory,index) in navigtion.favoriteCategories"
+                                      v-if="index<5" :favoriteCategory="favoriteCategory"></NavigationUnit>
             </ul>
           </nav>
         </div>
