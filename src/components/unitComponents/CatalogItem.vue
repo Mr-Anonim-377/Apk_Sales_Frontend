@@ -98,6 +98,9 @@
             </div>
           </div>
           <div class="main_section">
+            <CatalogItemProduct
+              v-for = "product in products"
+            />
           </div>
         </div>
       </div>
@@ -107,9 +110,20 @@
 </template>
 
 <script>
-    export default {
-        name: "CatalogItem"
-    }
+import CatalogItemProduct from './CatalogItemProduct'
+export default {
+  name: 'CatalogItem',
+  data () {
+    return {product: []}
+  },
+  components: {CatalogItemProduct},
+  created: function init () {
+    fetch(process.env.HOST + '/products')
+      .then(response => response.json())
+      // eslint-disable-next-line
+      .then(commits => this.product = commits)
+  }
+}
 </script>
 
 <style scoped>

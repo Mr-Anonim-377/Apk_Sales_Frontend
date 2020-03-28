@@ -10,7 +10,7 @@
 <script>
 import Header from '@/components/unitComponents/Header'
 import Navigation from '@/components/unitComponents/Navigation'
-import CurrentBaner from '@/components/unitComponents/CurrentBaner'
+import CurrentBaner from '../unitComponents/CurrentBaner'
 import BodyPage from '@/components/unitComponents/BodyPage'
 import Footer from '@/components/unitComponents/Footer'
 export default {
@@ -109,7 +109,7 @@ export default {
     }
   },
   // created: function init() {
-  //   fetch('http://ec2-13-58-76-77.us-east-2.compute.amazonaws.com:8080/baners/allByStatusByPage?page=MAIN&status=true', {
+  //   fetch(process.env.HOST + '/baners/allByStatusByPage?page=MAIN&status=true', {
   //     method: 'get'
   //   }).then(response => response.json())
   //   // eslint-disable-next-line

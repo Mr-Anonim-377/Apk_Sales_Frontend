@@ -44,7 +44,7 @@
       }
     },
     created: function init() {
-      fetch(HOST + '/shoppingCart/cart', {
+      fetch(process.env.HOST + '/shoppingCart/cart', {
         method: 'get',
         credentials: 'include'
       }).then(response => response.json())
@@ -55,6 +55,6 @@
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style>
+<style scoped>
 
 </style>

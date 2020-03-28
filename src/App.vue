@@ -4,7 +4,7 @@
   </div>
 </template>
 <script>
-  import mainWrapper from './components/main-Wrapper'
+  import mainWrapper from './main-Wrapper'
 export default {
   name: 'app',
   components: {
@@ -12,3 +12,5 @@ export default {
   }
 }
 </script>
+<style scoped>
+</style>

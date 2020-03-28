@@ -16,7 +16,7 @@ export default {
   },
   components: {FavoriteCategoriesUnit},
   created: function init () {
-    fetch(HOST+'/products/favorites?countFavoriteCategries=5', {
+    fetch(process.env.HOST +'/products/favorites?countFavoriteCategries=5', {
       method: 'post',
       headers: {
         'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
@@ -29,6 +29,6 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 </style>

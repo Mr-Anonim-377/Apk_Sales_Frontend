@@ -46,7 +46,7 @@ export default {
   },
   components: {CollectionsCaruselUnit},
   created: function init () {
-    fetch(HOST + '/collection/all')
+    fetch(process.env.HOST + '/collection/all')
       .then(response => response.json())
       // eslint-disable-next-line
       .then(commits => this.collections = commits)

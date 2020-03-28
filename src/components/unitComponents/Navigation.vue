@@ -7,7 +7,9 @@
           <nav class="nav">
             <ul class="nav_product">
               <li class="nav_product_name">
-                <a class="naw_categor" href>Категории</a>
+                <router-link :to="{name: 'catalog'}">
+                <a class="naw_categor">Категории</a>
+                </router-link>
               </li>
               <div class="nav_list">
                 <div class="nav_list_circle_top"></div>
@@ -23,7 +25,7 @@
   </section>
 </template>
 <script>
-  import NavigationUnit from './NavigationUnit'
+import NavigationUnit from './NavigationUnit'
 export default {
   data () {
     return {
@@ -32,7 +34,7 @@ export default {
   },
   components: {NavigationUnit},
   created: function init () {
-    fetch('http://ec2-13-58-76-77.us-east-2.compute.amazonaws.com:8080/navigation', {
+    fetch(process.env.HOST + '/navigation', {
       method: 'get'
     }).then(response => response.json())
       // eslint-disable-next-line
@@ -40,5 +42,5 @@ export default {
   }
 }
 </script>
-<style>
+<style scoped>
 </style>

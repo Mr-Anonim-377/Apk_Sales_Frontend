@@ -6,10 +6,8 @@
 
 <script>
   export default {
-        name: "main-Wrapper"
     }
 </script>
 
 <style >
-  @import '../../static/CSS/CSS.css';
 </style>

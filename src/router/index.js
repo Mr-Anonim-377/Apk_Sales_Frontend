@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import mainPageComponent from '../components/routComponents/mainPageComponent'
 import catalog from '../components/routComponents/main-catalog'
 
-Vue.use(Router);
+Vue.use(Router)
 
 export default new Router({
   mode: 'history',
@@ -13,8 +13,9 @@ export default new Router({
       component: mainPageComponent
     },
     {
-      path: '/catalog/:i',
+      path: '/catalog',
       component: catalog,
+      name: catalog,
       props: true
     }
   ]
