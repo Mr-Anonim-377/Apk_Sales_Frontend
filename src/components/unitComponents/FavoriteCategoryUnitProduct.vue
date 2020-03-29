@@ -111,6 +111,7 @@
     cursor: pointer;
     margin: 20% 20px auto 20px;
     transition: transform 150ms linear;
+
   }
 
   .card-carousel--nav__left[disabled], .card-carousel--nav__right[disabled] {

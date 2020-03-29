@@ -20,7 +20,7 @@ export default {
   },
 
   created: function init () {
-    fetch(process.env.HOST + '/image/' + this.collection.image.imageId)
+    fetch('api/image/' + this.collection.image.imageId)
       .then(response => response.json())
       // eslint-disable-next-line
       .then(commits => this.imagePatch = commits)

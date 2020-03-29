@@ -11,8 +11,19 @@
             >
           </p>
           <form action method="get" class="input">
-            <input class="input_search" type="search" name="q" placeholder="Искать здесь..">
-            <input class="input_botton" v-model="searchStr" @click="displaySearhcResult()" type="button">
+            <input class="input_search" type="search" name="q" placeholder="Искать здесь.."
+                   v-model="searchStr"
+                   @click="displaySearhcResult"
+                   @focusout="nonDisplaySearhcResult">
+            <input class="input_botton" type="button">
+            <div class="search_pop_up" :class="searchResultVisible">
+              <div class="search_pop_up__blur"></div>
+              <div class="search_pop_up__result">
+                <div class="testttt" v-for="product in searchResult">
+                  {{product.nameProduct}}
+                </div>
+              </div>
+            </div>
           </form>
           <div class="basket_regist">
             <div class="basket">
@@ -37,31 +48,59 @@
 
 
 <script>
+  import axios from 'axios'
+
   export default {
     data() {
       return {
         shopingCart: {},
         searchStr: '',
-        searchResult:{}
+        searchResult: [],
+        searchResultVisible: ''
       }
     },
     created: function init() {
-      fetch(process.env.HOST + '/shoppingCart/cart', {
+      fetch('api/shoppingCart/cart', {
         method: 'get',
         credentials: 'include'
       }).then(response => response.json())
       // eslint-disable-next-line
-        .then(commits => this.shopingCart = commits)
+        .then(commits => this.shopingCart = commits);
+      fetch('api/products/category', {
+        method: 'post',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({categoryId: 1, page: 0})
+      })
+        .then(response => response.json())
+        .then(commits => console.log(commits))
     },
     methods: {
-      // displaySearhcResult() {
-      //   fetch(process.env.HOST + '/search/onProducts?page=0&searchString=' + this.searchStr + '&searchType=ALL', {
-      //     method: 'get',
-      //     credentials: 'include'
-      //   }).then(response => response.json()).then(commits => this.searchResult = commits);
-      //   Vue.compile()
-      // }
+      nonDisplaySearhcResult() {
+        this.searchResultVisible = '';
+        this.searchResult = []
+      },
+      displaySearhcResult() {
+        this.searchResult = [];
+        fetch('api/search/onProducts?page=0&searchString=' + this.searchStr + '&searchType=ALL', {
+          method: 'get',
+          credentials: 'include'
+        }).then(response => response.json())
+          .then(commits => commits.forEach(item => this.searchResult.push(item)));
 
+        this.searchResultVisible = 'visible';
+      }
+    },
+    watch: {
+      searchStr: function () {
+        if (this.searchStr.length >= 3) {
+          this.displaySearhcResult();
+        } else if (this.searchStr === '') {
+          this.nonDisplaySearhcResult();
+        }
+      }
     }
   }
 </script>
