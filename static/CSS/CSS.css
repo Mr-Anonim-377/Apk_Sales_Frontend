@@ -109,14 +109,14 @@ body {
 
 .naw_other {
   text-decoration: none;
-  font-family: Roboto;
+  font-family: Roboto, serif;
   font-size: 33px;
   color: #184355;
 }
 
 .naw_categor {
   text-decoration: none;
-  font-family: Roboto;
+  font-family: Roboto, serif;
   font-size: 25px;
   padding-right: 24px;
   color: #08303D;
@@ -497,7 +497,6 @@ main {
   width: 23%;
   height: 75%;
   position: absolute;
-  margin-top: 20px;
 }
 
 .main_filters {
@@ -508,6 +507,7 @@ main {
   margin-left: auto;
   padding-right: 15px;
   padding-left: 15px;
+  margin-top: 29px;
 
 }
 
@@ -531,7 +531,7 @@ main {
 }
 
 .text_color {
-  font-family: Alef;
+  font-family: Alef, serif;
   font-style: normal;
   font-weight: normal;
   color: #000000;
@@ -583,22 +583,27 @@ main {
 .main_goods {
   position: relative;
   padding-right: 15px;
-  padding-left: 15px;
+  /*padding-left: 15px;*/
   z-index: 100;
+  padding-top: 4%;
 }
 
 .main_goods_img {
   margin-top: 29px;
   height: 252px;
   width: 251px;
+  border-radius: 50px;
+  z-index: 3;
 }
 
 .main_goods_container {
-  padding-right: 15px;
-  padding-left: 15px;
+  /*padding-right: 15px;*/
+  /*padding-left: 15px;*/
   margin-top: 29px;
   position: relative;
   display: block;
+  width: 580px;
+  height: 286px;
 
 }
 
@@ -610,15 +615,24 @@ main {
   width: 100%;
   height: 100%;
   position: absolute;
+  border-radius: 5px;
 }
 
 .main_goods_text {
-  font-family: Roboto;
+  font-family: Roboto, serif;
   font-style: italic;
   font-weight: normal;
   font-size: 38px;
   text-align: center;
   z-index: 100;
+  height: 127px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  padding-right: 15px;
+  padding-left: 15px;
+
 }
 
 .main_goods_section {
@@ -628,7 +642,6 @@ main {
   margin-left: auto;
   padding-right: 15px;
   padding-left: 15px;
-  text-align: center;
   z-index: 100;
 }
 
@@ -637,13 +650,13 @@ main {
 }
 
 .pictures_catalog_message {
-  width: 50px;
-  height: 70px;
+  width: 70px;
+  height: 90px;
 }
 
 .pictures_catalog_basked {
-  width: 70px;
-  height: 67px;
+  width: 80px;
+  height: 80px;
 }
 
 .pictures_catalog {
@@ -655,25 +668,30 @@ main {
 .main_goods_text_pay {
   float: left;
   padding-top: 4%;
-  color: #000000;
-  font-family: Alef;
+  color: rgba(77, 63, 91, 0.78);
+  font-family: Alef, serif;
   font-style: normal;
   font-weight: normal;
   font-size: 46px;
   text-align: left;
 }
+.CatalogItemProduct__btn{
+  float: right;
+  width: 80px;
+  height: 80px;
 
+}
 .main_good {
   position: relative;
   display: inline-flex;
   padding-right: 15px;
   padding-left: 15px;
   z-index: 100;
-  padding-top: 5%;
 }
 
 .main_section {
   display: block;
+  width: 100%;
 }
 
 .card_right,
@@ -700,7 +718,7 @@ main {
   line-height: 21px;
   text-align: center;
   color: #000000;
-  font-family: Alef;
+  font-family: Alef, serif;
 }
 
 .price-controls {
@@ -847,7 +865,7 @@ main {
 }
 
 .card_text {
-  font-family: Roboto;
+  font-family: Roboto, serif;
   font-style: italic;
   font-weight: 500;
   font-size: 25px;
@@ -857,7 +875,7 @@ main {
 .text_cart_title,
 .product-description_title,
 .text_title {
-  font-family: Atomic Age;
+  font-family: Atomic Age, serif;
   font-style: normal;
   font-weight: normal;
   font-size: 48px;
@@ -877,7 +895,7 @@ main {
 }
 
 .text_carousel {
-  font-family: Roboto;
+  font-family: Roboto, serif;
   font-style: italic;
   font-weight: normal;
   font-size: 27px;
@@ -899,7 +917,7 @@ main {
 }
 
 .text_title_new {
-  font-family: Atomic Age;
+  font-family: Atomic Age, serif;
   font-style: normal;
   font-weight: normal;
   font-size: 40px;
@@ -908,7 +926,7 @@ main {
 }
 
 .product-description_paragraph {
-  font-family: Roboto;
+  font-family: Roboto, serif;
   font-style: normal;
   font-weight: normal;
   font-size: 25px;
@@ -1019,21 +1037,6 @@ main {
   margin: 0 10px 0 10px;
 }
 
-/*.favorite_category_product li {*/
-/*  height: 130px;*/
-/*  width: 9999px;*/
-/*  margin: 0;*/
-/*  padding: 0;*/
-/*  list-style: none;*/
-/*  transition: margin-left 250ms;*/
-/*  font-size: 0;*/
-/*}*/
-
-/*.favorite_category_product li {*/
-/*  list-style: none;*/
-/*  transition: margin-left 250ms;*/
-/*}*/
-
 .row_product_child {
   /*margin-bottom: 5%;*/
   /*width: 100%;*/
@@ -1093,4 +1096,80 @@ main {
 
 .collections_carousel {
 padding-left: 0;
+}
+.carousel-product-name {
+  font-family: Roboto, serif;
+  font-style: unset;
+  font-weight: normal;
+  font-size: 18px;
+  height: 86px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.carousel-product-title {
+  display: grid;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: start;
+  font-weight: 700;
+  color: rgba(77, 63, 91, 0.78);
+}
+
+.carousel-product-price-num {
+  font-family: Alef, serif;
+  font-style: normal;
+  font-size: 18px;
+  margin: 0;
+}
+
+.carousel-product-price-currents {
+  font-size: 80%;
+}
+
+
+.search_pop_up {
+  position: absolute;
+  top: 154px;
+  border-radius: 19px;
+  visibility: collapse;
+  min-height: 70px;
+  width: 499px;
+}
+
+.visible{
+  visibility: inherit;
+}
+
+.search_pop_up__blur{
+  position: absolute;
+  z-index: 2;
+  filter: blur(2px);
+  box-shadow: inset 0px 4px 120px rgba(147, 234, 223, 0.49);
+  background: linear-gradient(180deg, #53E88E 0%, rgba(141, 228, 176, 0) 100%), #23C1C1;
+  opacity: 0.9;
+  height: 100%;
+  width: 100%;
+}
+
+.testttt {
+  height: 68px;
+  background: aquamarine;
+  width: 479px;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  z-index: 99;
+}
+
+.search_pop_up__result {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  z-index: 99;
 }

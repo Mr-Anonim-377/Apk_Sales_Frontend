@@ -11,8 +11,19 @@
             >
           </p>
           <form action method="get" class="input">
-            <input class="input_search" type="search" name="q" placeholder="Искать здесь..">
+            <input class="input_search" type="search" name="q" placeholder="Искать здесь.."
+                   v-model="searchStr"
+                   @click="displaySearhcResult"
+                   @focusout="nonDisplaySearhcResult">
             <input class="input_botton" type="button">
+            <div class="search_pop_up" :class="searchResultVisible">
+              <div class="search_pop_up__blur"></div>
+              <div class="search_pop_up__result">
+                <div class="testttt" v-for="product in searchResult">
+                  {{product.nameProduct}}
+                </div>
+              </div>
+            </div>
           </form>
           <div class="basket_regist">
             <div class="basket">
@@ -35,23 +46,52 @@
   </header>
 </template>
 
-
 <script>
-  export default {
-    data() {
-      return {
-        shopingCart: {}
-      }
+import axios from 'axios'
+
+export default {
+  data () {
+    return {
+      shopingCart: {},
+      searchStr: '',
+      searchResult: [],
+      searchResultVisible: ''
+    }
+  },
+  created: function init () {
+    fetch(process.env.HOST + '/api/shoppingCart/cart', {
+      method: 'get',
+      credentials: 'include'
+    }).then(response => response.json())
+    // eslint-disable-next-line
+      .then(commits => this.shopingCart = commits);
+  },
+  methods: {
+    nonDisplaySearhcResult () {
+      this.searchResultVisible = ''
+      this.searchResult = []
     },
-    created: function init() {
-      fetch(process.env.HOST + '/shoppingCart/cart', {
+    displaySearhcResult () {
+      this.searchResult = []
+      fetch(process.env.HOST + '/api/search/onProducts?page=0&searchString=' + this.searchStr + '&searchType=ALL', {
         method: 'get',
         credentials: 'include'
       }).then(response => response.json())
-      // eslint-disable-next-line
-        .then(commits => this.shopingCart = commits)
+        .then(commits => commits.forEach(item => this.searchResult.push(item)))
+
+      this.searchResultVisible = 'visible'
+    }
+  },
+  watch: {
+    searchStr: function () {
+      if (this.searchStr.length >= 3) {
+        this.displaySearhcResult()
+      } else if (this.searchStr === '') {
+        this.nonDisplaySearhcResult()
+      }
     }
   }
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

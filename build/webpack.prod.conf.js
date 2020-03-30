@@ -1,19 +1,19 @@
-'use strict'
-const path = require('path')
-const utils = require('./utils')
-const webpack = require('webpack')
-const config = require('../config')
-const merge = require('webpack-merge')
-const baseWebpackConfig = require('./webpack.base.conf')
-const CopyWebpackPlugin = require('copy-webpack-plugin')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+'use strict';
+const path = require('path');
+const utils = require('./utils');
+const webpack = require('webpack');
+const config = require('../config');
+const merge = require('webpack-merge');
+const baseWebpackConfig = require('./webpack.base.conf');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const env = process.env.NODE_ENV === 'testing'
   ? require('../config/test.env')
-  : require('../config/prod.env')
+  : require('../config/prod.env');
 
 const webpackConfig = merge(baseWebpackConfig, {
   module: {
@@ -24,6 +24,14 @@ const webpackConfig = merge(baseWebpackConfig, {
     })
   },
   devtool: config.build.productionSourceMap ? config.build.devtool : false,
+  devServer: {
+    proxy: {
+      '/api': {
+        target: 'http://ec2-13-58-76-77.us-east-2.compute.amazonaws.com:8080',
+        pathRewrite: {'^/api': ''},
+      }
+    }
+  },
   output: {
     path: config.build.assetsRoot,
     filename: utils.assetsPath('js/[name].[chunkhash].js'),
@@ -121,10 +129,10 @@ const webpackConfig = merge(baseWebpackConfig, {
       }
     ])
   ]
-})
+});
 
 if (config.build.productionGzip) {
-  const CompressionWebpackPlugin = require('compression-webpack-plugin')
+  const CompressionWebpackPlugin = require('compression-webpack-plugin');
 
   webpackConfig.plugins.push(
     new CompressionWebpackPlugin({
@@ -142,8 +150,8 @@ if (config.build.productionGzip) {
 }
 
 if (config.build.bundleAnalyzerReport) {
-  const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+  const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
   webpackConfig.plugins.push(new BundleAnalyzerPlugin())
 }
 
-module.exports = webpackConfig
+module.exports = webpackConfig;

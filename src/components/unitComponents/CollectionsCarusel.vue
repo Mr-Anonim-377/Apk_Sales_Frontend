@@ -46,7 +46,7 @@ export default {
   },
   components: {CollectionsCaruselUnit},
   created: function init () {
-    fetch(process.env.HOST + '/collection/all')
+    fetch(process.env.HOST + '/api/collection/all')
       .then(response => response.json())
       // eslint-disable-next-line
       .then(commits => this.collections = commits)
@@ -121,7 +121,7 @@ export default {
     margin-left: 40%;
   }
   .container_circle_carusel {
-    z-index: 100;
+    z-index: 90;
     width: 100%;
     height: 100%;
     margin-right: auto;
