@@ -95,7 +95,7 @@ body {
 }
 
 .nav_product {
-  height: 100%;
+  height: 50px;
   margin: 1% 0 0;
   display: flex;
   text-decoration: none;
@@ -109,7 +109,7 @@ body {
 
 .naw_other {
   text-decoration: none;
-  font-family: Roboto;
+  font-family: Roboto, serif;
   font-size: 33px;
   color: #184355;
 }
@@ -118,7 +118,6 @@ body {
   text-decoration: none;
   font-family: Roboto;
   font-size: 25px;
-  padding-right: 24px;
   color: #08303D;
 }
 
@@ -143,7 +142,7 @@ main {
 }
 
 .container {
-  margin-top: 2%;
+  padding-top: 2%;
   text-align: center;
   z-index: 90;
   width: 100%;
@@ -157,7 +156,7 @@ main {
 }
 
 .container_nav {
-  margin-top: 0;
+  padding-top: 0;
   max-width: 1140px;
 }
 
@@ -235,7 +234,7 @@ main {
 .section_nav {
   height: 80px;;
   position: relative;
-  z-index: 1;
+  z-index: 2;
 }
 
 .nav {
@@ -246,7 +245,7 @@ main {
 
 .nav_product_name {
   margin-left: auto;
-  margin-right: auto;
+  margin-right: 24px;
 }
 
 .main_border,
@@ -462,8 +461,9 @@ main {
 }
 
 .nav_list {
-  margin-left: -1%;
-  padding-right: 5%;
+  margin-left: -16px;
+  margin-right: 20px;
+  margin-bottom: auto;
 }
 
 .nav_list_circle_top {
@@ -1043,6 +1043,7 @@ main {
   flex: 1 1 auto;
   margin-right: -12px;
   margin-left: -12px;
+  height: 100%;
 }
 
 .unit_product {
@@ -1128,7 +1129,7 @@ main {
   position: absolute;
   top: 154px;
   border-radius: 19px;
-  visibility: collapse;
+  /*visibility: collapse;*/
   min-height: 70px;
   width: 499px;
 }
@@ -1148,7 +1149,7 @@ main {
   width: 100%;
 }
 
-.testttt {
+.search_result_product {
   height: 68px;
   background: aquamarine;
   width: 479px;
@@ -1164,4 +1165,31 @@ main {
   height: 100%;
   width: 100%;
   z-index: 99;
+}
+
+.search_error_and_vait {
+  display: flex;
+  height: 42px;
+  background: aquamarine;
+  width: 431px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  z-index: 99;
+  border-radius: 7px;
+  text-align: center;
+}
+
+.show_more {
+  height: 43px;
+  background: aquamarine;
+  width: 210px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  z-index: 99;
+  border-radius: 78px;
+  opacity: 0.84;
 }
