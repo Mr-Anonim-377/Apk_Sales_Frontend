@@ -7,7 +7,9 @@
           <nav class="nav">
             <ul class="nav_product">
               <li class="nav_product_name">
+                <router-link :to="{name: 'catalog'}">
                 <a class="naw_categor" href>Категории</a>
+                </router-link>
               </li>
               <div class="nav_list">
                 <div class="nav_list_circle_top"></div>

@@ -210,7 +210,6 @@ main {
   padding-left: 0px;
 
 }
-
 .carousel,
 .row_new {
   width: 1200px;
@@ -320,7 +319,12 @@ main {
   z-index: 100;
 
 }
-
+.card_row_test{
+  display: flex;
+  position: relative;
+  z-index: 100;
+  flex-wrap: nowrap;
+}
 .card_row,
 .main_container_banner,
 .row_carousel {
@@ -698,6 +702,7 @@ main {
 .card_left,
 .text_catalog {
   display: block;
+  width: 48%;
 }
 
 .main_goods_text_pay_small {
@@ -752,8 +757,8 @@ main {
 
 .price-controls .min-price,
 .price-controls .max-price {
-  width: 90px;
-  padding-left: 35px;
+  width: 129px;
+  padding-left: 28px;
 }
 
 .price-controls input {
@@ -802,6 +807,7 @@ main {
 .range-toggle-min {
   left: 0;
 }
+
 
 .range-toggle-max {
   left: 80%;
@@ -964,6 +970,7 @@ main {
 .cart-btn {
   text-align: center;
   margin-top: 20px;
+  outline: none;
 }
 
 .text_cart_title_new {

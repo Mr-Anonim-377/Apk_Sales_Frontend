@@ -47,7 +47,7 @@ export default {
   }
 }
 </script>
-<!--this.products = commits-->
+
 <style scoped>
 
 </style>
