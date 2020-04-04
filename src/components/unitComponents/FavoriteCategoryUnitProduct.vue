@@ -34,51 +34,51 @@
 </template>
 
 <script>
-  export default {
-    props: {
-      products: [],
-      // Скорость перелистывания (мс)
-      speed: {
-        type: Number,
-        default: 500
-      },
+export default {
+  props: {
+    products: [],
+    // Скорость перелистывания (мс)
+    speed: {
+      type: Number,
+      default: 500
+    },
 
-      // Анимация перехода (linear, ease-in, ease-out, ease-in-out)
-      timing: {
-        type: String,
-        default: 'ease'
+    // Анимация перехода (linear, ease-in, ease-out, ease-in-out)
+    timing: {
+      type: String,
+      default: 'ease'
+    }
+  },
+  data () {
+    return {
+      currentOffset: 0,
+      windowSize: 3,
+      paginationFactor: 220,
+      settings: {
+        speed: this.speed,
+        timing: this.timing
       }
+    }
+  },
+  computed: {
+    atEndOfList () {
+      return this.currentOffset <= (this.paginationFactor * -1) * (this.products.length - this.windowSize)
     },
-    data() {
-      return {
-        currentOffset: 0,
-        windowSize: 3,
-        paginationFactor: 220,
-        settings: {
-          speed: this.speed,
-          timing: this.timing
-        }
-      }
-    },
-    computed: {
-      atEndOfList() {
-        return this.currentOffset <= (this.paginationFactor * -1) * (this.products.length - this.windowSize)
-      },
-      atHeadOfList() {
-        return this.currentOffset === 0
-      }
-    },
-    methods: {
-      moveCarousel(direction) {
-        // Find a more elegant way to express the :style. consider using props to make it truly generic
-        if (direction === 1 && !this.atEndOfList) {
-          this.currentOffset -= this.paginationFactor
-        } else if (direction === -1 && !this.atHeadOfList) {
-          this.currentOffset += this.paginationFactor
-        }
+    atHeadOfList () {
+      return this.currentOffset === 0
+    }
+  },
+  methods: {
+    moveCarousel (direction) {
+      // Find a more elegant way to express the :style. consider using props to make it truly generic
+      if (direction === 1 && !this.atEndOfList) {
+        this.currentOffset -= this.paginationFactor
+      } else if (direction === -1 && !this.atHeadOfList) {
+        this.currentOffset += this.paginationFactor
       }
     }
   }
+}
 </script>
 
 <style>

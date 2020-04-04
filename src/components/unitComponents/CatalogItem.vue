@@ -5,99 +5,12 @@
       <div class = "main_back main"></div>
       <div class = "main_border">
         <div class = "main_border_row">
-          <div class="main_filters ">
-            <div class="main_color"></div>
-            <div class="main_filter">
-              <a class="text_color">Фильры</a>
-            </div>
-            <div class="main_filter_electr">
-              <ul class="main_category_list text_color">
-                <li class ="category_list_item">
-                  <a class ="category_list_link">Электроника</a>
-                </li>
-                <li class ="category_list_item">
-                  <a class ="category_list_link">Электроника</a>
-                </li>
-                <li class ="category_list_item">
-                  <a class ="category_list_link">Электроника</a>
-                </li>
-                <li class ="category_list_item">
-                  <a class ="category_list_link">Электроника</a>
-                </li>
-                <li class ="category_list_item list_them">
-                  <a class ="category_list_link">Электроника</a>
-                </li>
-                <li class ="category_list_item list_them_lvl">
-                  <a class ="category_list_link">Электроника</a>
-                </li>
-              </ul>
-            </div>
-            <div class="filter-range">
-              <div class="filter-range-title"><a class="text_prise">Цена(р):</a></div>
-              <div class="price-controls">
-                <label class="min-price">от <input type="text" name="min-price" value="0"></label>
-                <label class="max-price">до <input type="text" name="max-price" value="3000"></label>
-              </div>
-              <div class="range-controls">
-                <div class="scale">
-                  <div class="bar"></div>
-                </div>
-                <div class="range-toggle range-toggle-min"></div>
-                <div class="range-toggle range-toggle-max"></div>
-              </div>
-            </div>
-            <div class="main_filter">
-              <a class="text_color">Бренды</a>
-            </div>
-            <div class="main_filter_electr">
-              <ul class="main_category_list text_color">
-                <li class ="category_list_item">
-                  <a class ="category_list_link">Электроника</a>
-                </li>
-                <li class ="category_list_item">
-                  <a class ="category_list_link">Электроника</a>
-                </li>
-                <li class ="category_list_item">
-                  <a class ="category_list_link">Электроника</a>
-                </li>
-                <li class ="category_list_item">
-                  <a class ="category_list_link">Электроника</a>
-                </li>
-                <li class ="category_list_item">
-                  <a class ="category_list_link">Электроника</a>
-                </li>
-                <li class ="category_list_item">
-                  <a class ="category_list_link">Электроника</a>
-                </li>
-              </ul>
-            </div>
-            <div class="main_filter">
-              <a class="text_color">Коллекции</a>
-            </div>
-            <div class="main_filter_electr">
-              <ul class="main_category_list text_color">
-                <li class ="category_list_item">
-                  <a class ="category_list_link">Электроника</a>
-                </li>
-                <li class ="category_list_item">
-                  <a class ="category_list_link">Электроника</a>
-                </li>
-                <li class ="category_list_item">
-                  <a class ="category_list_link">Электроника</a>
-                </li>
-                <li class ="category_list_item">
-                  <a class ="category_list_link">Электроника</a>
-                </li>
-                <li class ="category_list_item">
-                  <a class ="category_list_link">Электроника</a>
-                </li>
-                <li class ="category_list_item">
-                  <a class ="category_list_link">Электроника</a>
-                </li>
-              </ul>
-            </div>
-          </div>
+          <CatalogItemFilter/>
           <div class="main_section">
+            <CatalogItemProduct
+              v-for = "productCategory in products"
+              :productCategory="productCategory"
+            />
           </div>
         </div>
       </div>
@@ -107,9 +20,32 @@
 </template>
 
 <script>
-    export default {
-        name: "CatalogItem"
-    }
+import CatalogItemProduct from './CatalogItemProduct'
+import CatalogItemFilter from './CatalogItemFilter'
+export default {
+  name: 'CatalogItem',
+  data () {
+    return {products: []}
+  },
+  components: {CatalogItemProduct,
+    CatalogItemFilter},
+  created: function init () {
+    fetch(process.env.HOST + '/api/products/category', {
+      method: 'post',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({categoryId: 1, page: 0})
+    })
+      .then(response => response.json())
+      // eslint-disable-next-line no-return-assign
+      .then(commits => this.products = commits)
+      .catch(function (error) {
+        console.log('Request failed', error)
+      })
+  }
+}
 </script>
 
 <style scoped>

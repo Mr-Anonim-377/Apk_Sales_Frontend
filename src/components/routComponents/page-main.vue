@@ -109,7 +109,7 @@ export default {
     }
   },
   // created: function init() {
-  //   fetch('api/baners/allByStatusByPage?page=MAIN&status=true', {
+  //   fetch(process.env.HOST + '/api/baners/allByStatusByPage?page=MAIN&status=true', {
   //     method: 'get'
   //   }).then(response => response.json())
   //   // eslint-disable-next-line

@@ -7,7 +7,9 @@
           <nav class="nav">
             <ul class="nav_product">
               <li class="nav_product_name">
+                <router-link :to="{name: 'catalog'}">
                 <a class="naw_categor" href>Категории</a>
+                </router-link>
               </li>
 <!--              v-on-clickaway="onClickOutside"-->
               <div class="nav_list" @click="isVisible = true" v-on-clickaway="onClickOutside">
@@ -44,7 +46,7 @@ export default {
   },
   components: {NavigationUnit},
   created: function init () {
-    fetch('api/navigation', {
+    fetch(process.env.HOST + '/api/navigation', {
       method: 'get'
     }).then(response => response.json())
       // eslint-disable-next-line
