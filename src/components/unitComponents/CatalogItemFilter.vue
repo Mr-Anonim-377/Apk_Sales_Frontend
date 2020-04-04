@@ -180,8 +180,8 @@ input[type=range]::-webkit-slider-thumb {
   position: absolute;
   background: #AAD9E0;
   border-radius: 6px;
-  outline: none;
   z-index: 100;
+  outline: none;
   }
   .input_filter_max{
     right: 0;
