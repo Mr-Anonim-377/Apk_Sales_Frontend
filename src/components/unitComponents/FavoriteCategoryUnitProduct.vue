@@ -14,8 +14,8 @@
                     <img v-bind:src="item.image.imagePatch">
                     </div>
                     <div class="carousel-product-title">
-                      <span class="carousel-product-price-num">{{item.price}}
-                      <span class="carousel-product-price-currents">₽</span>
+                      <span class="product-price-num">{{item.price}}
+                      <span class="product-price-currents">₽</span>
                       </span>
                       <div class="carousel-product-name">
                       <span>{{item.nameProduct}}</span>

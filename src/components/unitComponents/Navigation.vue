@@ -10,13 +10,13 @@
                 <a class="naw_categor" href>Категории</a>
               </li>
 <!--              v-on-clickaway="onClickOutside"-->
-              <div class="nav_list" @click="isVisible = true">
+              <div class="nav_list" @click="isVisible = true" v-on-clickaway="onClickOutside">
                 <div class="nav_list_circle_top"  ></div>
                 <div class="nav_list_circle_bottom" ></div>
-                <div class="search_pop_up" v-if="isVisible" >
-                  <div class="search_pop_up__blur"></div>
-                  <div class="search_pop_up__result">
-                    <div class="show_more">Показать все</div>
+                <div class="category_pop_up" v-if="isVisible">
+                  <div class="category_pop_up__blur"></div>
+                  <div class="category_pop_up__result">
+                    <div class="show_more"></div>
                   </div>
                 </div>
               </div>
