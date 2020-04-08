@@ -1,9 +1,8 @@
 <template>
     <div id="main-catalog">
-      {{i}}
       <Header/>
       <Navigation/>
-      <CatalogItem/>
+      <CatalogItem :id = "categoryId"/>
       <Footer/>
     </div>
 </template>
@@ -14,7 +13,7 @@ import Navigation from '@/components/unitComponents/Navigation'
 import CatalogItem from '../unitComponents/CatalogItem'
 import Footer from '@/components/unitComponents/Footer'
 export default {
-  props: ['i'],
+  props: ['categoryId'],
   name: 'main-catalog',
   components: {
     Header,

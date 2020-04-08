@@ -1,14 +1,16 @@
 <template>
   <li class="nav_product_name">
-    <a class="naw_categor" href>{{favoriteCategory.category.categoryName}}</a>
+    <router-link :to="{path: '/catalog/'+favoriteCategory.category.categoryId}">
+      <a class="nav_category" href>{{favoriteCategory.category.categoryName}}</a>
+    </router-link>
   </li>
 </template>
 <script>
-export default {
-  props: {
-    favoriteCategory: {}
+  export default {
+    props: {
+      favoriteCategory: {}
+    }
   }
-}
 </script>
 <style scoped>
 </style>

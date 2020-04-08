@@ -21,7 +21,12 @@
                   <div class="search_error_and_vait__message">{{errorSearchStr}}</div>
                   <!--                  <div><img src="../../../static/img/1573285.png"></div>-->
                 </div>
-                <div class="search_result_product" v-for="(product,index) in searchResult" v-if="index<4">
+                <div class="search_result_product"
+                     v-for="(product,index) in searchResult"
+                     v-if="index<4"
+                     v-bind:style="indexOfColored(index)"
+                     @mouseover="setColor(true,index)"
+                     @mouseout="setColor(false,index)">
                   <div class="search_result_product__img">
                     <img v-bind:src="product.image.imagePatch" alt="">
                   </div>
@@ -68,95 +73,111 @@
 </template>
 
 <script>
-  import {directive as onClickaway} from 'vue-clickaway'
+import {directive as onClickaway} from 'vue-clickaway'
 
-  export default {
-    directives: {
-      onClickaway: onClickaway
-    },
-    data() {
-      return {
-        errorSearchStr: 'введите поисковый запрос',
-        shopingCart: {},
-        searchStr: '',
-        searchStrOld: '',
-        searchResult: [],
-        searchResultVisible: '',
-        isVisible: false
-      }
-    },
-    created: function init() {
-      fetch('api/shoppingCart/cart', {
-        method: 'get',
-        credentials: 'include'
-      }).then(response => response.json())
+export default {
+  directives: {
+    onClickaway: onClickaway
+  },
+  data () {
+    return {
+      searchResultStyle: {
+        background: '#9974fb'
+      },
+      colorIsNumber: -1,
+      errorSearchStr: 'введите поисковый запрос',
+      shopingCart: {},
+      searchStr: '',
+      searchStrOld: '',
+      searchResult: [],
+      searchResultVisible: '',
+      isVisible: false
+    }
+  },
+  created: function init () {
+    fetch('api/shoppingCart/cart', {
+      method: 'get',
+      credentials: 'include'
+    }).then(response => response.json())
       // eslint-disable-next-line
         .then(commits => this.shopingCart = commits);
+  },
+  methods: {
+    onClickOutside () {
+      this.isVisible = false
     },
-    methods: {
-      onClickOutside() {
-        this.isVisible = false
-      },
-      // @change="changeSearchStr"
-      // changeSearchStr() {
-      //   if (this.searchStr.length > 3) {
-      //     this.errorSearchStr = 'поиск по товарам'
-      //     this.getSearhcResult()
-      //   } else if (this.searchStr.length === 0) {
-      //     this.errorSearchStr = 'введите поисковый запрос'
-      //   } else {
-      //     this.errorSearchStr = 'дополните строку поиска'
-      //     this.searchResult = []
-      //   }
-      // },
-      errorSearch() {
-        this.errorSearchStr = 'нет результатов поиска';
-        this.searchResult = []
-      },
-      getSearhcResult() {
-        let searchStrOld = '';
-        this.searchResult = [];
-        searchStrOld = this.searchStr;
-        fetch('api/search/onProducts?page=0&searchString=' + this.searchStr + '&searchType=ALL', {
-          method: 'get',
-          credentials: 'include'
-        }).then(response => {
-          if (response.ok) {
-            if (searchStrOld === this.searchStr) {
-              // response.json().then(commits => commits.forEach(item => this.searchResult.push(item)))
-              response.json().then(commits => {
-                for (let i = 0; i < commits.length; i++) {
-                  if (searchStrOld === this.searchStr) {
-                    this.errorSearchStr = 'поиск по товарам';
-                    this.searchResult.push(commits[i])
-                  } else {
-                    this.searchResult = [];
-                    this.errorSearchStr = 'поиск по товарам';
-                    break
-                  }
-                }
-              })
-            }
-          } else {
-            this.errorSearch()
-          }
-        })
+    indexOfColored (number) {
+      if (number === this.colorIsNumber) {
+        return this.searchResultStyle
       }
     },
-    watch: {
-      searchStr: function () {
-        if (this.searchStr.length > 3) {
-          this.errorSearchStr = 'поиск по товарам';
-          this.getSearhcResult()
-        } else if (this.searchStr.length === 0) {
-          this.errorSearchStr = 'введите поисковый запрос'
+    setColor (isColor, num) {
+      if (isColor) {
+        this.colorIsNumber = num
+      } else {
+        this.colorIsNumber = -1
+      }
+    },
+    // @change="changeSearchStr"
+    // changeSearchStr() {
+    //   if (this.searchStr.length > 3) {
+    //     this.errorSearchStr = 'поиск по товарам'
+    //     this.getSearhcResult()
+    //   } else if (this.searchStr.length === 0) {
+    //     this.errorSearchStr = 'введите поисковый запрос'
+    //   } else {
+    //     this.errorSearchStr = 'дополните строку поиска'
+    //     this.searchResult = []
+    //   }
+    // },
+    errorSearch () {
+      this.errorSearchStr = 'нет результатов поиска';
+      this.searchResult = []
+    },
+    getSearhcResult () {
+      let searchStrOld = '';
+      this.searchResult = [];
+      searchStrOld = this.searchStr;
+      fetch('api/search/onProducts?page=0&searchString=' + this.searchStr + '&searchType=ALL', {
+        method: 'get',
+        credentials: 'include'
+      }).then(response => {
+        if (response.ok) {
+          if (searchStrOld === this.searchStr) {
+            // response.json().then(commits => commits.forEach(item => this.searchResult.push(item)))
+            response.json().then(commits => {
+              for (let i = 0; i < commits.length; i++) {
+                if (searchStrOld === this.searchStr) {
+                  this.errorSearchStr = 'поиск по товарам';
+                  this.searchResult.push(commits[i])
+                } else {
+                  this.searchResult = [];
+                  this.errorSearchStr = 'поиск по товарам';
+                  break
+                }
+              }
+            })
+          }
         } else {
-          this.errorSearchStr = 'дополните строку поиска';
-          this.searchResult = []
+          this.errorSearch()
         }
+      })
+    }
+  },
+  watch: {
+    searchStr: function () {
+      if (this.searchStr.length > 3) {
+        this.errorSearchStr = 'поиск по товарам';
+        this.getSearhcResult()
+      } else if (this.searchStr.length === 0) {
+        this.errorSearchStr = 'введите поисковый запрос'
+      } else {
+        this.errorSearchStr = 'дополните строку поиска';
+        this.searchResult = []
       }
     }
   }
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

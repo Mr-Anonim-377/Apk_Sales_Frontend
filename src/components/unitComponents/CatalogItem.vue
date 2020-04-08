@@ -4,7 +4,6 @@
     <div class="section_main">
       <div class = "main_back main"></div>
       <div class = "main_border">
-        <div class = "main_border_row">
           <CatalogItemFilter/>
           <div class="main_section">
             <CatalogItemProduct
@@ -12,7 +11,6 @@
               :productCategory="productCategory"
             />
           </div>
-        </div>
       </div>
     </div>
   </section>
@@ -23,6 +21,9 @@
 import CatalogItemProduct from './CatalogItemProduct'
 import CatalogItemFilter from './CatalogItemFilter'
 export default {
+  props: {
+    id: {}
+  },
   name: 'CatalogItem',
   data () {
     return {products: []}
@@ -36,7 +37,7 @@ export default {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({categoryId: 1, page: 0})
+      body: JSON.stringify({categoryId: this.id, page: 0})
     })
       .then(response => response.json())
       // eslint-disable-next-line no-return-assign

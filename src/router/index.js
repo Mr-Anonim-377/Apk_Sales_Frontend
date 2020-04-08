@@ -14,10 +14,10 @@ export default new Router({
       component: mainPageComponent
     },
     {
-      path: '/catalog',
+      path: '/catalog/:categoryId',
       component: catalog,
-      name: 'catalog'
-      // props: true
+      name: 'catalog',
+      props: true
     },
     {
       path: '/card',
