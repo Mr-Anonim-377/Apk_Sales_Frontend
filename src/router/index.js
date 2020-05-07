@@ -13,10 +13,16 @@ export default new Router({
       path: '/',
       component: mainPageComponent
     },
+    // {
+    //   path: '/page/:page/category/:categoryId',
+    //   component: catalog,
+    //   name: 'catalog',
+    //   props: true
+    // },
     {
-      path: '/catalog/:categoryId',
+      path: '/catalog/:categoryId&:page&:collectionIds?&:priceMin?&:priceMax?',
       component: catalog,
-      name: 'catalog',
+      name: 'catalogWithCollection',
       props: true
     },
     {
@@ -24,5 +30,11 @@ export default new Router({
       component: itemCard
       // props: true
     }
+    // {
+    //   path: 'catalog',
+    //   component: catalog,
+    //   name: 'catalog',
+    //   props: true
+    // }
   ]
 })

@@ -5,27 +5,29 @@
       <div class="card-carousel-wrapper"
            :style="{ transform: 'translateX' + '(' + currentOffset + 'px' + ')',  transition: 'transform ' + settings.timing + ' ' + settings.speed + 'ms'}">
         <ul v-for="item in products">
-          <li>
-            <div class="card-carousel">
-              <div class="card-carousel--overflow-container">
-                <div class="card-carousel-cards">
-                  <div class="card-carousel--card">
-                    <div>
-                    <img v-bind:src="item.image.imagePatch">
-                    </div>
-                    <div class="carousel-product-title">
+          <a class="favorute_card_hover">
+            <li>
+              <div class="card-carousel">
+                <div class="card-carousel--overflow-container">
+                  <div class="card-carousel-cards">
+                    <div class="card-carousel--card">
+                      <div>
+                        <img v-bind:src="item.image.imagePatch">
+                      </div>
+                      <div class="carousel-product-title">
                       <span class="product-price-num">{{item.price}}
                       <span class="product-price-currents">₽</span>
                       </span>
-                      <div class="carousel-product-name">
-                      <span>{{item.nameProduct}}</span>
+                        <div class="carousel-product-name">
+                          <span>{{item.nameProduct}}</span>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </li>
+            </li>
+          </a>
         </ul>
       </div>
     </div>
@@ -235,4 +237,9 @@ export default {
     box-shadow: -0px -0px 0px #004977;
   }
 
+  .favorute_card_hover:hover {
+    text-decoration: none;
+    -webkit-filter: drop-shadow(0 0 2px rgba(153, 116, 251, 0.81));
+    filter: drop-shadow(0 0 2px rgba(153, 116, 251, 0.81));
+  }
 </style>

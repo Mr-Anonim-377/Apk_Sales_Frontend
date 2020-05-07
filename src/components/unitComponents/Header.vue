@@ -4,12 +4,13 @@
       <div class="head_logo"></div>
       <div class="container">
         <div class="row_news">
-          <p class="row_logo">
+          <a class="row_logo"
+          href="http://localhost:8081/">
             <img
               class="logo_pictures"
               src="https://mr-anonim-377.github.io/Sales/src/main/resources/static/CSS/pictures/Logotip.png"
             >
-          </p>
+          </a>
           <div class="input" v-on-clickaway="onClickOutside">
             <input class="input_search" autocomplete="off" placeholder="Искать здесь.."
                    v-model="searchStr" @focus="isVisible = true">
@@ -81,7 +82,7 @@ export default {
   },
   data () {
     return {
-      searchResultStyle: {
+      collectionClickColor: {
         background: '#9974fb'
       },
       colorIsNumber: -1,
@@ -95,7 +96,7 @@ export default {
     }
   },
   created: function init () {
-    fetch('api/shoppingCart/cart', {
+    fetch(process.env.HOST + '/api/shoppingCart/cart', {
       method: 'get',
       credentials: 'include'
     }).then(response => response.json())
@@ -108,7 +109,7 @@ export default {
     },
     indexOfColored (number) {
       if (number === this.colorIsNumber) {
-        return this.searchResultStyle
+        return this.collectionClickColor
       }
     },
     setColor (isColor, num) {
@@ -138,7 +139,7 @@ export default {
       let searchStrOld = '';
       this.searchResult = [];
       searchStrOld = this.searchStr;
-      fetch('api/search/onProducts?page=0&searchString=' + this.searchStr + '&searchType=ALL', {
+      fetch(process.env.HOST + '/api/search/onProducts?page=0&searchString=' + this.searchStr + '&searchType=ALL', {
         method: 'get',
         credentials: 'include'
       }).then(response => {

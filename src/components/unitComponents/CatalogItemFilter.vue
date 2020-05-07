@@ -3,35 +3,23 @@
     <div class="main_color"></div>
     <div class="main_filter_container">
       <div class="main_filter">
-        <a class="text_color">Коллекции</a>
+        <p class="text_color">Коллекции</p>
       </div>
       <div class="main_filter_collection">
         <ul class="main_category_list text_color">
-          <li class="category_list_item">
-            <a class="category_list_link">Электроника</a>
-          </li>
-          <li class="category_list_item">
-            <a class="category_list_link">Электроника</a>
-          </li>
-          <li class="category_list_item">
-            <a class="category_list_link">Электроника</a>
-          </li>
-          <li class="category_list_item">
-            <a class="category_list_link">Электроника</a>
-          </li>
-          <li class="category_list_item">
-            <a class="category_list_link">Электроника</a>
-          </li>
-          <li class="category_list_item">
-            <a class="category_list_link">Электроника</a>
+          <li class="category_list_item"
+              v-for="(collection, index) in collections"
+              @click="providerCollectionInFilter(index)"
+              v-bind:style="collectionIsColor(index)">
+            <span class="category_list_link">{{collection.collection_name}}</span>
           </li>
         </ul>
       </div>
       <div class="filter-range">
-        <div class="filter-range-title"><a class="text_prise">Цена(р):</a></div>
+        <div class="filter-range-title"><a class="text_prise">Цена(₽):</a></div>
         <div class="price-controls">
-          <label class="min-price">от {{minPrice}}</label>
-          <label class="max-price">до {{maxPrice}}</label>
+          <input type="text" class="min-price"  v-bind:placeholder="'от ' + totalMinPrice" v-model.number="minPrice">
+          <input type="text" class="max-price" v-bind:placeholder="'от ' + totalMaxPrice" v-model.number="maxPrice">
         </div>
         <div class="range-slider">
           <input class="input_filter_min"
@@ -54,31 +42,95 @@
           >
         </div>
       </div>
-      <button class="btn_search"> Начать поиск</button>
+      <div class="btn_border">
+        <a   class="btn_search"
+             v-bind:href="'http://localhost:8081/catalog/' + categoryId + '&' + 1 + '&' + getStrByArray(getIds()) +'&' + minPrice.toFixed(2) + '&' + maxPrice.toFixed(2)"
+        > Начать поиск</a>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import CatalogItem from './CatalogItem'
+
 export default {
   name: 'CatalogItemFilter',
-  components: {},
-  props: {},
+  components: {CatalogItem},
+  props: {
+    priceMin: {},
+    priceMax: {},
+    productCount: {},
+    collectionIds: [],
+    numPage: {},
+    categoryId: {}
+  },
   data () {
     return {
+      totalMinPrice: 0,
+      totalMaxPrice: 10000,
+      ids: [],
+      colorIsNumber: -1,
+      collectionClickColor: {
+        background: '#9974fb'
+      },
+      collectionMouseMoveColor: {
+        background: 'rgba(153,116,251,0.61)'
+      },
       tmpMaxPrice: 10000,
       tmpMinPrice: 0,
       tmpMinInpWidth: 100,
       tmpMaxInpWidth: 100,
-      minPrice: 0,
-      maxPrice: 10000,
+      minPrice: Number.parseFloat(this.priceMin),
+      maxPrice: Number.parseFloat(this.priceMax),
       minInpWidth: 100,
       maxInpWidth: 100,
       absRange: 10000,
-      products: []
+      collections: [],
+      collectionFilters: []
     }
   },
   methods: {
+    getStrByArray (array) {
+      var str = '';
+      if (array !== 0 || array !== null) {
+        for (let i = 0; i < array.length; i++) {
+          if (i === 0) {
+            str = array[i]
+          } else {
+            str = str + '_' + array[i]
+          }
+        }
+      }
+      return str
+    },
+    setColor (isColor, num) {
+      if (isColor) {
+        this.colorIsNumber = num
+      } else {
+        this.colorIsNumber = -1
+      }
+    },
+    collectionIsColor (index) {
+      for (let i = 0; i < this.collectionFilters.length; i++) {
+        if (this.collectionFilters[i].index === index) {
+          return this.collectionClickColor
+        }
+      }
+      if (index === this.colorIsNumber) {
+        return this.collectionMouseMoveColor
+      }
+      return ''
+    },
+    providerCollectionInFilter (index) {
+      for (let i = 0; i < this.collectionFilters.length; i++) {
+        if (this.collectionFilters[i].index === index) {
+          this.collectionFilters.splice(i, 1);
+          return
+        }
+      }
+      this.collectionFilters.push({index: index, collectionId: this.collections[index].collection_id})
+    },
     setMaxWidth () {
       this.tmpMinInpWidth = this.minInpWidth;
       this.tmpMaxPrice = this.maxPrice;
@@ -87,7 +139,28 @@ export default {
     setMinWidth () {
       this.tmpMaxInpWidth = this.maxInpWidth;
       this.tmpMinPrice = this.minPrice;
-      this.minInpWidth = 100 - (this.absRange - this.maxPrice) * (100 / this.absRange)
+      this.minInpWidth = (this.absRange - (this.absRange - this.maxPrice)) * (100 / this.absRange)
+    },
+    setCollectionIdsArray () {
+      this.ids = [];
+      this.collectionFilters.forEach(item => this.ids.push(item.collectionId))
+    },
+    getIds () {
+      this.setCollectionIdsArray();
+      return this.ids
+    },
+    crateFilterBody () {
+      this.setCollectionIdsArray();
+      return JSON.stringify({
+        categoryId: this.categoryId,
+        collectionIds: this.ids,
+        maxPrice: this.maxPrice.toFixed(2),
+        minPrice: this.minPrice.toFixed(2),
+        page: this.numPage - 1
+      })
+    },
+    filterData () {
+      this.$emit('filterChangeData', this.crateFilterBody())
     }
   },
   watch: {
@@ -99,29 +172,35 @@ export default {
     }
   },
   created: function init () {
-    fetch(process.env.HOST + '/api/products/category', {
-      method: 'post',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        maxPrice: 100,
-        minPrice: 0,
-        page: 0
-      })
+    fetch(process.env.HOST + '/api/collection/all/byProductOfCategory?categoryId=' + this.categoryId, {
+      method: 'get'
     })
       .then(response => response.json())
     // eslint-disable-next-line no-return-assign
-      .then(commits => this.products = commits)
-      .catch(function (error) {
-        console.log('Request failed', error)
+      .then(commits => {
+        if (commits.type !== 'InternalServerError') {
+          for (let i = 0; i < commits.length; i++) {
+            for (let ii = 0; ii < this.collectionIds.length; ii++) {
+              if (Number.parseInt(this.collectionIds[ii]) === commits[i].collection_id) {
+                this.collectionFilters.push({index: i, collectionId: commits[i].collection_id})
+              }
+            }
+          }
+          this.filterData();
+          this.collections = commits
+        }
       })
-  }
+    }
 }
 </script>
 
 <style>
+
+  a:hover{
+    text-decoration: none;
+    color: #09333f;
+  }
+
   .range-slider {
     width: 230px;
     margin: auto 16px;
@@ -142,18 +221,16 @@ export default {
   }
 
   .btn_search {
-    color: #000000;
+    font-size: 15px;
     font-family: Alef, serif;
     -moz-user-select: none;
     -ms-user-select: none;
-    height: 35px;
-    background: #AAD9E0;
-    border-radius: 6px;
-    z-index: 100;
-    margin-bottom: 10%;
-    position: relative;
-    margin-top: 5%;
-    margin-left: 25%;
+    color: #09333f;
+  }
+  .btn_search,
+  .btn_search:active,
+  .btn_search:hover{
+    text-decoration: none;
   }
 
   .input_filter_max {
@@ -187,5 +264,16 @@ export default {
     border-radius: 50%;
     box-shadow: 0 2px 1px 0 rgba(0, 1, 1, 0.2);
     cursor: pointer;
+  }
+
+  .collection_list_error {
+    font-family: Roboto, serif;
+    font-style: italic;
+    font-weight: normal;
+    font-size: 23px;
+    text-align: left;
+    z-index: 90;
+    height: 86px;
+    margin-left: 2%;
   }
 </style>
