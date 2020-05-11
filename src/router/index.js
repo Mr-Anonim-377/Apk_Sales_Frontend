@@ -3,8 +3,9 @@ import Router from 'vue-router'
 import mainPageComponent from '../components/routComponents/page-main'
 import catalog from '../components/routComponents/page-catalog'
 import collection from '../components/routComponents/page-collection'
-import itemCard from '../components/routComponents/page-itemCard'
+import itemCard from '../components/routComponents/page-productCard'
 import searchResult from '../components/routComponents/page-searchResult'
+import shoppingCard from '../components/routComponents/page-shoppingCart'
 
 Vue.use(Router);
 
@@ -34,7 +35,7 @@ export default new Router({
       path: '/shopping',
       component: shoppingCard
       // props: true
-    }
+    },
     {
       path: '/search/page=:page&searchStr=:searchStr' +
         '&collectionsIds=:collectionIds?' +

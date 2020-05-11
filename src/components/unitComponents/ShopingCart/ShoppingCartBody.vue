@@ -130,6 +130,8 @@ export default {
 </script>
 
 <style >
+  @import '../../../../static/CSS/CSS.css';
+
   .text_shoppingCart {
     font-family: Roboto, serif;
     font-style: normal;
