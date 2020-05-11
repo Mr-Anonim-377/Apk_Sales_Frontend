@@ -5,7 +5,7 @@
       <div class="container">
         <div class="row_news">
           <a class="row_logo"
-          href="http://localhost:8081/">
+             href="http://localhost:8081/">
             <img
               class="logo_pictures"
               src="https://mr-anonim-377.github.io/Sales/src/main/resources/static/CSS/pictures/Logotip.png"
@@ -28,10 +28,11 @@
                      v-bind:style="indexOfColored(index)"
                      @mouseover="setColor(true,index)"
                      @mouseout="setColor(false,index)">
-                  <a class="search_result_product__img"  v-bind:href="'http://localhost:8081/card/'+product.productId">
+                  <a class="search_result_product__img" v-bind:href="'http://localhost:8081/card/'+product.productId">
                     <img v-bind:src="product.image.imagePatch" alt="">
                   </a>
-                  <a class="search_result_product__name__container"  v-bind:href="'http://localhost:8081/card/'+product.productId">
+                  <a class="search_result_product__name__container"
+                     v-bind:href="'http://localhost:8081/card/'+product.productId">
                     <div class="search_result_product__name">
                       <span>{{product.nameProduct}}</span>
                     </div>
@@ -49,7 +50,9 @@
                            src="../../../../static/CSS/pictures/basket.png" alt=""/></div>
                   </div>
                 </div>
-                <a v-bind:href="'http://localhost:8081/search/page=1&searchStr=' + searchStr.split(' ').join('%20')">
+                <a
+                  v-bind:href="'http://localhost:8081/search/page=1&searchStr=' + searchStr.split(' ').join('%20') +
+                  '&collectionsIds=&categoryIds=&price-min=&price-max='">
                   <div class="show_more" v-if="searchResult.length !== 0">Показать все</div>
                 </a>
               </div>
@@ -77,129 +80,130 @@
 </template>
 
 <script>
-import {directive as onClickaway} from 'vue-clickaway'
+  import {directive as onClickaway} from 'vue-clickaway'
 
-export default {
-  directives: {
-    onClickaway: onClickaway
-  },
-  props: {
-    shopingCard: {}
-  },
-  data () {
-    return {
-      filterClickColor: {
-        background: '#9974fb'
-      },
-      collectionColorIsNumber: -1,
-      errorSearchStr: 'введите поисковый запрос',
-      searchStr: '',
-      searchStrOld: '',
-      searchResult: [],
-      searchResultVisible: '',
-      isVisible: false
-    }
-  },
-  methods: {
-    // getShopingCard () {
-    //   fetch(process.env.HOST + '/api/shoppingCart/cart', {
-    //     method: 'get',
-    //     credentials: 'include'
-    //   }).then(response => response.json())
-    //   // eslint-disable-next-line
-    //     .then(commits => this.shopingCard = commits);
-    // },
-    addProduct (product) {
-      fetch(process.env.HOST + '/api/shoppingCart?numberPieces=1&' + 'productId=' + product.productId, {
-        method: 'post',
-        headers: {
-          'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
-        }
-      })
-        .then(response => this.$emit('addProduct', true))
+  export default {
+    directives: {
+      onClickaway: onClickaway
     },
-    onClickOutside () {
-      this.isVisible = false
+    props: {
+      shopingCard: {}
     },
-    indexOfColored (number) {
-      if (number === this.collectionColorIsNumber) {
-        return this.filterClickColor
-      }
-    },
-    setColor (isColor, num) {
-      if (isColor) {
-        this.colorIsNumber = num
-      } else {
-        this.colorIsNumber = -1
-      }
-    },
-    // @change="changeSearchStr"
-    // changeSearchStr() {
-    //   if (this.searchStr.length > 3) {
-    //     this.errorSearchStr = 'поиск по товарам'
-    //     this.getSearhcResult()
-    //   } else if (this.searchStr.length === 0) {
-    //     this.errorSearchStr = 'введите поисковый запрос'
-    //   } else {
-    //     this.errorSearchStr = 'дополните строку поиска'
-    //     this.searchResult = []
-    //   }
-    // },
-    errorSearch () {
-      this.errorSearchStr = 'нет результатов поиска';
-      this.searchResult = []
-    },
-    getSearhcResult () {
-      let searchStrOld = '';
-      this.searchResult = [];
-      searchStrOld = this.searchStr;
-      fetch(process.env.HOST + '/api/search/onProducts', {
-        method: 'post',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
+    data() {
+      return {
+        filterClickColor: {
+          background: '#9974fb'
         },
-        body: JSON.stringify({ page: 0,
-          searchString: '%' + this.searchStr + '%',
-          searchType: 'ALL'
-        })
-      }).then(response => {
-        if (response.ok) {
-          if (searchStrOld === this.searchStr) {
-            // response.json().then(commits => commits.forEach(item => this.searchResult.push(item)))
-            response.json().then(commits => {
-              for (let i = 0; i < commits.products.length; i++) {
-                if (searchStrOld === this.searchStr) {
-                  this.errorSearchStr = 'поиск по товарам';
-                  this.searchResult.push(commits.products[i])
-                } else {
-                  this.searchResult = [];
-                  this.errorSearchStr = 'поиск по товарам';
-                  break
-                }
-              }
-            })
+        collectionColorIsNumber: -1,
+        errorSearchStr: 'введите поисковый запрос',
+        searchStr: '',
+        searchStrOld: '',
+        searchResult: [],
+        searchResultVisible: '',
+        isVisible: false
+      }
+    },
+    methods: {
+      // getShopingCard () {
+      //   fetch(process.env.HOST + '/api/shoppingCart/cart', {
+      //     method: 'get',
+      //     credentials: 'include'
+      //   }).then(response => response.json())
+      //   // eslint-disable-next-line
+      //     .then(commits => this.shopingCard = commits);
+      // },
+      addProduct(product) {
+        fetch(process.env.HOST + '/api/shoppingCart?numberPieces=1&' + 'productId=' + product.productId, {
+          method: 'post',
+          headers: {
+            'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
           }
-        } else {
-          this.errorSearch()
+        })
+          .then(response => this.$emit('addProduct', true))
+      },
+      onClickOutside() {
+        this.isVisible = false
+      },
+      indexOfColored(number) {
+        if (number === this.collectionColorIsNumber) {
+          return this.filterClickColor
         }
-      })
-    }
-  },
-  watch: {
-    searchStr: function () {
-      if (this.searchStr.length > 3) {
-        this.errorSearchStr = 'поиск по товарам';
-        this.getSearhcResult()
-      } else if (this.searchStr.length === 0) {
-        this.errorSearchStr = 'введите поисковый запрос'
-      } else {
-        this.errorSearchStr = 'дополните строку поиска';
+      },
+      setColor(isColor, num) {
+        if (isColor) {
+          this.colorIsNumber = num
+        } else {
+          this.colorIsNumber = -1
+        }
+      },
+      // @change="changeSearchStr"
+      // changeSearchStr() {
+      //   if (this.searchStr.length > 3) {
+      //     this.errorSearchStr = 'поиск по товарам'
+      //     this.getSearhcResult()
+      //   } else if (this.searchStr.length === 0) {
+      //     this.errorSearchStr = 'введите поисковый запрос'
+      //   } else {
+      //     this.errorSearchStr = 'дополните строку поиска'
+      //     this.searchResult = []
+      //   }
+      // },
+      errorSearch() {
+        this.errorSearchStr = 'нет результатов поиска';
         this.searchResult = []
+      },
+      getSearhcResult() {
+        let searchStrOld = '';
+        this.searchResult = [];
+        searchStrOld = this.searchStr;
+        fetch(process.env.HOST + '/api/search/onProducts', {
+          method: 'post',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            page: 0,
+            searchString: '%' + this.searchStr + '%',
+            searchType: 'ALL'
+          })
+        }).then(response => {
+          if (response.ok) {
+            if (searchStrOld === this.searchStr) {
+              // response.json().then(commits => commits.forEach(item => this.searchResult.push(item)))
+              response.json().then(commits => {
+                for (let i = 0; i < commits.products.length; i++) {
+                  if (searchStrOld === this.searchStr) {
+                    this.errorSearchStr = 'поиск по товарам';
+                    this.searchResult.push(commits.products[i])
+                  } else {
+                    this.searchResult = [];
+                    this.errorSearchStr = 'поиск по товарам';
+                    break
+                  }
+                }
+              })
+            }
+          } else {
+            this.errorSearch()
+          }
+        })
+      }
+    },
+    watch: {
+      searchStr: function () {
+        if (this.searchStr.length > 3) {
+          this.errorSearchStr = 'поиск по товарам';
+          this.getSearhcResult()
+        } else if (this.searchStr.length === 0) {
+          this.errorSearchStr = 'введите поисковый запрос'
+        } else {
+          this.errorSearchStr = 'дополните строку поиска';
+          this.searchResult = []
+        }
       }
     }
   }
-}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
