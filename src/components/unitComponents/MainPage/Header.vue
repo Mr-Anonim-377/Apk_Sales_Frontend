@@ -1,0 +1,208 @@
+<template>
+  <header class="header">
+    <div class="head_body">
+      <div class="head_logo"></div>
+      <div class="container">
+        <div class="row_news">
+          <a class="row_logo"
+          href="http://localhost:8081/">
+            <img
+              class="logo_pictures"
+              src="https://mr-anonim-377.github.io/Sales/src/main/resources/static/CSS/pictures/Logotip.png"
+            >
+          </a>
+          <div class="input" v-on-clickaway="onClickOutside">
+            <input class="input_search" autocomplete="off" placeholder="Искать здесь.."
+                   v-model="searchStr" @focus="isVisible = true">
+            <input class="input_botton" type="button">
+            <div class="search_pop_up" v-if="isVisible">
+              <div class="search_pop_up__blur"></div>
+              <div class="search_pop_up__result">
+                <div class="search_error_and_vait" v-if="searchResult.length === 0">
+                  <div class="search_error_and_vait__message">{{errorSearchStr}}</div>
+                  <!--                  <div><img src="../../../static/img/1573285.png"></div>-->
+                </div>
+                <div class="search_result_product"
+                     v-for="(product,index) in searchResult"
+                     v-if="index<4"
+                     v-bind:style="indexOfColored(index)"
+                     @mouseover="setColor(true,index)"
+                     @mouseout="setColor(false,index)">
+                  <a class="search_result_product__img"  v-bind:href="'http://localhost:8081/card/'+product.productId">
+                    <img v-bind:src="product.image.imagePatch" alt="">
+                  </a>
+                  <a class="search_result_product__name__container"  v-bind:href="'http://localhost:8081/card/'+product.productId">
+                    <div class="search_result_product__name">
+                      <span>{{product.nameProduct}}</span>
+                    </div>
+                    <span class="search_result_product__price">{{product.price}}
+                      <span class="product-price-currents">₽</span>
+                      </span>
+                  </a>
+                  <div class="search_product_cart_interactions__container">
+                    <div class="search_product_cart_interactions">
+                      <img class="search_product_cart_img search_product_cart_img_message"
+                           src="../../../../static/CSS/pictures/reviews.png" alt=""/></div>
+                    <div class="search_product_cart_interactions"
+                         @click="addProduct(product)">
+                      <img class="search_product_cart_img search_product_cart_img_basked"
+                           src="../../../../static/CSS/pictures/basket.png" alt=""/></div>
+                  </div>
+                </div>
+                <a v-bind:href="'http://localhost:8081/search/page=1&searchStr=' + searchStr.split(' ').join('%20')">
+                  <div class="show_more" v-if="searchResult.length !== 0">Показать все</div>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="basket_regist">
+            <div class="basket">
+              <div class="basket_product_count">
+                {{shopingCard.countProducts === null || shopingCard.countProducts === "0"
+                ?0
+                :shopingCard.countProducts}}
+              </div>
+              <img src="https://mr-anonim-377.github.io/Sales/src/main/resources/static/CSS/pictures/Korzina.png"
+              >
+            </div>
+            <div class="login_picture">
+              <img src="https://mr-anonim-377.github.io/Sales/src/main/resources/static/CSS/pictures/log_in 1.png"
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+</template>
+
+<script>
+import {directive as onClickaway} from 'vue-clickaway'
+
+export default {
+  directives: {
+    onClickaway: onClickaway
+  },
+  props: {
+    shopingCard: {}
+  },
+  data () {
+    return {
+      filterClickColor: {
+        background: '#9974fb'
+      },
+      collectionColorIsNumber: -1,
+      errorSearchStr: 'введите поисковый запрос',
+      searchStr: '',
+      searchStrOld: '',
+      searchResult: [],
+      searchResultVisible: '',
+      isVisible: false
+    }
+  },
+  methods: {
+    // getShopingCard () {
+    //   fetch(process.env.HOST + '/api/shoppingCart/cart', {
+    //     method: 'get',
+    //     credentials: 'include'
+    //   }).then(response => response.json())
+    //   // eslint-disable-next-line
+    //     .then(commits => this.shopingCard = commits);
+    // },
+    addProduct (product) {
+      fetch(process.env.HOST + '/api/shoppingCart?numberPieces=1&' + 'productId=' + product.productId, {
+        method: 'post',
+        headers: {
+          'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
+        }
+      })
+        .then(response => this.$emit('addProduct', true))
+    },
+    onClickOutside () {
+      this.isVisible = false
+    },
+    indexOfColored (number) {
+      if (number === this.collectionColorIsNumber) {
+        return this.filterClickColor
+      }
+    },
+    setColor (isColor, num) {
+      if (isColor) {
+        this.colorIsNumber = num
+      } else {
+        this.colorIsNumber = -1
+      }
+    },
+    // @change="changeSearchStr"
+    // changeSearchStr() {
+    //   if (this.searchStr.length > 3) {
+    //     this.errorSearchStr = 'поиск по товарам'
+    //     this.getSearhcResult()
+    //   } else if (this.searchStr.length === 0) {
+    //     this.errorSearchStr = 'введите поисковый запрос'
+    //   } else {
+    //     this.errorSearchStr = 'дополните строку поиска'
+    //     this.searchResult = []
+    //   }
+    // },
+    errorSearch () {
+      this.errorSearchStr = 'нет результатов поиска';
+      this.searchResult = []
+    },
+    getSearhcResult () {
+      let searchStrOld = '';
+      this.searchResult = [];
+      searchStrOld = this.searchStr;
+      fetch(process.env.HOST + '/api/search/onProducts', {
+        method: 'post',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ page: 0,
+          searchString: '%' + this.searchStr + '%',
+          searchType: 'ALL'
+        })
+      }).then(response => {
+        if (response.ok) {
+          if (searchStrOld === this.searchStr) {
+            // response.json().then(commits => commits.forEach(item => this.searchResult.push(item)))
+            response.json().then(commits => {
+              for (let i = 0; i < commits.products.length; i++) {
+                if (searchStrOld === this.searchStr) {
+                  this.errorSearchStr = 'поиск по товарам';
+                  this.searchResult.push(commits.products[i])
+                } else {
+                  this.searchResult = [];
+                  this.errorSearchStr = 'поиск по товарам';
+                  break
+                }
+              }
+            })
+          }
+        } else {
+          this.errorSearch()
+        }
+      })
+    }
+  },
+  watch: {
+    searchStr: function () {
+      if (this.searchStr.length > 3) {
+        this.errorSearchStr = 'поиск по товарам';
+        this.getSearhcResult()
+      } else if (this.searchStr.length === 0) {
+        this.errorSearchStr = 'введите поисковый запрос'
+      } else {
+        this.errorSearchStr = 'дополните строку поиска';
+        this.searchResult = []
+      }
+    }
+  }
+}
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+
+</style>

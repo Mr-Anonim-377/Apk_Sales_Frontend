@@ -36,7 +36,7 @@ export default {
   data () {
     return {collections: [],
       currentOffset: 0,
-      windowSize: 3,
+      windowSize: 4,
       paginationFactor: 180,
       settings: {
         speed: this.speed,

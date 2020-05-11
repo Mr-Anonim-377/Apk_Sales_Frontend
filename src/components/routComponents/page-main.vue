@@ -1,6 +1,8 @@
 <template>
   <div id="mainPageComponent">
-    <Header/>
+    <Header
+      :shopingCard="cart"
+      v-on:addProduct="refreshChopingCart($event)"/>
     <Navigation/>
     <CurrentBaner :baners="baners"/>
     <BodyPage :baners="baners"/>
@@ -8,11 +10,11 @@
   </div>
 </template>
 <script>
-import Header from '@/components/unitComponents/Header'
-import Navigation from '@/components/unitComponents/Navigation'
-import CurrentBaner from '../unitComponents/CurrentBaner'
-import BodyPage from '@/components/unitComponents/BodyPage'
-import Footer from '@/components/unitComponents/Footer'
+import Header from '../unitComponents/MainPage/Header'
+import Navigation from '../unitComponents/MainPage/Navigation'
+import CurrentBaner from '../unitComponents/MainPage/CurrentBaner'
+import BodyPage from '../unitComponents/MainPage/MainBodyPage'
+import Footer from '../unitComponents/MainPage/Footer'
 export default {
   data() {
     return {
@@ -105,16 +107,10 @@ export default {
           "pageLocation": "MAIN_SMALL",
           "banerUsesStatus": true
         }
-      ]
+      ],
+      cart: {}
     }
   },
-  // created: function init() {
-  //   fetch(process.env.HOST + '/api/baners/allByStatusByPage?page=MAIN&status=true', {
-  //     method: 'get'
-  //   }).then(response => response.json())
-  //   // eslint-disable-next-line
-  //     .then(commits => this.baners = commits)
-  // },
   name: 'mainPageComponent',
   components: {
     Header,
@@ -122,6 +118,26 @@ export default {
     CurrentBaner,
     BodyPage,
     Footer
+  },
+  methods: {
+    refreshChopingCart (isRefresh) {
+      if (isRefresh) {
+        fetch(process.env.HOST + '/api/shoppingCart/cart', {
+          method: 'get',
+          credentials: 'include'
+        }).then(response => response.json())
+        // eslint-disable-next-line
+          .then(commits => this.cart = commits);
+      }
+    }
+  },
+  created: function init () {
+    fetch(process.env.HOST + '/api/shoppingCart/cart', {
+      method: 'get',
+      credentials: 'include'
+    }).then(response => response.json())
+    // eslint-disable-next-line
+      .then(commits => this.cart = commits);
   }
 }
 </script>

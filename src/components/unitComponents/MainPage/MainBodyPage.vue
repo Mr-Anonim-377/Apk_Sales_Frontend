@@ -17,7 +17,7 @@
   </section>
 </template>
 <script>
-import CollectionsCarusel from './CollectionsCarusel'
+import CollectionsCarusel from './MainPageCollectionsCarusel'
 import BanersBodyPage from './BanersBodyPage'
 import FavoriteCategoriesCarusel from './FavoriteCategoriesCarusel'
 export default {

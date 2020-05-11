@@ -1,31 +1,28 @@
 <template>
-  <div class=" main_container_banner favorite_category_product">
+  <div class=" carusel_container main_container_banner favorite_category_product right_none">
     <div class="card-carousel--nav__left" @click="moveCarousel(-1)" :disabled="atHeadOfList"></div>
-    <div class="row row_product_child">
-      <div class="card-carousel-wrapper"
+    <div class="row row_product_child row_padding row_product_child_width">
+      <div class="card_image_carousel"
            :style="{ transform: 'translateX' + '(' + currentOffset + 'px' + ')',  transition: 'transform ' + settings.timing + ' ' + settings.speed + 'ms'}">
-        <ul v-for="item in products">
-          <li>
-            <div class="card-carousel">
-              <div class="card-carousel--overflow-container">
-                <div class="card-carousel-cards">
-                  <div class="card-carousel--card">
-                    <div>
-                    <img v-bind:src="item.image.imagePatch">
-                    </div>
-                    <div class="carousel-product-title">
-                      <span class="product-price-num">{{item.price}}
-                      <span class="product-price-currents">₽</span>
-                      </span>
-                      <div class="carousel-product-name">
-                      <span>{{item.nameProduct}}</span>
+        <ul class="image_hover" v-for="(item,index) in images"
+            v-bind:style="indexOfColored(index)"
+            @click="mouseOverToCategory(item, index)">
+<!--          @mouseout="setColor(true,index)"-->
+          <a class="favorute_card_hover">
+            <li>
+              <div class="card-carousel">
+                <div class="card-carousel--overflow-container">
+                  <div class="card-carousel-cards">
+                    <div class="card-carousel--card">
+                      <div class="card-carousel--card_image_container">
+                        <img v-bind:src="item.image.imagePatch">
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </li>
+            </li>
+          </a>
         </ul>
       </div>
     </div>
@@ -36,7 +33,7 @@
 <script>
 export default {
   props: {
-    products: [],
+    images: [],
     // Скорость перелистывания (мс)
     speed: {
       type: Number,
@@ -51,9 +48,14 @@ export default {
   },
   data () {
     return {
+      filterClickColor: {
+        filter: 'grayscale(20%) drop-shadow(0 0 8px rgba(153, 116, 251, 0.81))'
+      },
+      lastIndex: -1,
+      collectionColorIsNumber: -1,
       currentOffset: 0,
-      windowSize: 3,
-      paginationFactor: 220,
+      windowSize: 4,
+      paginationFactor: 120,
       settings: {
         speed: this.speed,
         timing: this.timing
@@ -62,13 +64,31 @@ export default {
   },
   computed: {
     atEndOfList () {
-      return this.currentOffset <= (this.paginationFactor * -1) * (this.products.length - this.windowSize)
+      return this.currentOffset <= (this.paginationFactor * -1) * (this.images.length - this.windowSize)
     },
     atHeadOfList () {
       return this.currentOffset === 0
     }
   },
   methods: {
+    indexOfColored (number) {
+      if (number === this.collectionColorIsNumber) {
+        return this.filterClickColor
+      }
+    },
+    setColor (isColor, num) {
+      this.lastIndex = num;
+      if (isColor) {
+        this.colorIsNumber = num
+      } else {
+        this.colorIsNumber = -1
+      }
+    },
+    mouseOverToCategory (image,index) {
+      this.$emit('currentImage', image);
+    this.setColor(true,index)
+      // this.setColor(false, this.lastIndex);
+    },
     moveCarousel (direction) {
       // Find a more elegant way to express the :style. consider using props to make it truly generic
       if (direction === 1 && !this.atEndOfList) {
@@ -82,18 +102,19 @@ export default {
 </script>
 
 <style>
-  .card-carousel-wrapper {
+  .card_image_carousel {
+    margin-left: 4px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 20px 0 40px;
+    /*margin: 20px 0 40px;*/
     color: #666a73;
   }
 
   .card-carousel {
     display: flex;
     justify-content: center;
-    width: 200px;
+    width: 100px;
   }
 
   .card-carousel--overflow-container {
@@ -162,12 +183,13 @@ export default {
     margin-right: 0;
   }
 
-  .card-carousel-cards .card-carousel--card img {
+  .card-carousel-cards .card-carousel--card .card-carousel--card_image_container img {
     vertical-align: bottom;
     transition: opacity 150ms linear;
     user-select: none;
-    width: 200px;
-    height: 200px;
+    width: 100%;
+    height: 100%;
+    border-radius: 19px;
   }
 
   .card-carousel-cards .card-carousel--card img:hover {
@@ -235,4 +257,45 @@ export default {
     box-shadow: -0px -0px 0px #004977;
   }
 
+  .favorute_card_hover:hover {
+    text-decoration: none;
+    -webkit-filter: drop-shadow(0 0 2px rgba(153, 116, 251, 0.81));
+    filter: drop-shadow(0 0 2px rgba(153, 116, 251, 0.81));
+  }
+
+  .card-carousel--card_image_container {
+  height: 100px;
+    width: 100px;
+  }
+
+  .right_none {
+  right: 0;
+  }
+
+  .carusel_container {
+  width: 100%;
+  }
+
+  .row_padding {
+  }
+
+  .row_product_child_width {
+  max-width: 80%;
+  }
+  .image_hover:hover {
+    -webkit-filter: grayscale(50%) drop-shadow(0 0 7px rgba(153, 116, 251, 0.81));
+    filter: grayscale(50%) drop-shadow(0 0 7px rgba(153, 116, 251, 0.81));
+    background-position: 0 0;
+  }
+
+  .image_hover:active {
+    -webkit-filter: grayscale(50%) drop-shadow(0 0 7px rgba(153, 116, 251, 0.81));
+    filter: grayscale(50%) drop-shadow(0 0 7px rgba(153, 116, 251, 0.81));
+  }
+  .image_hover {
+    transition: all 0.36s ease-in-out;
+    margin-bottom: 4%;
+    border-radius: 19px;
+    text-align: left;
+  }
 </style>

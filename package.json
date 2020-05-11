@@ -20,10 +20,12 @@
   },
   "dependencies": {
     "axios": "^0.19.0",
+    "nouislider": "^14.2.0",
     "v-click-outside": "^3.0.1",
     "vue": "^2.5.2",
     "vue-clickaway": "^2.2.2",
     "vue-cookie": "^1.1.4",
+    "vue-range-slider": "^0.6.0",
     "vue-router": "^3.0.1",
     "vuetify": "^2.1.12",
     "vuex": "^3.1.3"
