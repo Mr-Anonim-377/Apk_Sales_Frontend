@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import mainPageComponent from '../components/routComponents/page-main'
 import catalog from '../components/routComponents/page-catalog'
 import itemCard from '../components/routComponents/page-itemCard'
+import shoppingCard from '../components/routComponents/page-shoppingCart'
 
 Vue.use(Router);
 
@@ -22,6 +23,11 @@ export default new Router({
     {
       path: '/card',
       component: itemCard
+      // props: true
+    },
+    {
+      path: '/shopping',
+      component: shoppingCard
       // props: true
     }
   ]

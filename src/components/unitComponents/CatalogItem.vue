@@ -10,6 +10,7 @@
             <CatalogItemProduct
               v-for = "productCategory in products"
               :productCategory="productCategory"
+              @addToCart="addToCart"
             />
           </div>
         </div>
@@ -44,6 +45,11 @@ export default {
       .catch(function (error) {
         console.log('Request failed', error)
       })
+  },
+  methods: {
+    addToCart (data) {
+      console.log(data)
+    }
   }
 }
 </script>
