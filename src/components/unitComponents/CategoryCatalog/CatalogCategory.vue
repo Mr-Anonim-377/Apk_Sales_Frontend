@@ -36,6 +36,7 @@
           <CatalogItemProduct
             v-for="productCategory in products"
             :productCategory="productCategory"
+            v-on:addProduct="refreshProductCount($event)"
           />
         </div>
       </div>
@@ -45,26 +46,31 @@
             v-if="!this.isError">
           <li v-bind:class="getPreviousClass()">
             <a v-if="page>1"
-               v-bind:href="'http://localhost:8081/catalog/' +
-                categoryId + '&' + (Number.parseInt(this.page)-1) + '&' + getStrByArray(collectionIdsArray) +
-               '&' + priceMin + '&' + priceMax">«Previous</a>
+               v-bind:href="'http://localhost:8081/catalog/category=' + categoryId +
+          '&page=' + (Number.parseInt(this.page)-1) +
+          '&collections=' +getStrByArray(collectionIdsArray) +
+          '&price-min='+ currentPriceMin.toFixed(2) +
+          '&price-max=' + currentPriceMax.toFixed(2)">«Previous</a>
             <p v-if="Number.parseInt(page) === 1"
             >«Previous</p>
           </li>
           <li v-for="(numPage) in pagesArray">
             <a
               v-bind:class=isLiActive(numPage+1)
-              v-bind:href="'http://localhost:8081/catalog/' +
-                categoryId + '&' + numPage+1 + '&' + getStrByArray(collectionIdsArray) +
-               '&' + priceMin + '&' + priceMax"
-            >{{numPage+1}}</a>
+              v-bind:href="'http://localhost:8081/catalog/category=' + categoryId +
+          '&page=' + (numPage+1) +
+          '&collections=' +getStrByArray(collectionIdsArray) +
+          '&price-min='+ currentPriceMin.toFixed(2) +
+          '&price-max=' + currentPriceMax.toFixed(2)">{{numPage+1}}</a>
           </li>
           <li v-bind:class="getNextClass()">
             <a
               v-if="Number.parseInt(page)<Number.parseInt(totalPage)"
-              v-bind:href="'http://localhost:8081/catalog/' +
-                categoryId + '&' + (Number.parseInt(this.page)+1) + '&' + getStrByArray(collectionIdsArray) +
-               '&' + priceMin + '&' + priceMax">
+              v-bind:href="'http://localhost:8081/catalog/category=' + categoryId +
+          '&page=' + (Number.parseInt(this.page)+1) +
+          '&collections=' +getStrByArray(collectionIdsArray) +
+          '&price-min='+ currentPriceMin.toFixed(2) +
+          '&price-max=' + currentPriceMax.toFixed(2)">
               Next »</a>
             <p v-if="Number.parseInt(page) === Number.parseInt(totalPage)"
             >Next »</p>
@@ -76,8 +82,8 @@
 </template>
 
 <script>
-import CatalogItemProduct from './CatalogItemProduct'
-import CatalogItemFilter from './CatalogItemFilter'
+import CatalogItemProduct from './CatalogProduct'
+import CatalogItemFilter from './CatalogCategoryFilter'
 
 export default {
   props: {
@@ -149,6 +155,11 @@ export default {
         return 'next-off'
       } else {
         return 'next'
+      }
+    },
+    refreshProductCount (isRefresh) {
+      if (isRefresh) {
+        this.$emit('addProduct', true)
       }
     }
   },

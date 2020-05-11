@@ -5,7 +5,7 @@
       <div class="main_filter">
         <p class="text_color">Коллекции</p>
       </div>
-      <div class="main_filter_collection">
+      <div class="main_filter_unit">
         <ul class="main_category_list text_color">
           <li class="category_list_item"
               v-for="(collection, index) in collections"
@@ -43,16 +43,19 @@
         </div>
       </div>
       <div class="btn_border">
-        <a   class="btn_search"
-             v-bind:href="'http://localhost:8081/catalog/' + categoryId + '&' + 1 + '&' + getStrByArray(getIds()) +'&' + minPrice.toFixed(2) + '&' + maxPrice.toFixed(2)"
-        > Начать поиск</a>
+        <a class="btn_search"
+             v-bind:href="'http://localhost:8081/catalog/category=' + categoryId +
+          '&page=' + 1 +
+          '&collections=' +getStrByArray(getIds()) +
+          '&price-min='+ minPrice.toFixed(2) +
+          '&price-max=' + maxPrice.toFixed(2)">Применить</a>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import CatalogItem from './CatalogItem'
+import CatalogItem from './CatalogCategory'
 
 export default {
   name: 'CatalogItemFilter',
@@ -70,11 +73,11 @@ export default {
       totalMinPrice: 0,
       totalMaxPrice: 10000,
       ids: [],
-      colorIsNumber: -1,
-      collectionClickColor: {
+      collectionColorIsNumber: -1,
+      filterClickColor: {
         background: '#9974fb'
       },
-      collectionMouseMoveColor: {
+      mouseMoveColor: {
         background: 'rgba(153,116,251,0.61)'
       },
       tmpMaxPrice: 10000,
@@ -114,11 +117,11 @@ export default {
     collectionIsColor (index) {
       for (let i = 0; i < this.collectionFilters.length; i++) {
         if (this.collectionFilters[i].index === index) {
-          return this.collectionClickColor
+          return this.filterClickColor
         }
       }
-      if (index === this.colorIsNumber) {
-        return this.collectionMouseMoveColor
+      if (index === this.collectionColorIsNumber) {
+        return this.mouseMoveColor
       }
       return ''
     },

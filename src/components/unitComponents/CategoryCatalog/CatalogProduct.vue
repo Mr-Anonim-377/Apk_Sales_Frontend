@@ -8,13 +8,14 @@
            @mouseout="setBlur(false)">
         <h2 class="mask_goods_name">{{productCategory.nameProduct}}</h2>
         <div class="mask_text">
-          <p>{{productCategory.productDescription}}</p>
+          <p >{{productCategory.productDescription}}</p>
         </div>
-        <a href="#" class="info">Открыть карточку товара</a>
+        <a v-bind:href="'http://localhost:8081/card/'+productCategory.productId" class="info">Открыть карточку товара</a>
         <div class="CatalogItemProduct__btn">
-          <img class="pictures_catalog pictures_catalog_message" src="../../../static/CSS/pictures/reviews.png"/></div>
-        <div class="CatalogItemProduct__btn">
-          <img class="pictures_catalog pictures_catalog_basked" src="../../../static/CSS/pictures/basket.png"/></div>
+          <img class="pictures_catalog pictures_catalog_message" src="../../../../static/CSS/pictures/reviews.png"/></div>
+        <div class="CatalogItemProduct__btn"
+        @click="addProduct()">
+          <img class="pictures_catalog pictures_catalog_basked" src="../../../../static/CSS/pictures/basket.png"/></div>
       </div>
       <div class="main_goods">
         <img class="main_goods_img" :src="productCategory.image.imagePatch"/>
@@ -39,27 +40,36 @@
 </template>
 
 <script>
-  export default {
-    name: 'CatalogItemProduct',
-    props: {
-      productCategory: {}
-    },
-    data () {
-      return {
-        isBlur: false
-      }
-    },
-    methods: {
-      getBlur () {
-        if (this.isBlur === true) {
-          return 'blure'
+export default {
+  name: 'CatalogItemProduct',
+  props: {
+    productCategory: {}
+  },
+  data () {
+    return {
+      isBlur: false
+    }
+  },
+  methods: {
+    addProduct () {
+      fetch(process.env.HOST + '/api/shoppingCart?numberPieces=1&' + 'productId=' + this.productCategory.productId, {
+        method: 'post',
+        headers: {
+          'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
         }
-      },
-      setBlur (isTrue) {
-        this.isBlur = isTrue
+      })
+        .then(response => this.$emit('addProduct', true))
+    },
+    getBlur () {
+      if (this.isBlur === true) {
+        return 'blure'
       }
+    },
+    setBlur (isTrue) {
+      this.isBlur = isTrue
     }
   }
+}
 </script>
 
 <style>
@@ -101,7 +111,7 @@
     color: #fff;
     text-align: center;
     position: relative;
-    font-size: 17px;
+    font-size: 23px;
     font-family: Raleway, serif;
     margin-top: 4%;
     margin-right: 22%;
@@ -113,20 +123,21 @@
     font-family: Roboto, serif;
     font-style: italic;
     font-weight: normal;
-    font-size: 30px;
+    font-size: 21px;
     text-align: left;
     z-index: 90;
     height: 86px;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     margin-right: 10%;
     position: relative;
     color: #fff;
     padding: 0px 20px 0px;
     margin-left: 30%;
+    width: 49%;
   }
 
   .main_good a.info {
@@ -193,5 +204,9 @@
 
   .main_good:hover a.info {
     transition-delay: 0.2s;
+  }
+
+  .product_description {
+  font-size: 21px;
   }
 </style>

@@ -19,32 +19,43 @@
                       <div class="category_pop_up__main_container_right_non" style="text-align: left;">
                         <div class="category_pop_up__unit_container"
                              v-for="(category,index) in navigtion.categoriesNavigation">
-                        <div class="category_pop_up_main_unit_container_row"
-                             v-bind:style="indexOfColored(index)"
-                             @mouseover="mouseOverToCategory(category.childCategory, index)"
-                             @mouseout="setColor(true,index)"
-                        >
-                          <a class="category_pop_up_main_unit text_unit_margin text_bold main_unit_text"
-                             v-bind:href="'http://localhost:8081/catalog/' + category.categoryId + '&' + 1 + '&' + '&'+ '&'">
-                            {{category.categoryName}}
-                          </a>
-                        </div>
+                          <div class="category_pop_up_main_unit_container_row"
+                               v-bind:style="indexOfColored(index)"
+                               @mouseover="mouseOverToCategory(category.childCategory)"
+                               @mouseout="setColor(true,index)">
+                            <a class="category_pop_up_main_unit text_unit_margin text_bold main_unit_text"
+                               v-bind:href="'http://localhost:8081/catalog/category=' + category.categoryId +
+                              '&page=' + 1 +
+                              '&collections=' +
+                              '&price-min='+
+                              '&price-max='">
+                              {{category.categoryName}}
+                            </a>
+                          </div>
                         </div>
                       </div>
                       <div class="category_pop_up__main_container_left_non">
                         <div class="category_pop_up__unit_container unit_container_width"
                              v-for="category in subCategory"
-                             >
+                        >
                           <div class="category_pop_up_main_unit_container_row unit_row_margin">
                             <a class="category_pop_up_main_unit sub_text_unit_margin text_bold"
-                               v-bind:href="'http://localhost:8081/catalog/' + category.categoryId + '&' + 1 + '&' + '&'+ '&'">
+                               v-bind:href="'http://localhost:8081/catalog/category=' + category.categoryId +
+                              '&page=' + 1 +
+                              '&collections=' +
+                              '&price-min='+
+                              '&price-max='">
                               {{category.categoryName}}
                             </a>
                           </div>
                           <div class="category_pop_up_main_unit_container_row"
                                v-for="subCategory in category.childCategory">
                             <a class="sub_text_unit_margin category_pop_up_main_unit"
-                               v-bind:href="'http://localhost:8081/catalog/' + subCategory.categoryId + '&' + 1 + '&' + '&'+ '&'">
+                               v-bind:href="'http://localhost:8081/catalog/category=' + subCategory.categoryId +
+                              '&page=' + 1 +
+                              '&collections=' +
+                              '&price-min='+
+                              '&price-max='">
                               {{subCategory.categoryName}}
                             </a>
                           </div>
@@ -73,11 +84,11 @@
     },
     data() {
       return {
-        collectionClickColor: {
+        filterClickColor: {
           background: 'rgba(153, 116, 251, 0.81)'
         },
         lastIndex: -1,
-        colorIsNumber: -1,
+        collectionColorIsNumber: -1,
         subCategory: [],
         isSubVisible: false,
         subCategoryIndex: -1,
@@ -97,12 +108,12 @@
         })
     },
     methods: {
-      indexOfColored (number) {
-        if (number === this.colorIsNumber) {
-          return this.collectionClickColor
+      indexOfColored(number) {
+        if (number === this.collectionColorIsNumber) {
+          return this.filterClickColor
         }
       },
-      setColor (isColor, num) {
+      setColor(isColor, num) {
         this.lastIndex = num;
         if (isColor) {
           this.colorIsNumber = num
@@ -110,7 +121,7 @@
           this.colorIsNumber = -1
         }
       },
-      mouseOverToCategory (subCategory) {
+      mouseOverToCategory(subCategory) {
         this.setColor(false, this.lastIndex);
         this.subCategory = subCategory
       },
@@ -124,14 +135,14 @@
       onClickOutside() {
         this.isVisible = false
       },
-      isVisibleSubCategoryontainer (index) {
+      isVisibleSubCategoryontainer(index) {
         if (this.subCategoryIndex === index) {
           return true
         } else {
           return false
         }
       },
-      setVisibleSubCategory (index) {
+      setVisibleSubCategory(index) {
         this.subCategoryIndex = index
       }
     }
@@ -201,16 +212,16 @@
     display: block;
   }
 
-  .unit_container_width{
+  .unit_container_width {
     width: 100%;
   }
 
   .unit_row_margin {
-  margin-bottom: 2%;
+    margin-bottom: 2%;
   }
 
   .text_unit_margin {
-  margin-left: 9%;
+    margin-left: 9%;
   }
 
   .text_bold {
@@ -220,21 +231,23 @@
   .main_unit_text {
     font-size: 21px;
   }
+
   .sub_text_unit_margin {
     text-align: left;
     margin-left: 5%;
   }
-  a.sub_text_unit_margin.text_bold{
+
+  a.sub_text_unit_margin.text_bold {
     margin-left: 8%;
-  font-size: 19px;
+    font-size: 19px;
   }
 
-  a{
+  a {
     text-decoration: none;
     color: #09333f;
   }
 
-  a:hover{
+  a:hover {
     -webkit-filter: drop-shadow(0 0 5px rgba(153, 116, 251, 0.81));
     filter: drop-shadow(0 0 5px rgba(153, 116, 251, 0.81));
     background-position: 0 0;

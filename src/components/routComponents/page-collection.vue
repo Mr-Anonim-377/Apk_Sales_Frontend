@@ -1,12 +1,17 @@
 <template>
-  <div id="page-itemCard">
+  <div id="main-catalog">
     <Header
       :shopingCard="cart"
       v-on:addProduct="refreshChopingCart($event)"/>
     <Navigation/>
-    <ItemCardBody
-    :productId="productId"
-    v-on:addProduct="refreshChopingCart($event)"/>
+    <CollectionCatalog
+      :collectionId="collectionId"
+      :page="page"
+      :categoryIds="categoryIds"
+      :priceMin="priceMin"
+      :priceMax="priceMax"
+      v-on:addProduct="refreshChopingCart($event)"
+    />
     <Footer/>
   </div>
 </template>
@@ -14,14 +19,16 @@
 <script>
 import Header from '../unitComponents/MainPage/Header'
 import Navigation from '../unitComponents/MainPage/Navigation'
-import ItemCardBody from '../unitComponents/ProductCard/ProductCardBody'
+import CollectionCatalog from '../unitComponents/CollectionCatalog/CollectionCatalog'
 import Footer from '../unitComponents/MainPage/Footer'
+
 export default {
-  props: ['productId'],
+  props: ['collectionId', 'page', 'categoryIds', 'priceMin', 'priceMax'],
+  name: 'main-catalog',
   components: {
     Header,
     Navigation,
-    ItemCardBody,
+    CollectionCatalog,
     Footer
   },
   data () {
@@ -36,8 +43,8 @@ export default {
           method: 'get',
           credentials: 'include'
         }).then(response => response.json())
-        // eslint-disable-next-line
-          .then(commits => this.cart = commits);
+          // eslint-disable-next-line
+            .then(commits => this.cart = commits);
       }
     }
   },
@@ -46,12 +53,15 @@ export default {
       method: 'get',
       credentials: 'include'
     }).then(response => response.json())
-    // eslint-disable-next-line
-      .then(commits => this.cart = commits);
+      // eslint-disable-next-line
+        .then(commits => this.cart = commits);
   }
+  // created: function init () {
+  //
+  // }
 }
 </script>
 
 <style>
-
+  @import '../../../static/CSS/CSS.css';
 </style>

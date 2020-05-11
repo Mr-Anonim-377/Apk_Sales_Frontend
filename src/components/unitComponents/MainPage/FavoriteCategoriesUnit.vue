@@ -2,7 +2,10 @@
   <div class="container_main">
     <div class="main_container_banner">
       <div class=" row row_product_child" >
-        <h1 class="text">{{favoriteCategory.favoriteCategory.category.categoryName}}</h1>
+        <a v-bind:href="'http://localhost:8081/catalog/category=' + favoriteCategory.favoriteCategory.category.categoryId +
+          '&page=1&collections=&price-min=&price-max='">
+          <h1 class="text">{{favoriteCategory.favoriteCategory.category.categoryName}}</h1>
+        </a>
       </div>
     </div>
     <br>
