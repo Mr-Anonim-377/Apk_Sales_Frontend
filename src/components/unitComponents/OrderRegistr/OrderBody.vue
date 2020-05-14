@@ -1,0 +1,99 @@
+<template>
+  <section class = "section">
+    <div class="section_main">
+      <div class = "main"></div>
+      <div class ="order_container">
+        <div class="main_order_section">
+          <div class="section_good">
+            <h1 class="text_h"><b>Оформление заказа</b></h1>
+            <br><br>
+            <div class="text_order"><b>Состав заказа</b></div>
+            <br>
+            <div class="container_good">
+              <div class="img_good"><img class="img_good" src=""></div>
+              <div class="text_good">Лопата лучшего качества, для любых видов почв <br> 1 шт.</div>
+            </div>
+          </div>
+          <div class="section_order">
+            <div class="container_order-btn">
+              <span class="text_order"><b>Ваш заказ</b></span>
+              <div class="btn_order">Изменить</div>
+            </div><br>
+            <div class="container_text">
+              <span class="text_good">Товары (1) </span>
+              <span class="text_good text_good_size"> 887 ₽</span>
+            </div>
+            <div class="container_text">
+              <span class="text_good">Доставка курьером (1) </span>
+              <span class="text_good text_good_size"> 249 ₽</span>
+            </div><br>
+            <div class="order-line"></div>
+            <br>
+            <div class="container_text">
+              <span class="text_good"><b>Итого</b></span>
+              <span class="text_good text_good_size"><b> 1 097 ₽</b></span>
+            </div>
+          </div>
+        </div>
+        <br> <br>
+        <div class="main_regitretion_section">
+          <span class="text_order"><b>Город получения</b></span>
+          <input class="input_city" placeholder="Населенный пункт">
+          <span class="text_order text_order_size"><b>Способ получения</b></span>
+          <div class="section_delivery">
+            <div class="container_courier">
+              <span class="text_order text_size_courier"><b>Курьером</b></span>
+              <span class="text_good">В удобный для вас день</span>
+              <span class="text_good text_size_price"> 250 ₽</span>
+            </div>
+            <div class="container_pickup">
+              <span class="text_order text_size_courier"><b>Самовывоз</b></span>
+              <span class="text_good">Без лишних рук и когда удобно</span>
+              <span class="text_good text_size_price"> 99 ₽</span>
+            </div>
+            <div class="container_postal">
+              <span class="text_order text_size_courier"><b>Почтой</b></span>
+              <span class="text_good">В ближайшее отделение Почты России</span>
+              <span class="text_good text_size_price"> 149 ₽</span>
+            </div>
+          </div>
+          <span class="text_order text_order_size"><b>Адрес получателя</b></span>
+          <input class="input_street" placeholder="Улица">
+          <div class="container_input_address">
+            <input class="inp_home" placeholder="Дом">
+            <input class="inp_home" placeholder="Квартира">
+          </div>
+          <input class="input_name" placeholder="Фамилия и Имя по паспорту">
+          <span class="text_good_inp">Полные фамилия, имя и отчество могут потребоваться при получении заказа</span>
+          <div class="container_input_mail">
+            <input class="inp_mail" placeholder="Электронная почта">
+            <input class="inp_mail" placeholder="Телефон">
+          </div>
+          <span class="text_order text_order_size"><b>Способ оплаты</b></span>
+          <div class="">
+            <input class="inp_radio" type="radio" name="gender" value="Картой">
+            <span class="text_good">Картой</span>
+          </div>
+          <div class="">
+            <input class="inp_radio" type="radio" name="gender" value="Наличными">
+            <span class="text_good">Наличными при получении</span>
+          </div>
+          <span class="text_order text_order_size"><b>Дополнительно</b></span>
+          <input class="inp_add">
+          <p><input class="mail_inp" type="checkbox" name="spice" value="Salt">Сообщать мне об акциях, скидках и рекомендациях</p>
+          <div class="btn_orderReg">Перейти к оплате</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</template>
+
+<script>
+export default {
+  name: 'OrderBody'
+}
+</script>
+
+<style scoped>
+
+</style>

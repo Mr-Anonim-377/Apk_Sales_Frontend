@@ -253,6 +253,8 @@ main {
 .section_footer,
 .section {
   position: relative;
+  width: 100%;
+  z-index: 70;
 }
 
 .section_nav {
@@ -639,6 +641,7 @@ main {
   z-index: 90;
   padding-bottom: 7px;
   padding-top: 7px;
+
 }
 
 .main_goods_img {
@@ -661,7 +664,7 @@ main {
   opacity: 1.5;
   filter: blur(5px);
   z-index: 90;
-  width: 100%;
+  width: 580px;
   height: 100%;
   position: absolute;
   border-radius: 5px;
@@ -738,6 +741,7 @@ main {
   font-weight: normal;
   font-size: 35px;
   text-align: left;
+  z-index: 100;
 }
 
 .CatalogItemProduct__btn {
@@ -1063,6 +1067,10 @@ color: #000000;
   text-align: center;
   margin-top: 20px;
   outline: none;
+  z-index: 100;
+  position: relative;
+  padding-left: 622px;
+  display: flex;
 }
 
 .text_cart_title_new {
@@ -1607,7 +1615,223 @@ color: #000000;
   min-height: 200px;
   max-height: 1400px;
 }
-
+.container_good,
 .card_row_container {
   display: flex;
+}
+.main_order_section{
+display: flex;
+flex-wrap: wrap;
+flex: 1 1 auto;
+margin-right: -12px;
+margin-left: -12px;
+  position: relative;
+  z-index: 90;
+  padding-top: 24px;
+
+
+}
+.section_good{
+  display: block;
+  width: 50%;
+}
+.text_h{
+  font-family: Roboto, serif;
+  font-style: italic;
+  font-weight: normal;
+  font-size: 35px;
+  text-align: left;
+}
+.img_good{
+  width: 50px;
+  height: 60px;
+}
+.text_order{
+  font-family: Roboto, serif;
+  font-style: italic;
+  font-weight: normal;
+  font-size: 25px;
+  text-align: left;
+}
+.text_good{
+  font-family: Roboto, serif;
+  font-style: italic;
+  font-weight: normal;
+  font-size: 18px;
+  text-align: left;
+  margin-left: 21px;
+}
+.container_order-btn{
+  display: flex;
+  padding-left: 21px;
+}
+.section_order{
+  display: block;
+  margin-left: 178px;
+  width: 34%;
+  padding-top: 10px;
+  border: 2px solid #9EC1D4;
+}
+.order-line{
+  border-top: 2px solid #9EC1D4;
+  width: 89%;
+  margin-left: 19px;
+}
+
+.btn_order{
+  font-family: Roboto, serif;
+  width: 200px;
+  height: 40px;
+  color: #1E90FF;
+  font-weight: 700;
+  text-decoration: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  padding: 0.5em 2em;
+  outline: none;
+  border-radius: 1px;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+  text-align: center;
+}
+.btn_order:hover {
+  background: rgba(255,255,255,.2);
+  border: 2px solid
+}
+.btn_order:active {
+  background: none;
+}
+.main_regitretion_section{
+  display: inline-grid;;
+  width: 100%;
+  flex-wrap: wrap;
+  flex: 1 1 auto;
+  margin-right: -12px;
+  margin-left: -12px;
+  position: relative;
+  z-index: 90;
+}
+.text_good_size{
+  float: right;
+  margin-right: 24px;
+}
+.input_name,
+.input_street,
+.input_city{
+  width: 400px;
+  height: 50px;
+  margin-top: 30px;
+  border-radius: 5px;
+  background: #E2F2E2
+}
+.order_container{
+  z-index: 90;
+  width: 100%;
+  height: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 15px;
+  padding-left: 15px;
+  max-width: 1140px;
+  display: block;
+  padding-bottom: 2%;
+}
+.text_order_size{
+  margin-top: 50px;
+}
+.section_delivery{
+  display: flex;
+  padding-top: 20px;
+  padding-right: 5px;
+}
+.container_pickup,
+.container_courier{
+  display: grid;
+  width: 260px;
+  height: 145px;
+  border: 2px solid #9EC1D4;
+  padding-right: 5px;
+  margin-right: 10px;
+}
+.text_size_courier{
+  padding-left: 17px;
+  font-size: 22px;
+}
+.text_size_price{
+  margin-left: 191px;
+}
+.container_postal{
+  display: grid;
+  width: 260px;
+  height: 145px;
+  border: 2px solid #0000CD;
+  padding-right: 5px;
+}
+.container_input_mail,
+.container_input_address{
+  display: flex;
+  padding-top: 20px;
+}
+.inp_mail,
+.inp_home{
+  width: 195px;
+  height: 50px;
+  margin-right: 10px;
+  border-radius: 5px;
+  background: #E2F2E2
+}
+.text_good_inp{
+  font-family: Roboto, serif;
+  font-style: italic;
+  font-weight: normal;
+  font-size: 12px;
+  text-align: left;
+}
+.inp_radio{
+  color: #0000CD;
+  size: 10px;
+}
+.inp_add{
+  width: 550px;
+  height: 150px;
+  border-radius: 5px;
+  background: #E2F2E2
+}
+.mail_inp{
+  margin-right: 13px;
+  margin-top: 20px;
+}
+.btn_orderReg{
+  font-family: Roboto, serif;
+  width: 298px;
+  height: 54px;
+  font-weight: 700;
+  color: white;
+  text-decoration: none;
+  padding: .8em 1em calc(.8em + 3px);
+  border-radius: 3px;
+  background: rgb(30, 144, 255);
+  box-shadow: 0 -3px rgb(0, 0, 255) inset;
+  transition: 0.2s;
+  text-align: center;
+}
+.btn_orderReg:hover {
+  background: rgb(65, 105, 225);
+}
+.btn_orderReg:active {
+  background: rgb(65, 105, 225);
+  box-shadow: 0 3px rgb(0, 0, 255) inset;
+}
+.thankList_container{
+position: relative;
+z-index: 100;
+text-align: center;
+}
+.thankList_etext_h{
+  padding-top: 50px;
+}
+.thankList_text_p{
+  padding-bottom: 50px;
 }

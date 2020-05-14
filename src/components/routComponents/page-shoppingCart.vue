@@ -4,7 +4,12 @@
       :shopingCard="cart"
     v-on:addProduct="refreshChopingCart($event)"/>
     <Navigation/>
-    <ShoppingCart />
+    <ShoppingCart
+    :shoppingCart = "cart"
+    v-on:addMinus="refreshChopingCart($event)"
+    v-on:addPlus="refreshChopingCart($event)"
+    v-on:addDelete="refreshChopingCart($event)"
+    />
     <Footer/>
   </div>
 </template>
