@@ -341,7 +341,7 @@ export default {
   .loader .l_main {
     position: absolute;
     top: 40%;
-    left: 63%;
+    left: 53%;
     width: 172px;
     height: 128px;
     margin: 0;

@@ -4,7 +4,17 @@
       <div class="main"></div>
       <div class="product_container">
         <div class="card_row_test">
-          <div class="card_row_container">
+          <div class="preloader_container" v-if="productsByCategory.length === 0">
+            <div class="loader">
+              <div class="l_main">
+                <div class="l_square"><span></span><span></span><span></span></div>
+                <div class="l_square"><span></span><span></span><span></span></div>
+                <div class="l_square"><span></span><span></span><span></span></div>
+                <div class="l_square"><span></span><span></span><span></span></div>
+              </div>
+            </div>
+          </div>
+          <div class="card_row_container" v-if="productsByCategory.length > 0">
             <div class="card_left">
               <div class="photo"
                    @mouseover="isButtonShowCurrentImage = true"
@@ -68,7 +78,7 @@
             </div>
           </div>
           <div>
-            <div class="carousel_container">
+            <div class="carousel_container" v-if="productsByCategory.length > 0">
               <p class="text_title_new">Товары из данной категории</p>
               <p v-if="isError">Ошибка сервера</p>
               <div class="carusel_category_container">
@@ -274,5 +284,10 @@ export default {
     top: 10%;
     left: 42%;
     font-size: 30px;
+  }
+
+  .preloader_container {
+    top: 202px;
+    position: relative;
   }
 </style>

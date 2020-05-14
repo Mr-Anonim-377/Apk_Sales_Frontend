@@ -174,6 +174,8 @@ export default {
         }).then(response => {
           if (response.ok) {
             this.$emit('refreshUser', true)
+          } else {
+            this.helpStrByError.push('Пользователь с такими телефоном и почтой уже существует')
           }
         })
       }

@@ -169,7 +169,6 @@ export default {
 
   .log_out_btn {
     margin-left: 21px;
-    -webkit-transition: all .12s ease-out;
     transition: all .12s ease-out;
     border: 2px solid rgb(164, 245, 106);
     height: 31px;

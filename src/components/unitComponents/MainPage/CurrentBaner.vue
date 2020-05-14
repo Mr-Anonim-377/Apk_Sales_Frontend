@@ -3,7 +3,7 @@
     <div class="section_main">
       <div class="main"></div>
       <div class="container_clamped">
-        <div class="row_banner">
+        <div class="row_banner border_radios">
           <div class="main_banners_wrapper">
             <div class="main_banners_circle_left"></div>
             <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -18,7 +18,7 @@
                 <div class="carousel-item container_banner_Img"
                      v-for="(item_img,index) in banersBig"
                      :class="{ 'active': index === 0 }">
-                  <img v-bind:src="item_img.image.imagePatch" class="d-block w-100" alt="...">
+                  <img v-bind:src="item_img.image.imagePatch" class="d-block w-100 border_radios" alt="...">
                 </div>
               </div>
               <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -55,4 +55,7 @@
   }
 </script>
 <style scoped>
+  .border_radios {
+  border-radius: 30px;
+  }
 </style>

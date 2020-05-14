@@ -229,6 +229,10 @@ export default {
 
 <style >
 
+  img {
+    transition: all .12s ease-out;
+  }
+
   a:hover, img:hover {
     -webkit-filter: drop-shadow(0 0 5px rgba(178, 38, 205, 0.81));
     filter: drop-shadow(0 0 5px rgba(178, 38, 205, 0.81));
