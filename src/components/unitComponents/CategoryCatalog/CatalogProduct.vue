@@ -22,17 +22,15 @@
       </div>
       <div class="main_goods_container"  v-bind:class="getBlur()">
         <div class="main_goods_back"></div>
+        <div class="rating-result">
+            <span
+              v-for="(index) in starArray"
+              v-bind:class="isActivClass(index)"></span>
+        </div>
         <div class="main_goods_section">
           <span class="main_goods_text">{{productCategory.nameProduct}}</span>
           <br>
           <a class="main_goods_text_pay">{{productCategory.price}}₽</a>
-          <div class="rating-result">
-            <span class="active"></span>
-            <span class="active"></span>
-            <span class="active"></span>
-            <span></span>
-            <span></span>
-          </div>
         </div>
       </div>
     </div>
@@ -47,10 +45,15 @@ export default {
   },
   data () {
     return {
-      isBlur: false
+      isBlur: false,
+      mark: 0,
+      starArray: [0, 1, 2, 3, 4]
     }
   },
   methods: {
+    isActivClass (index) {
+      return index < this.mark ? 'active' : ''
+    },
     addProduct () {
       fetch(process.env.HOST + '/api/shoppingCart?numberPieces=1&' + 'productId=' + this.productCategory.productId, {
         method: 'post',
@@ -68,25 +71,27 @@ export default {
     setBlur (isTrue) {
       this.isBlur = isTrue
     }
+  },
+  created: function init () {
+    this.mark = this.productCategory.averageMark === null ? 1 : Math.round(Number.parseFloat(this.productCategory.averageMark))
   }
 }
 </script>
 
 <style>
-
   .rating-result {
-    bottom: 4px;
     position: relative;
     width: 265px;
-    left: 116px;
+    left: 40%;
+    top: 125px;
     display: flex;
-    margin: 0;
+    z-index: 90;
   }
   .rating-result span {
     padding: 0;
     font-size: 60px;
     line-height: 1;
-    color: lightgrey;
+    color: #b7adbf;
     text-shadow: 1px 1px #bbb;
     margin-left: 10px;
   }
@@ -97,6 +102,7 @@ export default {
     color: gold;
     text-shadow: 1px 1px #c60;
   }
+
   .main_good .mask {
     width: 840px;
     height: 100%;

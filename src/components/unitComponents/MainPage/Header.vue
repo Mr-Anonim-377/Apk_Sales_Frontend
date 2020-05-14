@@ -1,7 +1,7 @@
 <template>
   <header class="header">
     <div class="head_body">
-      <div class="head_logo"></div>
+      <div class="header_blur"></div>
       <div class="container">
         <div class="row_news">
           <a class="row_logo"
@@ -14,9 +14,8 @@
           <div class="input" v-on-clickaway="onClickOutside">
             <input class="input_search" autocomplete="off" placeholder="Искать здесь.."
                    v-model="searchStr" @focus="isVisible = true">
-            <input class="input_botton" type="button">
             <div class="search_pop_up" v-if="isVisible">
-              <div class="search_pop_up__blur"></div>
+              <div class="pop_up__blur"></div>
               <div class="search_pop_up__result">
                 <div class="search_error_and_vait" v-if="searchResult.length === 0">
                   <div class="search_error_and_vait__message">{{errorSearchStr}}</div>
@@ -53,24 +52,31 @@
                 <a
                   v-bind:href="'http://localhost:8081/search/page=1&searchStr=' + searchStr.split(' ').join('%20') +
                   '&collectionsIds=&categoryIds=&price-min=&price-max='">
-                  <div class="show_more" v-if="searchResult.length !== 0">Показать все</div>
+                  <div class="show_more" v-if="searchResult.length >= 4">Показать все</div>
                 </a>
               </div>
             </div>
           </div>
           <div class="basket_regist">
-            <div class="basket">
+            <div class="image_header_conatiner">
               <div class="basket_product_count">
                 {{shopingCard.countProducts === null || shopingCard.countProducts === "0"
                 ?0
                 :shopingCard.countProducts}}
               </div>
-              <img src="https://mr-anonim-377.github.io/Sales/src/main/resources/static/CSS/pictures/Korzina.png"
-              >
+              <img src="https://mr-anonim-377.github.io/Sales/src/main/resources/static/CSS/pictures/Korzina.png">
             </div>
-            <div class="login_picture">
-              <img src="https://mr-anonim-377.github.io/Sales/src/main/resources/static/CSS/pictures/log_in 1.png"
-              >
+            <div class="image_header_conatiner image_header_conatiner_mmargin_left" v-on-clickaway="logInOutsideClick">
+              <div @click="isUserPopUp = true">
+                <img src="https://mr-anonim-377.github.io/Sales/src/main/resources/static/CSS/pictures/log_in 1.png">
+              </div>
+              <div class="logInPopUp_container" v-if="isUserPopUp">
+                <LogInPopUp v-if="!isUserAuthorized"
+                            v-on:refreshUser="refreshUser($event)"></LogInPopUp>
+              <AutorizedUserData :user="user"
+                                 v-if="isUserAuthorized"
+                                 v-on:refreshUser="refreshUser($event)"></AutorizedUserData>
+              </div>
             </div>
           </div>
         </div>
@@ -80,133 +86,168 @@
 </template>
 
 <script>
-  import {directive as onClickaway} from 'vue-clickaway'
+import LogInPopUp from '../UserAction/LogAndSignInPopUp'
+import AutorizedUserData from '../Autorezed/AutorizedUserData'
+import {directive as onClickaway} from 'vue-clickaway'
 
-  export default {
-    directives: {
-      onClickaway: onClickaway
+export default {
+  components: {LogInPopUp,
+    AutorizedUserData},
+  directives: {
+    onClickaway: onClickaway
+  },
+  props: {
+    shopingCard: {}
+  },
+
+  data () {
+    return {
+      user: {},
+      filterClickColor: {
+        background: '#9974fb'
+      },
+      colorIsNumber: -1,
+      errorSearchStr: 'введите поисковый запрос',
+      searchStr: '',
+      searchStrOld: '',
+      searchResult: [],
+      searchResultVisible: '',
+      isVisible: false,
+      isUserPopUp: false,
+      isUserAuthorized: false
+    }
+  },
+  component: {
+    LogInPopUp
+  },
+  methods: {
+    addProduct (product) {
+      fetch(process.env.HOST + '/api/shoppingCart?numberPieces=1&' + 'productId=' + product.productId, {
+        method: 'post',
+        headers: {
+          'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
+        }
+      })
+        .then(response => this.$emit('addProduct', true))
     },
-    props: {
-      shopingCard: {}
+    onClickOutside () {
+      this.isVisible = false
     },
-    data() {
-      return {
-        filterClickColor: {
-          background: '#9974fb'
+    logInOutsideClick () {
+      this.isUserPopUp = false
+    },
+    indexOfColored (number) {
+      if (number === this.colorIsNumber) {
+        return this.filterClickColor
+      }
+    },
+    setColor (isColor, num) {
+      if (isColor) {
+        this.colorIsNumber = num
+      } else {
+        this.colorIsNumber = -1
+      }
+    },
+    errorSearch () {
+      this.errorSearchStr = 'нет результатов поиска';
+      this.searchResult = []
+    },
+    getSearhcResult () {
+      let searchStrOld = '';
+      this.searchResult = [];
+      searchStrOld = this.searchStr;
+      fetch(process.env.HOST + '/api/search/onProducts', {
+        method: 'post',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
         },
-        collectionColorIsNumber: -1,
-        errorSearchStr: 'введите поисковый запрос',
-        searchStr: '',
-        searchStrOld: '',
-        searchResult: [],
-        searchResultVisible: '',
-        isVisible: false
-      }
-    },
-    methods: {
-      // getShopingCard () {
-      //   fetch(process.env.HOST + '/api/shoppingCart/cart', {
-      //     method: 'get',
-      //     credentials: 'include'
-      //   }).then(response => response.json())
-      //   // eslint-disable-next-line
-      //     .then(commits => this.shopingCard = commits);
-      // },
-      addProduct(product) {
-        fetch(process.env.HOST + '/api/shoppingCart?numberPieces=1&' + 'productId=' + product.productId, {
-          method: 'post',
-          headers: {
-            'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
-          }
+        body: JSON.stringify({
+          page: 0,
+          searchString: '%' + this.searchStr + '%',
+          searchType: 'ALL'
         })
-          .then(response => this.$emit('addProduct', true))
-      },
-      onClickOutside() {
-        this.isVisible = false
-      },
-      indexOfColored(number) {
-        if (number === this.collectionColorIsNumber) {
-          return this.filterClickColor
-        }
-      },
-      setColor(isColor, num) {
-        if (isColor) {
-          this.colorIsNumber = num
-        } else {
-          this.colorIsNumber = -1
-        }
-      },
-      // @change="changeSearchStr"
-      // changeSearchStr() {
-      //   if (this.searchStr.length > 3) {
-      //     this.errorSearchStr = 'поиск по товарам'
-      //     this.getSearhcResult()
-      //   } else if (this.searchStr.length === 0) {
-      //     this.errorSearchStr = 'введите поисковый запрос'
-      //   } else {
-      //     this.errorSearchStr = 'дополните строку поиска'
-      //     this.searchResult = []
-      //   }
-      // },
-      errorSearch() {
-        this.errorSearchStr = 'нет результатов поиска';
-        this.searchResult = []
-      },
-      getSearhcResult() {
-        let searchStrOld = '';
-        this.searchResult = [];
-        searchStrOld = this.searchStr;
-        fetch(process.env.HOST + '/api/search/onProducts', {
-          method: 'post',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            page: 0,
-            searchString: '%' + this.searchStr + '%',
-            searchType: 'ALL'
-          })
-        }).then(response => {
-          if (response.ok) {
-            if (searchStrOld === this.searchStr) {
-              // response.json().then(commits => commits.forEach(item => this.searchResult.push(item)))
-              response.json().then(commits => {
-                for (let i = 0; i < commits.products.length; i++) {
-                  if (searchStrOld === this.searchStr) {
-                    this.errorSearchStr = 'поиск по товарам';
-                    this.searchResult.push(commits.products[i])
-                  } else {
-                    this.searchResult = [];
-                    this.errorSearchStr = 'поиск по товарам';
-                    break
-                  }
+      }).then(response => {
+        if (response.ok) {
+          if (searchStrOld === this.searchStr) {
+            // response.json().then(commits => commits.forEach(item => this.searchResult.push(item)))
+            response.json().then(commits => {
+              for (let i = 0; i < commits.products.length; i++) {
+                if (searchStrOld === this.searchStr) {
+                  this.errorSearchStr = 'поиск по товарам';
+                  this.searchResult.push(commits.products[i])
+                } else {
+                  this.searchResult = [];
+                  this.errorSearchStr = 'поиск по товарам';
+                  break
                 }
-              })
-            }
-          } else {
-            this.errorSearch()
+              }
+            })
           }
-        })
-      }
-    },
-    watch: {
-      searchStr: function () {
-        if (this.searchStr.length > 3) {
-          this.errorSearchStr = 'поиск по товарам';
-          this.getSearhcResult()
-        } else if (this.searchStr.length === 0) {
-          this.errorSearchStr = 'введите поисковый запрос'
         } else {
-          this.errorSearchStr = 'дополните строку поиска';
-          this.searchResult = []
+          this.errorSearch()
         }
+      })
+    },
+    refreshUser (isRefresh) {
+      if (isRefresh) {
+        fetch(process.env.HOST + '/api/user', {
+          method: 'get',
+          credentials: 'include'
+        }).then(response => response.json())
+        // eslint-disable-next-line
+          .then(commits => {
+            if (commits.email !== null) {
+              this.isUserAuthorized = true;
+              this.user = commits
+            } else {
+              this.user = {};
+              this.isUserAuthorized = false
+            }
+          })
+      }
+    }
+  },
+  created: function init () {
+    this.refreshUser(true)
+  },
+  watch: {
+    searchStr: function () {
+      if (this.searchStr.length > 3) {
+        this.errorSearchStr = 'поиск по товарам';
+        this.getSearhcResult()
+      } else if (this.searchStr.length === 0) {
+        this.errorSearchStr = 'введите поисковый запрос'
+      } else {
+        this.errorSearchStr = 'дополните строку поиска';
+        this.searchResult = []
       }
     }
   }
+}
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style >
 
+  a:hover, img:hover {
+    -webkit-filter: drop-shadow(0 0 5px rgba(178, 38, 205, 0.81));
+    filter: drop-shadow(0 0 5px rgba(178, 38, 205, 0.81));
+    background-position: 0 0;
+  }
+
+  a:active, img:active {
+    -webkit-filter: grayscale(50%) drop-shadow(0 0 5px rgba(178, 38, 205, 0.81));
+    filter: grayscale(50%) drop-shadow(0 0 5px rgba(178, 38, 205, 0.81));
+  }
+
+  .image_header_conatiner_mmargin_left {
+    margin-left: 11%;
+  }
+
+  .logInPopUp_container {
+    position: absolute;
+    min-height: 70px;
+    top: 76%;
+    left: 76.5%;
+  }
 </style>

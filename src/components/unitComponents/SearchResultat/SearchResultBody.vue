@@ -84,149 +84,149 @@
 </template>
 
 <script>
-  import CatalogItemProduct from '../CategoryCatalog/CatalogProduct'
-  import SearchResultFilter from './SearchResultFilter'
+import CatalogItemProduct from '../CategoryCatalog/CatalogProduct'
+import SearchResultFilter from './SearchResultFilter'
 
-  export default {
-    props: {
-      searchStr: {},
-      page: {},
-      collectionIds: {},
-      categoryIds: {},
-      priceMin: {},
-      priceMax: {}
+export default {
+  props: {
+    searchStr: {},
+    page: {},
+    collectionIds: {},
+    categoryIds: {},
+    priceMin: {},
+    priceMax: {}
+  },
+  methods: {
+    refreshPages () {
+      this.pagesArray = [];
+      let page = Number.parseInt(this.page);
+      let maxPage = 0;
+      if (this.totalPage < (page + 4)) {
+        maxPage = this.totalPage
+      } else {
+        maxPage = page + 4
+      }
+      let minPage = 0;
+      if (!((page - 4) < 0)) {
+        minPage = page - 4
+      }
+      for (let i = minPage; i < maxPage; i++) {
+        this.pagesArray.push(i)
+      }
     },
-    methods: {
-      refreshPages() {
-        this.pagesArray = [];
-        let page = Number.parseInt(this.page);
-        let maxPage = 0;
-        if (this.totalPage < (page + 4)) {
-          maxPage = this.totalPage
-        } else {
-          maxPage = page + 4
-        }
-        let minPage = 0;
-        if (!((page - 4) < 0)) {
-          minPage = page - 4
-        }
-        for (let i = minPage; i < maxPage; i++) {
-          this.pagesArray.push(i)
-        }
-      },
-      getStrByArray(array) {
-        var str = '';
-        if (array !== 0 || array !== null) {
-          for (let i = 0; i < array.length; i++) {
-            if (i === 0) {
-              str = array[i]
-            } else {
-              str = str + '_' + array[i]
-            }
+    getStrByArray (array) {
+      var str = '';
+      if (array !== 0 || array !== null) {
+        for (let i = 0; i < array.length; i++) {
+          if (i === 0) {
+            str = array[i]
+          } else {
+            str = str + '_' + array[i]
           }
         }
-        return str
-      },
-      isLiActive(num) {
-        if (num === Number.parseInt(this.page)) {
-          return 'active'
-        }
-      },
-      getPreviousClass() {
-        if (Number.parseInt(this.page) === 1) {
-          return 'previous-off'
-        } else {
-          return 'previous'
-        }
-      },
-      getNextClass() {
-        if (Number.parseInt(this.page) === Number.parseInt(this.totalPage)) {
-          return 'next-off'
-        } else {
-          return 'next'
-        }
-      },
-      refreshProductCount(isRefresh) {
-        if (isRefresh) {
-          this.$emit('addProduct', true)
-        }
-      },
-      getCollectionIds() {
-        var split = [];
-        if (this.collectionIds !== undefined) {
-          split = this.collectionIds.split('_')
-        }
-        var collectionIds = [];
-        for (let i = 0; i < split.length; i++) {
-          collectionIds.push(Number.parseInt(split[i]))
-        }
-        return collectionIds
-      },
-      getCategoryIds() {
-        var split = [];
-        if (this.categoryIds !== undefined) {
-          split = this.categoryIds.split('_')
-        }
-        var categoryIds = [];
-        for (let i = 0; i < split.length; i++) {
-          categoryIds.push(Number.parseInt(split[i]))
-        }
-        return categoryIds
+      }
+      return str
+    },
+    isLiActive (num) {
+      if (num === Number.parseInt(this.page)) {
+        return 'active'
       }
     },
-    name: 'CatalogItem',
-    data() {
-      return {
-        currentRequestJson: {},
-        currentPriceMin: {},
-        currentPriceMax: {},
-        totalPage: 0,
-        pagesArray: [],
-        products: [],
-        isError: false
+    getPreviousClass () {
+      if (Number.parseInt(this.page) === 1) {
+        return 'previous-off'
+      } else {
+        return 'previous'
       }
     },
-    components: {
-      CatalogItemProduct,
-      SearchResultFilter
+    getNextClass () {
+      if (Number.parseInt(this.page) === Number.parseInt(this.totalPage)) {
+        return 'next-off'
+      } else {
+        return 'next'
+      }
     },
-    created: function init() {
-      this.currentPriceMin = 0.00;
-      this.currentPriceMax = 10000.00;
-      if (this.priceMin !== undefined) {
-        this.currentPriceMin = this.priceMin
+    refreshProductCount (isRefresh) {
+      if (isRefresh) {
+        this.$emit('addProduct', true)
       }
-      if (this.priceMax !== undefined) {
-        this.currentPriceMax = this.priceMax
+    },
+    getCollectionIds () {
+      var split = [];
+      if (this.collectionIds !== undefined) {
+        split = this.collectionIds.split('_')
       }
-      fetch(process.env.HOST + '/api/search/onProducts', {
-        method: 'post',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          page: (Number.parseInt(this.page) - 1),
-          searchString: '%' + this.searchStr + '%',
-          searchType: 'ALL',
-          categoryIds: this.getCategoryIds(),
-          collectionIds: this.getCollectionIds(),
-          minPrice: this.currentPriceMin,
-          maxPrice: this.currentPriceMax
-        })
-      }).then(response => {
-        if (response.ok) {
-          response.json().then(commits => {
-            commits.products.forEach(item => this.products.push(item));
-            this.totalPage = Number.parseInt(commits.pageCount);
-            this.refreshPages()
-          })
-        } else {
-          this.isError = true
-        }
-      })
+      var collectionIds = [];
+      for (let i = 0; i < split.length; i++) {
+        collectionIds.push(Number.parseInt(split[i]))
+      }
+      return collectionIds
+    },
+    getCategoryIds () {
+      var split = [];
+      if (this.categoryIds !== undefined) {
+        split = this.categoryIds.split('_')
+      }
+      var categoryIds = [];
+      for (let i = 0; i < split.length; i++) {
+        categoryIds.push(Number.parseInt(split[i]))
+      }
+      return categoryIds
     }
+  },
+  name: 'CatalogItem',
+  data () {
+    return {
+      currentRequestJson: {},
+      currentPriceMin: {},
+      currentPriceMax: {},
+      totalPage: 0,
+      pagesArray: [],
+      products: [],
+      isError: false
+    }
+  },
+  components: {
+    CatalogItemProduct,
+    SearchResultFilter
+  },
+  created: function init () {
+    this.currentPriceMin = 0.00;
+    this.currentPriceMax = 10000.00;
+    if (this.priceMin !== undefined) {
+      this.currentPriceMin = this.priceMin
+    }
+    if (this.priceMax !== undefined) {
+      this.currentPriceMax = this.priceMax
+    }
+    fetch(process.env.HOST + '/api/search/onProducts', {
+      method: 'post',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        page: (Number.parseInt(this.page) - 1),
+        searchString: '%' + this.searchStr + '%',
+        searchType: 'ALL',
+        categoryIds: this.getCategoryIds(),
+        collectionIds: this.getCollectionIds(),
+        minPrice: this.currentPriceMin,
+        maxPrice: this.currentPriceMax
+      })
+    }).then(response => {
+      if (response.ok) {
+        response.json().then(commits => {
+          commits.products.forEach(item => this.products.push(item));
+          this.totalPage = Number.parseInt(commits.pageCount);
+          this.refreshPages()
+        })
+      } else {
+        this.isError = true
+      }
+    })
   }
+}
 </script>
 
 <style>

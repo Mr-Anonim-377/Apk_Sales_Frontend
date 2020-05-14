@@ -3,199 +3,168 @@
     <div class="main_color"></div>
     <div class="main_filter_container">
       <div class="main_filter">
-        <p class="text_color">Коллекции</p>
+        <p class="text_color">Категории</p>
       </div>
       <div class="main_filter_unit">
         <ul class="main_category_list text_color">
           <li class="category_list_item"
-              v-for="(collection, index) in categories"
+              v-for="(category, index) in categories"
               @click="providerCollectionInFilter(index)"
               v-bind:style="collectionIsColor(index)">
-            <span class="category_list_link">{{collection.category_name}}</span>
+            <span class="category_list_link">{{category.category_name}}</span>
           </li>
         </ul>
       </div>
       <div class="filter-range">
         <div class="filter-range-title"><a class="text_prise">Цена(₽):</a></div>
         <div class="price-controls">
-          <input type="text" class="min-price" v-bind:placeholder="'от ' + totalMinPrice" v-model.number="minPrice">
-          <input type="text" class="max-price" v-bind:placeholder="'от ' + totalMaxPrice" v-model.number="maxPrice">
-        </div>
-        <div class="range-slider">
-          <input class="input_filter_min"
-                 type="range"
-                 min="0"
-                 step="1"
-                 @focus="setMaxWidth"
-                 v-bind:max="tmpMaxPrice"
-                 v-model.number="minPrice"
-                 v-bind:style="{width: tmpMinInpWidth + '%'}"
-          >
-          <input class="input_filter_max"
-                 type="range"
-                 max="10000"
-                 step="1"
-                 @focus="setMinWidth"
-                 v-bind:min="tmpMinPrice"
-                 v-model.number="maxPrice"
-                 v-bind:style="{width: tmpMaxInpWidth + '%'}"
-          >
+          <input type="text" class="min-price" v-bind:placeholder="'от ' + totalMinPrice" v-model="minPrice">
+          <input type="text" class="max-price" v-bind:placeholder="'до ' + totalMaxPrice" v-model="maxPrice">
         </div>
       </div>
       <div class="btn_border">
-        <!--        http://localhost:8081/collection/collection=9&page=1&categoryIds=2&price-min=1000.00&price-max=-->
         <a class="btn_search"
            v-bind:href="'http://localhost:8081/collection/collectionId=' + collectionId +
             '&page=' + 1 +
             '&categoryIds=' +getStrByArray(getIds()) +
-            '&price-min='+ minPrice.toFixed(2) +
-            '&price-max=' + maxPrice.toFixed(2)">Применить</a>
+            '&price-min='+ minPriceUrl +
+            '&price-max=' + maxPriceUrl">Применить</a>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-  import CatalogItem from './CollectionCatalog'
+import CatalogItem from './CollectionCatalog'
 
-  export default {
-    name: 'CatalogItemFilter',
-    components: {CatalogItem},
-    props: {
-      priceMin: {},
-      priceMax: {},
-      productCount: {},
-      categoryIds: [],
-      numPage: {},
-      collectionId: {}
-    },
-    data() {
-      return {
-        totalMinPrice: 0,
-        totalMaxPrice: 10000,
-        ids: [],
-        categoryColorIsNumber: -1,
-        filterClickColor: {
-          background: '#9974fb'
-        },
-        mouseMoveColor: {
-          background: 'rgba(153,116,251,0.61)'
-        },
-        tmpMaxPrice: 10000,
-        tmpMinPrice: 0,
-        tmpMinInpWidth: 100,
-        tmpMaxInpWidth: 100,
-        minPrice: Number.parseFloat(this.priceMin),
-        maxPrice: Number.parseFloat(this.priceMax),
-        minInpWidth: 100,
-        maxInpWidth: 100,
-        absRange: 10000,
-        categories: [],
-        categoriesFilters: []
-      }
-    },
-    methods: {
-      getStrByArray(array) {
-        var str = '';
-        if (array !== 0 || array !== null) {
-          for (let i = 0; i < array.length; i++) {
-            if (i === 0) {
-              str = array[i]
-            } else {
-              str = str + '_' + array[i]
-            }
+export default {
+  name: 'CatalogItemFilter',
+  components: {CatalogItem},
+  props: {
+    totalMinPrice: {},
+    totalMaxPrice: {},
+    priceMin: {},
+    priceMax: {},
+    categoryIds: [],
+    numPage: {},
+    collectionId: {}
+  },
+  data () {
+    return {
+      ids: [],
+      categoryColorIsNumber: -1,
+      filterClickColor: {
+        background: '#9974fb'
+      },
+      mouseMoveColor: {
+        background: 'rgba(153,116,251,0.61)'
+      },
+      minPrice: '',
+      minPriceUrl: '',
+      maxPrice: '',
+      maxPriceUrl: '',
+      categories: [],
+      categoriesFilters: []
+    }
+  },
+  methods: {
+    getStrByArray (array) {
+      var str = '';
+      if (array !== 0 || array !== null) {
+        for (let i = 0; i < array.length; i++) {
+          if (i === 0) {
+            str = array[i]
+          } else {
+            str = str + '_' + array[i]
           }
         }
-        return str
-      },
-      setColor(isColor, num) {
-        if (isColor) {
-          this.categoryColorIsNumber = num
-        } else {
-          this.categoryColorIsNumber = -1
-        }
-      },
-      collectionIsColor(index) {
-        for (let i = 0; i < this.categoriesFilters.length; i++) {
-          if (this.categoriesFilters[i].index === index) {
-            return this.filterClickColor
-          }
-        }
-        if (index === this.categoryColorIsNumber) {
-          return this.mouseMoveColor
-        }
-        return ''
-      },
-      providerCollectionInFilter(index) {
-        for (let i = 0; i < this.categoriesFilters.length; i++) {
-          if (this.categoriesFilters[i].index === index) {
-            this.categoriesFilters.splice(i, 1);
-            return
-          }
-        }
-        this.categoriesFilters.push({index: index, categoryId: this.categories[index].category_id})
-      },
-      setMaxWidth() {
-        this.tmpMinInpWidth = this.minInpWidth;
-        this.tmpMaxPrice = this.maxPrice;
-        this.maxInpWidth = (this.absRange - this.minPrice) * (100 / this.absRange)
-      },
-      setMinWidth() {
-        this.tmpMaxInpWidth = this.maxInpWidth;
-        this.tmpMinPrice = this.minPrice;
-        this.minInpWidth = (this.absRange - (this.absRange - this.maxPrice)) * (100 / this.absRange)
-      },
-      setCollectionIdsArray() {
-        this.ids = [];
-        this.categoriesFilters.forEach(item => this.ids.push(item.categoryId))
-      },
-      getIds() {
-        this.setCollectionIdsArray();
-        return this.ids
-      },
-      crateFilterBody() {
-        this.setCollectionIdsArray();
-        return JSON.stringify({
-          collectionId: this.collectionId,
-          categoryIds: this.ids,
-          maxPrice: this.maxPrice.toFixed(2),
-          minPrice: this.minPrice.toFixed(2),
-          page: this.numPage - 1
-        })
-      },
-      filterData() {
-        this.$emit('filterChangeData', this.crateFilterBody())
+      }
+      return str
+    },
+    setColor (isColor, num) {
+      if (isColor) {
+        this.categoryColorIsNumber = num
+      } else {
+        this.categoryColorIsNumber = -1
       }
     },
-    watch: {
-      minPrice: function () {
-        this.setMaxWidth()
-      },
-      maxPrice: function () {
-        this.setMinWidth()
+    collectionIsColor (index) {
+      for (let i = 0; i < this.categoriesFilters.length; i++) {
+        if (this.categoriesFilters[i].index === index) {
+          return this.filterClickColor
+        }
+      }
+      if (index === this.categoryColorIsNumber) {
+        return this.mouseMoveColor
+      }
+      return ''
+    },
+    providerCollectionInFilter (index) {
+      for (let i = 0; i < this.categoriesFilters.length; i++) {
+        if (this.categoriesFilters[i].index === index) {
+          this.categoriesFilters.splice(i, 1);
+          return
+        }
+      }
+      this.categoriesFilters.push({index: index, categoryId: this.categories[index].category_id})
+    },
+    setCollectionIdsArray () {
+      this.ids = [];
+      this.categoriesFilters.forEach(item => this.ids.push(item.categoryId))
+    },
+    getIds () {
+      this.setCollectionIdsArray();
+      return this.ids
+    }
+  },
+  watch: {
+    minPrice: function () {
+      this.minPrice = this.minPrice.replace(/\D/, '');
+      if (this.minPrice === '') {
+        this.minPriceUrl = ''
+      } else {
+        this.minPriceUrl = Number.parseInt(this.minPrice).toFixed(2)
       }
     },
-    created: function init() {
-      fetch(process.env.HOST + '/api/category/all/byProductOfCollection?collectionId=' + this.collectionId, {
-        method: 'get'
-      })
-        .then(response => response.json())
-        // eslint-disable-next-line no-return-assign
-        .then(commits => {
-          if (commits.type !== 'InternalServerError') {
-            for (let i = 0; i < commits.length; i++) {
-              for (let ii = 0; ii < this.categoryIds.length; ii++) {
-                if (Number.parseInt(this.categoryIds[ii]) === commits[i].category_id) {
-                  this.categoriesFilters.push({index: i, categoryId: commits[i].category_id})
-                }
+    maxPrice: function () {
+      this.maxPrice = this.maxPrice.replace(/\D/, '');
+      if (this.maxPrice === '') {
+        this.maxPriceUrl = ''
+      } else {
+        this.maxPriceUrl = Number.parseInt(this.maxPrice).toFixed(2)
+      }
+    }
+  },
+  created: function init () {
+    var min = Number.parseFloat(this.priceMin);
+    if (min !== Number.parseFloat(this.totalMinPrice)) {
+      this.minPrice = min;
+      this.minPriceUrl = min.toFixed(2)
+    }
+    var max = Number.parseFloat(this.priceMax);
+    if (max !== Number.parseFloat(this.totalMaxPrice)) {
+      this.maxPrice = max;
+      this.maxPriceUrl = max.toFixed(2)
+    }
+    fetch(process.env.HOST + '/api/category/all/byProductOfCollection?collectionId=' + this.collectionId, {
+      method: 'get'
+    })
+      .then(response => response.json())
+    // eslint-disable-next-line no-return-assign
+      .then(commits => {
+        if (commits.type !== 'InternalServerError') {
+          for (let i = 0; i < commits.length; i++) {
+            for (let ii = 0; ii < this.categoryIds.length; ii++) {
+              if (Number.parseInt(this.categoryIds[ii]) === commits[i].category_id) {
+                this.categoriesFilters.push({index: i, categoryId: commits[i].category_id})
               }
             }
-            this.filterData();
-            this.categories = commits
           }
-        })
-    }
+          this.categories = commits
+        }
+      })
   }
+}
 </script>
 
 <style>

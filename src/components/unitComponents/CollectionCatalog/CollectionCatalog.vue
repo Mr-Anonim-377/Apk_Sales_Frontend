@@ -4,12 +4,15 @@
       <div class="main_back main"></div>
       <div class="main_border">
         <CollectionFilter
+          v-if="products.length >0 || isError"
+          :totalMinPrice="totalMinPrice"
+          :totalMaxPrice="totalMaxPrice"
           :collectionId='collectionId'
           :numPage='page'
           :categoryIds='categoryIdsArray'
           :productCount="products.length"
-          :priceMin="currentPriceMin"
-          :priceMax="currentPriceMax"
+          :priceMin="currentPriceMin.toFixed(2)"
+          :priceMax="currentPriceMax.toFixed(2)"
           v-on:filterChangeData="saveFilterData($event)"></CollectionFilter>
         <div class="main_section">
           <div class="loader" v-if="products.length === 0 && isError === false ">
@@ -40,7 +43,7 @@
           />
         </div>
       </div>
-      <div class="pagination">
+      <div class="pagination" v-if="products.length > 0">
         <div class="error_pagination_non" v-if="this.isError"></div>
         <ul id="pagination-digg"
             v-if="!this.isError">
@@ -166,6 +169,8 @@ export default {
   name: 'CatalogItem',
   data () {
     return {
+      totalMaxPrice: 0,
+      totalMinPrice: 0,
       currentPriceMin: 0,
       currentPriceMax: 0,
       totalPage: 0,
@@ -181,43 +186,57 @@ export default {
     CollectionFilter
   },
   created: function init () {
-    this.currentPriceMin = Number.parseFloat(this.priceMin);
-    this.currentPriceMax = Number.parseFloat(this.priceMax);
-    if (this.priceMin === undefined) {
-      this.currentPriceMin = 0.00
-    }
-    if (this.priceMax === undefined) {
-      this.currentPriceMax = 10000.00
-    }
-    this.refreshPages();
-    var categoryIds = [];
-    if (this.categoryIds !== undefined) {
-      categoryIds = this.categoryIds.split('_')
-    }
-    this.refreshCollectionIdByArray(categoryIds);
-    this.currentRequestJson = {collectionId: this.collectionId,
-      page: Number.parseInt(this.page) - 1,
-      minPrice: this.currentPriceMin,
-      maxPrice: this.currentPriceMax,
-      categoryIds: categoryIds
-    };
-    fetch(process.env.HOST + '/api/products/collection', {
-      method: 'post',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(this.currentRequestJson)
+    fetch(process.env.HOST + '/api/collection/all/getPriceBetween?collectionId=' + this.collectionId, {
+      method: 'get'
     })
       .then(response => response.json())
-    // eslint-disable-next-line no-return-assign
+      // eslint-disable-next-line no-return-assign
       .then(commits => {
-        if (commits.type === 'NoSuchObj') {
-          this.isError = true
-        } else {
-          commits.products.forEach(item => this.products.push(item));
-          this.totalPage = Number.parseInt(commits.pageCount);
-          this.refreshPages()
+        if (commits.type !== 'InternalServerError') {
+          this.collections = commits;
+          this.currentPriceMin = Number.parseInt(this.priceMin);
+          this.currentPriceMax = Number.parseInt(this.priceMax);
+          if (this.priceMin === undefined) {
+            var totalMinPrice = Number.parseInt(commits.totalMinPrice);
+            this.currentPriceMin = totalMinPrice
+          }
+          if (this.priceMax === undefined) {
+            var totalMaxPrice = Number.parseInt(commits.totalMaxPrice);
+            this.currentPriceMax = totalMaxPrice
+          }
+          this.refreshPages();
+          var categoryIds = [];
+          if (this.categoryIds !== undefined) {
+            categoryIds = this.categoryIds.split('_')
+          }
+          this.refreshCollectionIdByArray(categoryIds);
+          this.currentRequestJson = {collectionId: this.collectionId,
+            page: Number.parseInt(this.page) - 1,
+            minPrice: this.currentPriceMin,
+            maxPrice: this.currentPriceMax,
+            categoryIds: categoryIds
+          };
+          fetch(process.env.HOST + '/api/products/collection', {
+            method: 'post',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(this.currentRequestJson)
+          })
+            .then(response => response.json())
+            // eslint-disable-next-line no-return-assign
+            .then(commits => {
+              if (commits.type === 'NoSuchObj') {
+                this.isError = true
+              } else {
+                commits.products.forEach(item => this.products.push(item));
+                this.totalMinPrice = Math.floor(Number.parseFloat(totalMinPrice));
+                this.totalMaxPrice = Math.round(Number.parseFloat(totalMaxPrice));
+                this.totalPage = Number.parseInt(commits.pageCount);
+                this.refreshPages()
+              }
+            })
         }
       })
   }

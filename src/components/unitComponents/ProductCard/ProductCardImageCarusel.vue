@@ -52,7 +52,7 @@ export default {
         filter: 'grayscale(20%) drop-shadow(0 0 8px rgba(153, 116, 251, 0.81))'
       },
       lastIndex: -1,
-      collectionColorIsNumber: -1,
+      colorIsNumber: -1,
       currentOffset: 0,
       windowSize: 4,
       paginationFactor: 120,
@@ -72,7 +72,7 @@ export default {
   },
   methods: {
     indexOfColored (number) {
-      if (number === this.collectionColorIsNumber) {
+      if (number === this.colorIsNumber) {
         return this.filterClickColor
       }
     },

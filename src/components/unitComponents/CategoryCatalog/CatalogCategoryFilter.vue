@@ -18,37 +18,17 @@
       <div class="filter-range">
         <div class="filter-range-title"><a class="text_prise">Цена(₽):</a></div>
         <div class="price-controls">
-          <input type="text" class="min-price"  v-bind:placeholder="'от ' + totalMinPrice" v-model.number="minPrice">
-          <input type="text" class="max-price" v-bind:placeholder="'от ' + totalMaxPrice" v-model.number="maxPrice">
-        </div>
-        <div class="range-slider">
-          <input class="input_filter_min"
-                 type="range"
-                 min="0"
-                 step="1"
-                 @focus="setMaxWidth"
-                 v-bind:max="tmpMaxPrice"
-                 v-model.number="minPrice"
-                 v-bind:style="{width: tmpMinInpWidth + '%'}"
-          >
-          <input class="input_filter_max"
-                 type="range"
-                 max="10000"
-                 step="1"
-                 @focus="setMinWidth"
-                 v-bind:min="tmpMinPrice"
-                 v-model.number="maxPrice"
-                 v-bind:style="{width: tmpMaxInpWidth + '%'}"
-          >
+          <input class="min-price" maxlength="7"  v-bind:placeholder="'от ' + totalMinPrice" v-model="minPrice">
+          <input class="max-price" maxlength="7" v-bind:placeholder="'до ' + totalMaxPrice" v-model="maxPrice">
         </div>
       </div>
       <div class="btn_border">
-        <a class="btn_search"
-             v-bind:href="'http://localhost:8081/catalog/category=' + categoryId +
-          '&page=' + 1 +
-          '&collections=' +getStrByArray(getIds()) +
-          '&price-min='+ minPrice.toFixed(2) +
-          '&price-max=' + maxPrice.toFixed(2)">Применить</a>
+<a class="btn_search"
+v-bind:href="'http://localhost:8081/catalog/category=' + categoryId +
+'&page=' + 1 +
+'&collections=' +getStrByArray(getIds()) +
+'&price-min='+ minPriceUrl +
+'&price-max=' + maxPriceUrl ">Применить</a>
       </div>
     </div>
   </div>
@@ -61,6 +41,8 @@ export default {
   name: 'CatalogItemFilter',
   components: {CatalogItem},
   props: {
+    totalMinPrice: {},
+    totalMaxPrice: {},
     priceMin: {},
     priceMax: {},
     productCount: {},
@@ -70,25 +52,18 @@ export default {
   },
   data () {
     return {
-      totalMinPrice: 0,
-      totalMaxPrice: 10000,
       ids: [],
-      collectionColorIsNumber: -1,
+      colorIsNumber: -1,
       filterClickColor: {
         background: '#9974fb'
       },
       mouseMoveColor: {
         background: 'rgba(153,116,251,0.61)'
       },
-      tmpMaxPrice: 10000,
-      tmpMinPrice: 0,
-      tmpMinInpWidth: 100,
-      tmpMaxInpWidth: 100,
-      minPrice: Number.parseFloat(this.priceMin),
-      maxPrice: Number.parseFloat(this.priceMax),
-      minInpWidth: 100,
-      maxInpWidth: 100,
-      absRange: 10000,
+      minPrice: '',
+      minPriceUrl: '',
+      maxPrice: '',
+      maxPriceUrl: '',
       collections: [],
       collectionFilters: []
     }
@@ -134,16 +109,6 @@ export default {
       }
       this.collectionFilters.push({index: index, collectionId: this.collections[index].collection_id})
     },
-    setMaxWidth () {
-      this.tmpMinInpWidth = this.minInpWidth;
-      this.tmpMaxPrice = this.maxPrice;
-      this.maxInpWidth = (this.absRange - this.minPrice) * (100 / this.absRange)
-    },
-    setMinWidth () {
-      this.tmpMaxInpWidth = this.maxInpWidth;
-      this.tmpMinPrice = this.minPrice;
-      this.minInpWidth = (this.absRange - (this.absRange - this.maxPrice)) * (100 / this.absRange)
-    },
     setCollectionIdsArray () {
       this.ids = [];
       this.collectionFilters.forEach(item => this.ids.push(item.collectionId))
@@ -151,30 +116,37 @@ export default {
     getIds () {
       this.setCollectionIdsArray();
       return this.ids
-    },
-    crateFilterBody () {
-      this.setCollectionIdsArray();
-      return JSON.stringify({
-        categoryId: this.categoryId,
-        collectionIds: this.ids,
-        maxPrice: this.maxPrice.toFixed(2),
-        minPrice: this.minPrice.toFixed(2),
-        page: this.numPage - 1
-      })
-    },
-    filterData () {
-      this.$emit('filterChangeData', this.crateFilterBody())
     }
   },
   watch: {
     minPrice: function () {
-      this.setMaxWidth()
+      this.minPrice = this.minPrice.replace(/\D/, '');
+      if (this.minPrice === '') {
+        this.minPriceUrl = ''
+      } else {
+        this.minPriceUrl = Number.parseInt(this.minPrice).toFixed(2)
+      }
     },
     maxPrice: function () {
-      this.setMinWidth()
+      this.maxPrice = this.maxPrice.replace(/\D/, '');
+      if (this.maxPrice === '') {
+        this.maxPriceUrl = ''
+      } else {
+        this.maxPriceUrl = Number.parseInt(this.maxPrice).toFixed(2)
+      }
     }
   },
   created: function init () {
+    var min = Number.parseFloat(this.priceMin);
+    if (min !== Number.parseFloat(this.totalMinPrice)) {
+      this.minPrice = min;
+      this.minPriceUrl = min.toFixed(2)
+    }
+    var max = Number.parseFloat(this.priceMax);
+    if (max !== Number.parseFloat(this.totalMaxPrice)) {
+      this.maxPrice = max;
+      this.maxPriceUrl = max.toFixed(2)
+    }
     fetch(process.env.HOST + '/api/collection/all/byProductOfCategory?categoryId=' + this.categoryId, {
       method: 'get'
     })
@@ -189,11 +161,10 @@ export default {
               }
             }
           }
-          this.filterData();
           this.collections = commits
         }
       })
-    }
+  }
 }
 </script>
 

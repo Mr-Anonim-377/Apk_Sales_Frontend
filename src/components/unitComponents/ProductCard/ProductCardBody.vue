@@ -60,12 +60,10 @@
                 </a>
               </a>
               <div class="text_cart_title text_cart_title_new">Оценка пользователей</div>
-              <div class="cart_score">
-                <div class="score"></div>
-                <div class="score"></div>
-                <div class="score"></div>
-                <div class="score score_col"></div>
-                <div class="score score_col"></div>
+              <div class="rating-result">
+            <span
+              v-for="(index) in starArray"
+              v-bind:class="isActivClass(index)"></span>
               </div>
             </div>
           </div>
@@ -101,6 +99,8 @@ export default {
   },
   data () {
     return {
+      mark: 0,
+      starArray: [0, 1, 2, 3, 4],
       isShowCurrentImage: false,
       isButtonShowCurrentImage: false,
       isCurrentButtonShowCurrentImage: false,
@@ -118,6 +118,9 @@ export default {
       // eslint-disable-next-line
         .then(commits => {
         this.product = commits;
+        this.mark = this.product.averageMark === null
+          ? 1
+          : Math.round(Number.parseFloat(this.product.averageMark));
         this.currentImage = commits.image;
         this.images.push({image: this.currentImage});
         commits.images.forEach(item => this.images.push(item));
@@ -146,6 +149,9 @@ export default {
   },
 
   methods: {
+    isActivClass (index) {
+      return index < this.mark ? 'active' : ''
+    },
     saveCurrentImage (currentImage) {
       this.currentImage = currentImage.image
     },
@@ -164,6 +170,30 @@ export default {
 
 <style>
   @import '../../../../static/CSS/CSS.css';
+
+  .rating-result {
+   margin-bottom: 70px;
+    position: relative;
+    width: 265px;
+    left: 18%;
+    display: flex;
+    z-index: 90;
+  }
+  .rating-result span {
+    padding: 0;
+    font-size: 80px;
+    line-height: 1;
+    color: #b7adbf;
+    text-shadow: 1px 1px #bbb;
+    margin-left: 10px;
+  }
+  .rating-result > span:before {
+    content: '★';
+  }
+  .rating-result > span.active {
+    color: gold;
+    text-shadow: 1px 1px #c60;
+  }
 
   a {
     cursor: pointer;
