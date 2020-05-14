@@ -10,7 +10,7 @@
         <br>
         <div class="shop-line" v-if="shoppingCart.products.length > 0"></div>
         <br>
-        <div class="section_good">
+        <div class="section_good_shop">
           <div class="section_goodItem"
                v-for="product in shoppingCart.products"
                :product="product"
@@ -52,7 +52,7 @@
             <div class="totalCart text_shoppingCart" v-if="shoppingCart.products.length > 0">Сумма заказа: {{shoppingCart.totalAmount}}₽</div>
             <div class="quantityCart text_shoppingCart" v-if="shoppingCart.products.length > 0">Колличество: {{shoppingCart.countProductsPieces}}</div>
           </div>
-          <div class="cart-btn" v-if="shoppingCart.products.length > 0">
+          <div class="cart-btn_shop" v-if="shoppingCart.products.length > 0">
             <div class="btn_return">ПРОДОЛЖИТЬ ПОКУПКИ</div>
             <div class="btn_shop">ОФОРМИТЬ ЗАКАЗ</div>
           </div>
@@ -219,5 +219,20 @@ export default {
   }
   .btn_return:active {
     background: none;
+  }
+  .section_good_shop{
+    display: block;
+    width: 67%;
+  }
+  .cart-btn_shop{
+    text-align: center;
+    margin-top: 20px;
+    outline: none;
+    z-index: 100;
+    position: relative;
+    padding-left: 245px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
   }
 </style>
