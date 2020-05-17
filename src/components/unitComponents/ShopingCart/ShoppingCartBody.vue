@@ -24,11 +24,11 @@
                 <div class="main_goods_section">
                   <span class="main_goods_text">{{product.productName}}</span>
                   <br>
-                  <a class="main_goods_text_pay">Цена: {{product.product.price}}₽</a>
-                  <div class="rating-resul">
-                    <span class="active"></span>
-                    <span class="active"></span>
-                    <span class="active"></span>
+                  <a class="main_goods_text_pay">{{product.product.price}}₽</a>
+                  <div class="rating-result_shop">
+                    <span class="active_shop"></span>
+                    <span class="active_shop"></span>
+                    <span class="active_shop"></span>
                     <span></span>
                     <span></span>
                   </div>
@@ -104,13 +104,28 @@ export default {
     display: inline-flex;
     z-index: 100;
   }
-  .rating-resul{
+  .rating-result_shop {
     bottom: 4px;
-    position: relative;
     width: 265px;
     left: 116px;
     display: flex;
-    margin: 0;
+    float: right;
+    margin-right: 20px;
+  }
+  .rating-result_shop span {
+    padding: 0;
+    font-size: 60px;
+    line-height: 1;
+    color: lightgrey;
+    text-shadow: 1px 1px #bbb;
+    margin-left: 10px;
+  }
+  .rating-result_shop > span:before {
+    content: '★';
+  }
+  .rating-result_shop > span.active_shop{
+    color: gold;
+    text-shadow: 1px 1px #c60;
   }
   .error_catalog {
     left: 0;

@@ -47,7 +47,8 @@
                     <div class="search_product_cart_interactions"
                          @click="addProduct(product)">
                       <img class="search_product_cart_img search_product_cart_img_basked"
-                           src="../../../../static/CSS/pictures/basket.png" alt=""/></div>
+                           src="../../../../static/CSS/pictures/basket.png" alt=""
+                      /></div>
                   </div>
                 </div>
                 <a
@@ -64,13 +65,13 @@
                 {{shopingCard.countProducts === null || shopingCard.countProducts === "0"
                 ?0
                 :shopingCard.countProducts}}
-              </div>
+              </div><a v-bind:href="'http://localhost:8081/shopping'">
               <img src="https://mr-anonim-377.github.io/Sales/src/main/resources/static/CSS/pictures/Korzina.png"
-              >
+              ></a>
             </div>
-            <div class="login_picture">
+            <div class="login_picture"> <a v-bind:href="'http://localhost:8081/account'">
               <img src="https://mr-anonim-377.github.io/Sales/src/main/resources/static/CSS/pictures/log_in 1.png"
-              >
+              ></a>
             </div>
           </div>
         </div>

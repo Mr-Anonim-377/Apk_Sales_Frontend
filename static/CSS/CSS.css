@@ -79,9 +79,9 @@ ul::-webkit-scrollbar{
 .input {
   margin-top: 9%;
   margin-bottom: 10%;
-  padding-left: 5%;
   text-align: center;
   display: flex;
+  margin-left: 34px;
 }
 
 .input_search {
@@ -106,7 +106,6 @@ ul::-webkit-scrollbar{
 }
 
 .basket_regist {
-  padding-left: 3%;
   height: 63px;
   margin-top: 8%;
   margin-bottom: 10%;
@@ -449,10 +448,17 @@ main {
 .section_footer_size {
   height: 100%;
   width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 1140px;
+  z-index: 90;
 }
 
 .footer_size {
   height: 200px;
+  display: flex;
+  position: relative;
+  z-index: 100;
 }
 
 .row_product_child_bottom {
