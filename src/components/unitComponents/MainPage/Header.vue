@@ -7,7 +7,7 @@
           <a class="row_logo"
              href="http://localhost:8081/">
             <img
-              class="logo_pictures"
+              class="logo_pictures active_grayscale"
               src="https://mr-anonim-377.github.io/Sales/src/main/resources/static/CSS/pictures/Logotip.png"
             >
           </a>
@@ -58,18 +58,23 @@
             </div>
           </div>
           <div class="basket_regist">
-            <div class="image_header_conatiner">
-              <div class="basket_product_count">
-                {{shopingCard.countProducts === null || shopingCard.countProducts === "0"
-                ?0
-                :shopingCard.countProducts}}
+
+              <div class="image_header_conatiner">
+                <div class="basket_product_count">
+                  {{shopingCard.countProducts === null || shopingCard.countProducts === "0"
+                  ?0
+                  :shopingCard.countProducts}}
+                </div>
+                <a href="/shoppingCart">
+                  <img class="active_grayscale" src="https://mr-anonim-377.github.io/Sales/src/main/resources/static/CSS/pictures/Korzina.png">
+                </a>
               </div>
-              <img src="https://mr-anonim-377.github.io/Sales/src/main/resources/static/CSS/pictures/Korzina.png">
-            </div>
             <div class="image_header_conatiner image_header_conatiner_mmargin_left" v-on-clickaway="logInOutsideClick">
-              <div @click="isUserPopUp = true">
-                <img src="https://mr-anonim-377.github.io/Sales/src/main/resources/static/CSS/pictures/log_in 1.png">
-              </div>
+              <a>
+                <div @click="isUserPopUp = true">
+                  <img class="active_grayscale" src="https://mr-anonim-377.github.io/Sales/src/main/resources/static/CSS/pictures/log_in 1.png">
+                </div>
+              </a>
               <div class="logInPopUp_container" v-if="isUserPopUp">
                 <LogInPopUp v-if="!isUserAuthorized"
                             v-on:refreshUser="refreshUser($event)"></LogInPopUp>
@@ -87,7 +92,7 @@
 
 <script>
 import LogInPopUp from '../UserAction/LogAndSignInPopUp'
-import AutorizedUserData from '../Autorezed/AutorizedUserData'
+import AutorizedUserData from '../UserAction/Autorezed/AutorizedUserData'
 import {directive as onClickaway} from 'vue-clickaway'
 
 export default {
@@ -170,7 +175,7 @@ export default {
       }).then(response => {
         if (response.ok) {
           if (searchStrOld === this.searchStr) {
-            // response.json().then(commits => commits.forEach(item => this.searchResult.push(item)))
+            // response.json().then(commits => commits.forEach(itemCity => this.searchResult.push(itemCity)))
             response.json().then(commits => {
               for (let i = 0; i < commits.products.length; i++) {
                 if (searchStrOld === this.searchStr) {
@@ -189,7 +194,7 @@ export default {
         }
       })
     },
-    refreshUser (isRefresh) {
+    refreshUser(isRefresh) {
       if (isRefresh) {
         fetch(process.env.HOST + '/api/user', {
           method: 'get',
@@ -199,17 +204,18 @@ export default {
           .then(commits => {
             if (commits.email !== null) {
               this.isUserAuthorized = true;
-              this.user = commits
+              this.user = commits;
+              this.$emit('refreshUser', this.user)
             } else {
               this.user = {};
-              this.isUserAuthorized = false
+              this.isUserAuthorized = false;
+              this.$emit('refreshUser', this.user)
             }
           })
       }
     }
   },
   created: function init () {
-    this.refreshUser(true)
   },
   watch: {
     searchStr: function () {
@@ -228,22 +234,6 @@ export default {
 </script>
 
 <style >
-
-  img {
-    transition: all .12s ease-out;
-  }
-
-  a:hover, img:hover {
-    -webkit-filter: drop-shadow(0 0 5px rgba(178, 38, 205, 0.81));
-    filter: drop-shadow(0 0 5px rgba(178, 38, 205, 0.81));
-    background-position: 0 0;
-  }
-
-  a:active, img:active {
-    -webkit-filter: grayscale(50%) drop-shadow(0 0 5px rgba(178, 38, 205, 0.81));
-    filter: grayscale(50%) drop-shadow(0 0 5px rgba(178, 38, 205, 0.81));
-  }
-
   .image_header_conatiner_mmargin_left {
     margin-left: 11%;
   }
@@ -253,5 +243,8 @@ export default {
     min-height: 70px;
     top: 76%;
     left: 76.5%;
+  }
+  .active_grayscale:active {
+    filter: grayscale(50%)
   }
 </style>

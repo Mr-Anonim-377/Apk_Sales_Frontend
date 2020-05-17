@@ -1,75 +1,90 @@
 <template>
   <div class="pop_up_registration">
     <div class="pop_up__blur"></div>
-    <div class="users_choice_action">
-      <div
-        v-bind:class="indexOfColored(1)"
-        @mousemove="setColorIsNumber(1)"
-        class="action_container">Log In
-      </div>
-      <div
-        v-bind:class="indexOfColored(2)"
-        @mousemove="setColorIsNumber(2)"
-        class="action_container ation_container_left">Sign in
+    <div class="autoresation_wait_container" v-if="isLogIn">
+      <div class="banter-loader">
+        <div class="banter-loader__box"></div>
+        <div class="banter-loader__box"></div>
+        <div class="banter-loader__box"></div>
+        <div class="banter-loader__box"></div>
+        <div class="banter-loader__box"></div>
+        <div class="banter-loader__box"></div>
+        <div class="banter-loader__box"></div>
+        <div class="banter-loader__box"></div>
+        <div class="banter-loader__box"></div>
       </div>
     </div>
-    <div class="use_pop_up_container" v-if="colorIsNumber === 1">
-      <form v-on:submit="logIn" action="#" method="post" >
-        <div class="log_in_container_block">
-          <p>
-            Login
-          </p>
-          <input type="text" v-model="login">
+    <div v-if="!isLogIn">
+      <div class="users_choice_action">
+        <div
+          v-bind:class="indexOfColored(1)"
+          @mousemove="setColorIsNumber(1)"
+          class="action_container">Log In
         </div>
-        <div class="logIn_input_container log_in_container_block">
-          <p>
-            Password
-          </p>
-          <input type="password" v-model="password">
+        <div
+          v-bind:class="indexOfColored(2)"
+          @mousemove="setColorIsNumber(2)"
+          class="action_container ation_container_left">Sign in
         </div>
-        <div class="pop_up_error_container">
-          <div class="pop_up_error" v-if="logInError.length !== 0" >{{logInError}}</div>
-        </div>
-        <button type="submit" class="pop_up_button">Log In</button>
-      </form>
-    </div>
-    <div class="use_pop_up_container" v-if="colorIsNumber === 2">
-      <form  v-on:submit="signIn" action="#" method="post">
-        <div class="log_in_container_block">
-          <p>
-            E-mail
-          </p>
-          <input type="text" v-model="email">
-        </div>
-        <div class="logIn_input_container log_in_container_block">
-          <p>
-            Phone
-          </p>
-          <masked-input @input="registerPhone = arguments[1]" mask="\+\7 (111) 111-11-11" placeholder="" />
-        </div>
-        <div class="logIn_input_container log_in_container_block">
-          <p>
-            Last name
-          </p>
-          <input type="text" v-model="lastName">
-        </div>
-        <div class="logIn_input_container log_in_container_block">
-          <p>
-            First name
-          </p>
-          <input type="text" v-model="firstName">
-        </div>
-        <div class="logIn_input_container log_in_container_block">
-          <p>
-            Password
-          </p>
-          <input type="password" v-model="registerPass">
-          <div class="pop_up_error_container">
-            <div class="pop_up_error" v-if="helpStrByError.length > 0" v-for="itemError in helpStrByError">{{itemError}}</div>
+      </div>
+      <div class="use_pop_up_container" v-if="colorIsNumber === 1">
+        <form v-on:submit="logIn" action="#" method="post" >
+          <div class="log_in_container_block">
+            <p>
+              Login
+            </p>
+            <input type="text" v-model="login">
           </div>
-          <button type="submit" class="pop_up_button">Sign In</button>
-        </div>
-      </form>
+          <div class="logIn_input_container log_in_container_block">
+            <p>
+              Password
+            </p>
+            <input type="password" v-model="password">
+          </div>
+          <div class="pop_up_error_container">
+            <div class="pop_up_error" v-if="logInError.length !== 0" >{{logInError}}</div>
+          </div>
+          <button type="submit" class="pop_up_button">Log In</button>
+        </form>
+      </div>
+      <div class="use_pop_up_container" v-if="colorIsNumber === 2">
+        <form  v-on:submit="signIn" action="#" method="post">
+          <div class="log_in_container_block">
+            <p>
+              E-mail
+            </p>
+            <input type="text" v-model="email">
+          </div>
+          <div class="logIn_input_container log_in_container_block">
+            <p>
+              Phone
+            </p>
+            <masked-input @input="registerPhone = arguments[1]" mask="\+\7 (111) 111-11-11" placeholder="" />
+          </div>
+          <div class="logIn_input_container log_in_container_block">
+            <p>
+              Last name
+            </p>
+            <input type="text" v-model="lastName">
+          </div>
+          <div class="logIn_input_container log_in_container_block">
+            <p>
+              First name
+            </p>
+            <input type="text" v-model="firstName">
+          </div>
+          <div class="logIn_input_container log_in_container_block">
+            <p>
+              Password
+            </p>
+            <input type="password" v-model="registerPass">
+            <div class="pop_up_error_container">
+              <div class="pop_up_error" v-if="helpStrByError.length > 0" v-for="itemError in helpStrByError">{{itemError}}</div>
+            </div>
+            <button type="submit" class="pop_up_button">Sign In</button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </template>
@@ -95,7 +110,8 @@ export default {
       registerPhone: '',
       lastName: '',
       firstName: '',
-      registerPass: ''
+      registerPass: '',
+      isLogIn: false
     }
   },
   methods: {
@@ -105,6 +121,7 @@ export default {
     },
     logIn: function (event) {
       event.preventDefault();
+      this.isLogIn = true;
       fetch(process.env.HOST + '/api/user/logIn', {
         method: 'post',
         credentials: 'include',
@@ -115,11 +132,14 @@ export default {
         body: JSON.stringify({userLogin: this.login, userPassword: this.password})
       }).then(response => response.json()).then(commits => {
         if (commits.type === 'LoginNotValidate') {
+          this.isLogIn = false;
           this.logInError = 'Не верный логин'
         } else
         if (commits.type === 'PasswordNotValidate') {
+          this.isLogIn = false;
           this.logInError = 'Не верный пароль'
         } else if (commits.type === 'InternalServerError') {
+          this.isLogIn = false;
           this.logInError = 'Сервис не доступен, ортитесь к Администратору'
         } else {
           this.$emit('refreshUser', true)
@@ -136,6 +156,7 @@ export default {
     },
     signIn: function (event) {
       event.preventDefault();
+      this.isLogIn = true;
       this.helpStrByError = [];
       if (!this.validateEmail(this.email)) {
         this.helpStrByError.push('Не правильная почта')
@@ -175,9 +196,12 @@ export default {
           if (response.ok) {
             this.$emit('refreshUser', true)
           } else {
-            this.helpStrByError.push('Пользователь с такими телефоном и почтой уже существует')
+            this.helpStrByError.push('Пользователь с такими телефоном и почтой уже существует');
+            this.isLogIn = false
           }
         })
+      } else {
+        this.isLogIn = false
       }
     }
 
@@ -225,7 +249,6 @@ export default {
   }
 
   .users_choice_action {
-    margin-top: 7%;
     display: flex;
     z-index: 99;
     height: 20px;
@@ -281,10 +304,6 @@ export default {
     filter: grayscale(30%) drop-shadow(0 0 5px rgba(178, 38, 205, 0.81));
   }
 
-  .logInBtn_container {
-
-  }
-
   .pop_up_error {
     margin-top: 1%;
     margin-left: 5%;
@@ -299,5 +318,21 @@ export default {
 
   .pop_up_error_container {
     margin-top: 4%;
+  }
+
+  .autoresation_wait_container {
+    padding-top: 50%;
+    min-height: 224px;
+    position: relative;
+    z-index: 100;
+    margin-left: 5%;
+    border-radius: 30px;
+    filter: grayscale(30%) drop-shadow(0 0 5px rgb(204, 255, 147));
+    color: #0bcc0b;
+    width: 90%;
+    height: fit-content;
+    padding-bottom: 2px;
+    text-align: center;
+    font-size: 25px;
   }
 </style>

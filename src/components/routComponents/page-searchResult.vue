@@ -5,6 +5,7 @@
       v-on:addProduct="refreshChopingCart($event)"/>
     <Navigation/>
     <SearchhResult v-on:addProduct="refreshChopingCart($event)"
+                   :user="user"
                    :page="page"
                    :searchStr="searchStr"
                    :collectionIds="collectionIds"
@@ -33,7 +34,8 @@ export default {
   },
   data () {
     return {
-      cart: {}
+      cart: {},
+      user: {}
     }
   },
   methods: {

@@ -38,6 +38,7 @@
                  v-if="products.length > 0">Результаты поиска по запросу "{{searchStr}}":
             </div>
             <CatalogItemProduct
+              :user="user"
               v-for="productCategory in products"
               :productCategory="productCategory"
               v-on:addProduct="refreshProductCount($event)"></CatalogItemProduct>
@@ -89,6 +90,7 @@ import SearchResultFilter from './SearchResultFilter'
 
 export default {
   props: {
+    user: {},
     searchStr: {},
     page: {},
     collectionIds: {},

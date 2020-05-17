@@ -182,7 +182,7 @@ export default {
   @import '../../../../static/CSS/CSS.css';
 
   .rating-result {
-   margin-bottom: 70px;
+   margin-bottom: 60px;
     position: relative;
     width: 265px;
     left: 18%;
@@ -277,6 +277,7 @@ export default {
     position: relative;
     top: 49%;
     left: 43%;
+    z-index: 99;
   }
 
   .image_show_container_exit {

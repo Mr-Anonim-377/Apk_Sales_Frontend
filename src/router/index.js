@@ -5,7 +5,9 @@ import catalog from '../components/routComponents/page-catalog'
 import collection from '../components/routComponents/page-collection'
 import itemCard from '../components/routComponents/page-productCard'
 import searchResult from '../components/routComponents/page-searchResult'
-import shoppingCard from '../components/routComponents/page-shoppingCart'
+import shoppingCart from '../components/routComponents/page-shoppingCart'
+import thanks from '../components/routComponents/page-thankList'
+import registOrder from '../components/routComponents/page-orderRegistr'
 
 Vue.use(Router);
 
@@ -32,8 +34,8 @@ export default new Router({
       props: true
     },
     {
-      path: '/shopping',
-      component: shoppingCard
+      path: '/shoppingCart',
+      component: shoppingCart
       // props: true
     },
     {
@@ -53,7 +55,16 @@ export default new Router({
         '&price-max=:priceMax?',
       component: collection,
       props: true
+    },
+    {
+      path: '/order/thanks',
+      component: thanks
+      // props: true
+    },
+    {
+      path: '/order/create',
+      component: registOrder
+      // props: true
     }
-
   ]
 })

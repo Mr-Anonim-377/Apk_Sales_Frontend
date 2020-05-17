@@ -7,7 +7,6 @@
           class="article_pictures"
           :src="collection.image.imagePatch"
         />
-        <br>
         {{collection.collectionName}}
       </div>
     </div>

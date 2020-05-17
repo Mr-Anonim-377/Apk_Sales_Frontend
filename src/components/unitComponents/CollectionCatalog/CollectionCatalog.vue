@@ -39,6 +39,7 @@
           <CatalogProduct
             v-for="productCategory in products"
             :productCategory="productCategory"
+            :user="user"
             v-on:addProduct="refreshProductCount($event)"
           />
         </div>
@@ -90,6 +91,7 @@ import CollectionFilter from '../CollectionCatalog/CollectionCategoryFilter'
 
 export default {
   props: {
+    user: {},
     priceMin: {},
     priceMax: {},
     categoryIds: {},

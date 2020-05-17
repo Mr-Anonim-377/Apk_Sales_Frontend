@@ -1,7 +1,20 @@
 <template>
   <div class="pop_up_registration">
     <div class="pop_up__blur"></div>
-    <div class="user_pop_up_card_container">
+    <div class="autoresation_wait_container" v-if="isLogOut">
+      <div class="banter-loader">
+        <div class="banter-loader__box"></div>
+        <div class="banter-loader__box"></div>
+        <div class="banter-loader__box"></div>
+        <div class="banter-loader__box"></div>
+        <div class="banter-loader__box"></div>
+        <div class="banter-loader__box"></div>
+        <div class="banter-loader__box"></div>
+        <div class="banter-loader__box"></div>
+        <div class="banter-loader__box"></div>
+      </div>
+    </div>
+    <div class="user_pop_up_card_container" v-if="!isLogOut">
       <div class="user_data_container">
         <div class="user_image_container">
           <img v-bind:src="user.image.imagePatch">
@@ -42,11 +55,13 @@ export default {
   },
   data () {
     return {
-      colorIsNumber: 1
+      colorIsNumber: 1,
+      isLogOut: false
     }
   },
   methods: {
     logOut () {
+      this.isLogOut = true;
       fetch(process.env.HOST + '/api/user/logOut', {
         method: 'get',
         credentials: 'include'
@@ -77,7 +92,6 @@ export default {
   }
 
   .pop_up_registration {
-
     width: 200px;
     min-height: 70px;
   }
