@@ -46,7 +46,8 @@
                     <div class="search_product_cart_interactions"
                          @click="addProduct(product)">
                       <img class="search_product_cart_img search_product_cart_img_basked"
-                           src="../../../../static/CSS/pictures/basket.png" alt=""/></div>
+                           src="../../../../static/CSS/pictures/basket.png" alt=""
+                      /></div>
                   </div>
                 </div>
                 <a

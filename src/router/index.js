@@ -8,6 +8,10 @@ import searchResult from '../components/routComponents/page-searchResult'
 import shoppingCart from '../components/routComponents/page-shoppingCart'
 import thanks from '../components/routComponents/page-thankList'
 import registOrder from '../components/routComponents/page-orderRegistr'
+import shoppingCard from '../components/routComponents/page-shoppingCart'
+import Thanks from '../components/routComponents/page-thankList'
+import registOrder from '../components/routComponents/page-orderRegistr'
+import Account from '../components/routComponents/page-account'
 
 Vue.use(Router);
 
@@ -64,6 +68,11 @@ export default new Router({
     {
       path: '/order/create',
       component: registOrder
+      // props: true
+    },
+    {
+      path: '/account',
+      component: Account
       // props: true
     }
   ]
