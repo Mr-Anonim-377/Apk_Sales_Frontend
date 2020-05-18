@@ -5,8 +5,8 @@ import catalog from '../components/routComponents/page-catalog'
 import collection from '../components/routComponents/page-collection'
 import itemCard from '../components/routComponents/page-productCard'
 import searchResult from '../components/routComponents/page-searchResult'
-import shoppingCard from '../components/routComponents/page-shoppingCart'
-import Thanks from '../components/routComponents/page-thankList'
+import shoppingCart from '../components/routComponents/page-shoppingCart'
+import thanks from '../components/routComponents/page-thankList'
 import registOrder from '../components/routComponents/page-orderRegistr'
 import Account from '../components/routComponents/page-account'
 
@@ -35,8 +35,8 @@ export default new Router({
       props: true
     },
     {
-      path: '/shopping',
-      component: shoppingCard
+      path: '/shoppingCart',
+      component: shoppingCart
       // props: true
     },
     {
@@ -58,12 +58,12 @@ export default new Router({
       props: true
     },
     {
-      path: '/thanks',
-      component: Thanks
+      path: '/order/thanks',
+      component: thanks
       // props: true
     },
     {
-      path: '/registrationOrder',
+      path: '/order/create',
       component: registOrder
       // props: true
     },

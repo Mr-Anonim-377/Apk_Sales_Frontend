@@ -6,11 +6,8 @@
         <div class="thankList_text">
           <h1 class="thankList_etext_h">Спасибо!</h1>
           <br>
-          <br>
-          <p class="thankList_text_p">Ваш заказ успешно оформлен. Админитсратор связется с вами в ближйщее время.</p>
-          <br>
-          <br>
-          <p class="thankList_text_p">Номер вашего заказ - 333 </p>
+          <p class="thankList_text">Ваш заказ успешно оформлен. Админитсратор связется с вами в ближйщее время.</p>
+          <p class="thankList_text_p text_decoration">Номер вашего заказ - 333 </p>
         </div>
       </div>
     </div>
@@ -23,6 +20,14 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
+  @import '../../../static/CSS/CSS.css';
 
+  .thankList_text {
+  padding-bottom: 15px;
+  }
+
+  .text_decoration {
+    font-weight: bold;
+  }
 </style>

@@ -75,78 +75,78 @@
   </section>
 </template>
 <script>
-  import NavigationUnit from './NavigationUnit'
-  import {directive as onClickaway} from 'vue-clickaway'
+import NavigationUnit from './NavigationUnit'
+import {directive as onClickaway} from 'vue-clickaway'
 
-  export default {
-    directives: {
-      onClickaway: onClickaway
-    },
-    data() {
-      return {
-        filterClickColor: {
-          background: 'rgba(153, 116, 251, 0.81)'
-        },
-        lastIndex: -1,
-        collectionColorIsNumber: -1,
-        subCategory: [],
-        isSubVisible: false,
-        subCategoryIndex: -1,
-        navigtion: {},
-        isVisible: false
-      }
-    },
-    components: {NavigationUnit},
-    created: function init() {
-      fetch(process.env.HOST + '/api/navigation', {
-        method: 'get'
-      }).then(response => response.json())
+export default {
+  directives: {
+    onClickaway: onClickaway
+  },
+  data () {
+    return {
+      filterClickColor: {
+        background: 'rgba(153, 116, 251, 0.81)'
+      },
+      lastIndex: -1,
+      colorIsNumber: -1,
+      subCategory: [],
+      isSubVisible: false,
+      subCategoryIndex: -1,
+      navigtion: {},
+      isVisible: false
+    }
+  },
+  components: {NavigationUnit},
+  created: function init () {
+    fetch(process.env.HOST + '/api/navigation', {
+      method: 'get'
+    }).then(response => response.json())
       // eslint-disable-next-line
         .then(commits => {
-          this.navigtion = commits;
-          this.getByLeveOne(commits)
-        })
-    },
-    methods: {
-      indexOfColored(number) {
-        if (number === this.collectionColorIsNumber) {
-          return this.filterClickColor
-        }
-      },
-      setColor(isColor, num) {
-        this.lastIndex = num;
-        if (isColor) {
-          this.colorIsNumber = num
-        } else {
-          this.colorIsNumber = -1
-        }
-      },
-      mouseOverToCategory(subCategory) {
-        this.setColor(false, this.lastIndex);
-        this.subCategory = subCategory
-      },
-      getByLeveOne(array) {
-        for (let i = 0; i < array; i++) {
-          if (array[i].parentCategoryId === null) {
-            this.levelOne.push(array.categoryName)
-          }
-        }
-      },
-      onClickOutside() {
-        this.isVisible = false
-      },
-      isVisibleSubCategoryontainer(index) {
-        if (this.subCategoryIndex === index) {
-          return true
-        } else {
-          return false
-        }
-      },
-      setVisibleSubCategory(index) {
-        this.subCategoryIndex = index
+        this.navigtion = commits;
+        this.getByLeveOne(commits)
+      })
+  },
+  methods: {
+    indexOfColored (number) {
+      if (number === this.colorIsNumber) {
+        return this.filterClickColor
       }
+    },
+    setColor (isColor, num) {
+      this.lastIndex = num;
+      if (isColor) {
+        this.colorIsNumber = num
+      } else {
+        this.colorIsNumber = -1
+      }
+    },
+    mouseOverToCategory (subCategory) {
+      this.setColor(false, this.lastIndex);
+      this.subCategory = subCategory
+    },
+    getByLeveOne (array) {
+      for (let i = 0; i < array; i++) {
+        if (array[i].parentCategoryId === null) {
+          this.levelOne.push(array.categoryName)
+        }
+      }
+    },
+    onClickOutside () {
+      this.isVisible = false
+    },
+    isVisibleSubCategoryontainer (index) {
+      if (this.subCategoryIndex === index) {
+        return true
+      } else {
+        return false
+      }
+    },
+    setVisibleSubCategory (index) {
+      this.subCategoryIndex = index
     }
   }
+}
 </script>
 <style>
   .category_pop_up__main_container_left_non {

@@ -34,26 +34,6 @@
           <input type="text" class="min-price" v-bind:placeholder="'от ' + totalMinPrice" v-model.number="minPrice">
           <input type="text" class="max-price" v-bind:placeholder="'от ' + totalMaxPrice" v-model.number="maxPrice">
         </div>
-        <div class="range-slider">
-          <input class="input_filter_min"
-                 type="range"
-                 min="0"
-                 step="1"
-                 @focus="setMaxWidth"
-                 v-bind:max="tmpMaxPrice"
-                 v-model.number="minPrice"
-                 v-bind:style="{width: tmpMinInpWidth + '%'}"
-          >
-          <input class="input_filter_max"
-                 type="range"
-                 max="10000"
-                 step="1"
-                 @focus="setMinWidth"
-                 v-bind:min="tmpMinPrice"
-                 v-model.number="maxPrice"
-                 v-bind:style="{width: tmpMaxInpWidth + '%'}"
-          >
-        </div>
       </div>
       <div class="btn_border">
         <a class="btn_search"
@@ -91,20 +71,12 @@ export default {
       mouseMoveColor: {
         background: 'rgba(153,116,251,0.61)'
       },
-      tmpMaxPrice: 10000,
-      tmpMinPrice: 0,
-      tmpMinInpWidth: 100,
-      tmpMaxInpWidth: 100,
       minPrice: Number.parseFloat(this.priceMin),
       maxPrice: Number.parseFloat(this.priceMax),
-      minInpWidth: 100,
-      maxInpWidth: 100,
-      absRange: 10000,
       collections: [],
       categories: [],
       collectionFilters: [],
       categoryFilters: [],
-      collectionId: {},
       categoryColorIsNumber: -1
     }
   },

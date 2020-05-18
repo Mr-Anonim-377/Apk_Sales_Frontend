@@ -4,12 +4,15 @@
       <div class="main_back main"></div>
       <div class="main_border">
         <CollectionFilter
+          v-if="products.length >0 || isError"
+          :totalMinPrice="totalMinPrice"
+          :totalMaxPrice="totalMaxPrice"
           :collectionId='collectionId'
           :numPage='page'
           :categoryIds='categoryIdsArray'
           :productCount="products.length"
-          :priceMin="currentPriceMin"
-          :priceMax="currentPriceMax"
+          :priceMin="currentPriceMin.toFixed(2)"
+          :priceMax="currentPriceMax.toFixed(2)"
           v-on:filterChangeData="saveFilterData($event)"></CollectionFilter>
         <div class="main_section">
           <div class="loader" v-if="products.length === 0 && isError === false ">
@@ -36,11 +39,12 @@
           <CatalogProduct
             v-for="productCategory in products"
             :productCategory="productCategory"
+            :user="user"
             v-on:addProduct="refreshProductCount($event)"
           />
         </div>
       </div>
-      <div class="pagination">
+      <div class="pagination" v-if="products.length > 0">
         <div class="error_pagination_non" v-if="this.isError"></div>
         <ul id="pagination-digg"
             v-if="!this.isError">
@@ -87,6 +91,7 @@ import CollectionFilter from '../CollectionCatalog/CollectionCategoryFilter'
 
 export default {
   props: {
+    user: {},
     priceMin: {},
     priceMax: {},
     categoryIds: {},
@@ -166,6 +171,8 @@ export default {
   name: 'CatalogItem',
   data () {
     return {
+      totalMaxPrice: 0,
+      totalMinPrice: 0,
       currentPriceMin: 0,
       currentPriceMax: 0,
       totalPage: 0,
@@ -181,43 +188,57 @@ export default {
     CollectionFilter
   },
   created: function init () {
-    this.currentPriceMin = Number.parseFloat(this.priceMin);
-    this.currentPriceMax = Number.parseFloat(this.priceMax);
-    if (this.priceMin === undefined) {
-      this.currentPriceMin = 0.00
-    }
-    if (this.priceMax === undefined) {
-      this.currentPriceMax = 10000.00
-    }
-    this.refreshPages();
-    var categoryIds = [];
-    if (this.categoryIds !== undefined) {
-      categoryIds = this.categoryIds.split('_')
-    }
-    this.refreshCollectionIdByArray(categoryIds);
-    this.currentRequestJson = {collectionId: this.collectionId,
-      page: Number.parseInt(this.page) - 1,
-      minPrice: this.currentPriceMin,
-      maxPrice: this.currentPriceMax,
-      categoryIds: categoryIds
-    };
-    fetch(process.env.HOST + '/api/products/collection', {
-      method: 'post',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(this.currentRequestJson)
+    fetch(process.env.HOST + '/api/collection/all/getPriceBetween?collectionId=' + this.collectionId, {
+      method: 'get'
     })
       .then(response => response.json())
-    // eslint-disable-next-line no-return-assign
+      // eslint-disable-next-line no-return-assign
       .then(commits => {
-        if (commits.type === 'NoSuchObj') {
-          this.isError = true
-        } else {
-          commits.products.forEach(item => this.products.push(item));
-          this.totalPage = Number.parseInt(commits.pageCount);
-          this.refreshPages()
+        if (commits.type !== 'InternalServerError') {
+          this.collections = commits;
+          this.currentPriceMin = Number.parseInt(this.priceMin);
+          this.currentPriceMax = Number.parseInt(this.priceMax);
+          if (this.priceMin === undefined) {
+            var totalMinPrice = Number.parseInt(commits.totalMinPrice);
+            this.currentPriceMin = totalMinPrice
+          }
+          if (this.priceMax === undefined) {
+            var totalMaxPrice = Number.parseInt(commits.totalMaxPrice);
+            this.currentPriceMax = totalMaxPrice
+          }
+          this.refreshPages();
+          var categoryIds = [];
+          if (this.categoryIds !== undefined) {
+            categoryIds = this.categoryIds.split('_')
+          }
+          this.refreshCollectionIdByArray(categoryIds);
+          this.currentRequestJson = {collectionId: this.collectionId,
+            page: Number.parseInt(this.page) - 1,
+            minPrice: this.currentPriceMin,
+            maxPrice: this.currentPriceMax,
+            categoryIds: categoryIds
+          };
+          fetch(process.env.HOST + '/api/products/collection', {
+            method: 'post',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(this.currentRequestJson)
+          })
+            .then(response => response.json())
+            // eslint-disable-next-line no-return-assign
+            .then(commits => {
+              if (commits.type === 'NoSuchObj') {
+                this.isError = true
+              } else {
+                commits.products.forEach(item => this.products.push(item));
+                this.totalMinPrice = Math.floor(Number.parseFloat(totalMinPrice));
+                this.totalMaxPrice = Math.round(Number.parseFloat(totalMaxPrice));
+                this.totalPage = Number.parseInt(commits.pageCount);
+                this.refreshPages()
+              }
+            })
         }
       })
   }
@@ -310,202 +331,6 @@ export default {
 
   #pagination-digg li a:hover {
     border: solid 2px rgb(206, 94, 226);
-  }
-
-  .loader {
-    height: 100%;
-    z-index: 100;
-    width: 891px
-  }
-
-  .loader .l_main {
-    position: absolute;
-    top: 40%;
-    left: 63%;
-    width: 172px;
-    height: 128px;
-    margin: 0;
-    -webkit-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%)
-  }
-
-  @media (max-width: 550px) {
-    .loader {
-      -webkit-transform: scale(0.75);
-      transform: scale(0.75)
-    }
-  }
-
-  @media (max-width: 440px) {
-    .loader {
-      -webkit-transform: scale(0.5);
-      transform: scale(0.5)
-    }
-  }
-
-  .l_square {
-    position: relative
-  }
-
-  .l_square:nth-child(1) {
-    margin-left: 0px
-  }
-
-  .l_square:nth-child(2) {
-    margin-left: 44px
-  }
-
-  .l_square:nth-child(3) {
-    margin-left: 88px
-  }
-
-  .l_square:nth-child(4) {
-    margin-left: 132px
-  }
-
-  .l_square span {
-    position: absolute;
-    top: 0px;
-    left: 20px;
-    height: 36px;
-    width: 36px;
-    border-radius: 2px;
-    background-color: #af4cfa
-  }
-
-  .l_square span:nth-child(1) {
-    top: 0px
-  }
-
-  .l_square span:nth-child(2) {
-    top: 44px
-  }
-
-  .l_square span:nth-child(3) {
-    top: 88px
-  }
-
-  .l_square:nth-child(1) span {
-    -webkit-animation: animsquare1 2s infinite ease-in;
-    animation: animsquare1 2s infinite ease-in
-  }
-
-  .l_square:nth-child(2) span {
-    -webkit-animation: animsquare2 2s infinite ease-in;
-    animation: animsquare2 2s infinite ease-in
-  }
-
-  .l_square:nth-child(3) span {
-    -webkit-animation: animsquare3 2s infinite ease-in;
-    animation: animsquare3 2s infinite ease-in
-  }
-
-  .l_square:nth-child(4) span {
-    -webkit-animation: animsquare4 2s infinite ease-in;
-    animation: animsquare4 2s infinite ease-in
-  }
-
-  .l_square span:nth-child(1) {
-    -webkit-animation-delay: 0.00s;
-    animation-delay: 0.00s
-  }
-
-  .l_square span:nth-child(2) {
-    -webkit-animation-delay: 0.15s;
-    animation-delay: 0.15s
-  }
-
-  .l_square span:nth-child(3) {
-    -webkit-animation-delay: 0.30s;
-    animation-delay: 0.30s
-  }
-
-  @-webkit-keyframes animsquare1 {
-    0%, 5%, 95%, 100% {
-      -webkit-transform: translate(0px, 0px) rotate(0deg);
-      transform: translate(0px, 0px) rotate(0deg)
-    }
-    30%, 70% {
-      -webkit-transform: translate(-40px, 0px) rotate(-90deg);
-      transform: translate(-40px, 0px) rotate(-90deg)
-    }
-  }
-
-  @keyframes animsquare1 {
-    0%, 5%, 95%, 100% {
-      -webkit-transform: translate(0px, 0px) rotate(0deg);
-      transform: translate(0px, 0px) rotate(0deg)
-    }
-    30%, 70% {
-      -webkit-transform: translate(-40px, 0px) rotate(-90deg);
-      transform: translate(-40px, 0px) rotate(-90deg)
-    }
-  }
-
-  @-webkit-keyframes animsquare2 {
-    0%, 10%, 90%, 100% {
-      -webkit-transform: translate(0px, 0px) rotate(0deg);
-      transform: translate(0px, 0px) rotate(0deg)
-    }
-    35%, 65% {
-      -webkit-transform: translate(-40px, 0px) rotate(-90deg);
-      transform: translate(-40px, 0px) rotate(-90deg)
-    }
-  }
-
-  @keyframes animsquare2 {
-    0%, 10%, 90%, 100% {
-      -webkit-transform: translate(0px, 0px) rotate(0deg);
-      transform: translate(0px, 0px) rotate(0deg)
-    }
-    35%, 65% {
-      -webkit-transform: translate(-40px, 0px) rotate(-90deg);
-      transform: translate(-40px, 0px) rotate(-90deg)
-    }
-  }
-
-  @-webkit-keyframes animsquare3 {
-    0%, 15%, 85%, 100% {
-      -webkit-transform: translate(0px, 0px) rotate(0deg);
-      transform: translate(0px, 0px) rotate(0deg)
-    }
-    40%, 60% {
-      -webkit-transform: translate(-40px, 0px) rotate(-90deg);
-      transform: translate(-40px, 0px) rotate(-90deg)
-    }
-  }
-
-  @keyframes animsquare3 {
-    0%, 15%, 85%, 100% {
-      -webkit-transform: translate(0px, 0px) rotate(0deg);
-      transform: translate(0px, 0px) rotate(0deg)
-    }
-    40%, 60% {
-      -webkit-transform: translate(-40px, 0px) rotate(-90deg);
-      transform: translate(-40px, 0px) rotate(-90deg)
-    }
-  }
-
-  @-webkit-keyframes animsquare4 {
-    0%, 20%, 80%, 100% {
-      -webkit-transform: translate(0px, 0px) rotate(0deg);
-      transform: translate(0px, 0px) rotate(0deg)
-    }
-    45%, 55% {
-      -webkit-transform: translate(-40px, 0px) rotate(-90deg);
-      transform: translate(-40px, 0px) rotate(-90deg)
-    }
-  }
-
-  @keyframes animsquare4 {
-    0%, 20%, 80%, 100% {
-      -webkit-transform: translate(0px, 0px) rotate(0deg);
-      transform: translate(0px, 0px) rotate(0deg)
-    }
-    45%, 55% {
-      -webkit-transform: translate(-40px, 0px) rotate(-90deg);
-      transform: translate(-40px, 0px) rotate(-90deg)
-    }
   }
 
   .error_pagination_non {

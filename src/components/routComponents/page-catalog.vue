@@ -2,9 +2,11 @@
   <div id="main-catalog">
     <Header
       :shopingCard="cart"
-      v-on:addProduct="refreshChopingCart($event)"/>
+      v-on:addProduct="refreshChopingCart($event)"
+      v-on:refreshUser="user = $event"/>
     <Navigation/>
     <CatalogItem
+      :user="user"
       :categoryId="categoryId"
       :page="page"
       :collectionIds="collectionIds"
@@ -33,6 +35,7 @@ export default {
   },
   data () {
     return {
+      user: {},
       cart: {}
     }
   },

@@ -2,8 +2,10 @@
   <section class = "section">
     <div class="section_main_product">
       <div class = "main"></div>
-      <div class="error_catalog" v-if="shoppingCart.products.length === 0"></div>
-      <div class="text_shoppingCart" v-if="shoppingCart.products.length === 0">Корзина пуста</div>
+      <div class="error_empty_container" v-if="shoppingCart.products.length === 0">
+        <div class="error_catalog" ></div>
+        <div class="text_shoppingCart">Корзина пуста</div>
+      </div>
       <div class ="basket_container basket_container_section">
         <br>
         <H1 class="textCart" v-if="shoppingCart.products.length > 0">Корзина заказов</H1>
@@ -24,11 +26,11 @@
                 <div class="main_goods_section">
                   <span class="main_goods_text">{{product.productName}}</span>
                   <br>
-                  <a class="main_goods_text_pay">{{product.product.price}}₽</a>
-                  <div class="rating-result_shop">
-                    <span class="active_shop"></span>
-                    <span class="active_shop"></span>
-                    <span class="active_shop"></span>
+                  <a class="main_goods_text_pay">Цена: {{product.product.price}}₽</a>
+                  <div class="rating-resul">
+                    <span class="active"></span>
+                    <span class="active"></span>
+                    <span class="active"></span>
                     <span></span>
                     <span></span>
                   </div>
@@ -53,8 +55,12 @@
             <div class="quantityCart text_shoppingCart" v-if="shoppingCart.products.length > 0">Колличество: {{shoppingCart.countProductsPieces}}</div>
           </div>
           <div class="cart-btn_shop" v-if="shoppingCart.products.length > 0">
-            <div class="btn_return">ПРОДОЛЖИТЬ ПОКУПКИ</div>
-            <div class="btn_shop">ОФОРМИТЬ ЗАКАЗ</div>
+            <a href="/">
+              <div class="btn_return">НА ГЛАВНУЮ СТРАНИЦУ</div>
+            </a>
+            <a href="/order/create">
+              <div class="btn_shop">ОФОРМИТЬ ЗАКАЗ</div>
+            </a>
           </div>
         </div>
       </div>
@@ -104,28 +110,13 @@ export default {
     display: inline-flex;
     z-index: 100;
   }
-  .rating-result_shop {
+  .rating-resul{
     bottom: 4px;
+    position: relative;
     width: 265px;
     left: 116px;
     display: flex;
-    float: right;
-    margin-right: 20px;
-  }
-  .rating-result_shop span {
-    padding: 0;
-    font-size: 60px;
-    line-height: 1;
-    color: lightgrey;
-    text-shadow: 1px 1px #bbb;
-    margin-left: 10px;
-  }
-  .rating-result_shop > span:before {
-    content: '★';
-  }
-  .rating-result_shop > span.active_shop{
-    color: gold;
-    text-shadow: 1px 1px #c60;
+    margin: 0;
   }
   .error_catalog {
     left: 0;
@@ -149,7 +140,7 @@ export default {
     display: flex;
   }
   .quantityCart{
-    font-size: 21px;
+    font-size: 23px;
     flex: auto;
     margin-left: 220px;
     padding-top: 17px;
@@ -186,9 +177,9 @@ export default {
     font-weight: normal;
     z-index: 100;
     position: relative;
-    font-size: 22px;
+    font-size: 26px;
     padding-top: 30px;
-    margin-left: 70px;
+    margin-left: 44px;
   }
   .btn_shop{
     font-family: Roboto, serif;
@@ -249,5 +240,11 @@ export default {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
+  }
+
+  .error_empty_container {
+  position: relative;
+    /*margin-top: 10%;*/
+    top: 40px;
   }
 </style>

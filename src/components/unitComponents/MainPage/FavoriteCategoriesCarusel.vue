@@ -24,7 +24,10 @@ export default {
     })
       .then(response => response.json())
     // eslint-disable-next-line
-        .then(commits => this.favoriteCategoryProducts = commits)
+        .then(commits => {
+          this.favoriteCategoryProducts = commits;
+          this.$emit('preloaderAnimation', false)
+        })
   }
 }
 </script>

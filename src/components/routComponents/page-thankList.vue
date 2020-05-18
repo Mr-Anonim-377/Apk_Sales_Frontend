@@ -27,6 +27,14 @@ export default {
       cart: {}
     }
   },
+  created: function init () {
+    fetch(process.env.HOST + '/api/shoppingCart/cart', {
+      method: 'get',
+      credentials: 'include'
+    }).then(response => response.json())
+    // eslint-disable-next-line
+      .then(commits => this.cart = commits);
+  },
   methods: {
     refreshChopingCart (isRefresh) {
       if (isRefresh) {
