@@ -2543,3 +2543,54 @@ main {
 .thankList_text_p {
   padding-bottom: 50px;
 }
+.mail_img{
+  width: 100%;
+  height: 100%;
+  margin-left: 29%;
+}
+.section_mail{
+  background-color: white;
+}
+.container_mail{
+  width: 700px;
+  margin: 0px auto;
+}
+.container-mail_img{
+  width: 415px;
+  height: 217px;
+}
+.text_mail{
+  margin-top: 40px;
+  width: 700px;
+  text-align: center;
+  font-family: verdana,tahoma,arial, serif;
+  font-size: 30px;
+  color: #a5a5a5;
+  font-weight: bold;
+}
+.img_mail{
+  width: 12%;
+  height: 100%;
+}
+.container-mail_img-small{
+  width: 700px;
+  height: 60px;
+  padding-left: 130px;
+}
+.text_size_mail{
+  font-size: 15px;
+  width: 700px;
+  text-align: center;
+  font-family: verdana,tahoma,arial, serif;;
+  color: #a5a5a5;
+  font-weight: bold;
+}
+.text_mail_item{
+ margin-top: 1px;
+  width: 700px;
+  text-align: center;
+  font-family: verdana,tahoma,arial, serif;
+  font-size: 17px;
+  color: #000000;
+  font-weight: bold;
+}
