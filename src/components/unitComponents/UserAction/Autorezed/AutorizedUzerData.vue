@@ -32,11 +32,11 @@
       </div>
       <div class="user_meta_container">
         <div class="user_phone_container">
-          <div class="meta_data_hint">тел: </div>
+          <div class="meta_data_hint">тел:</div>
           <div class="user_phone">{{getUserPhone(user.personPhone)}}</div>
         </div>
         <div class="user_email_container">
-          <div class="meta_data_hint">mail: </div>
+          <div class="meta_data_hint">mail:</div>
           <div class="user_email">{{user.email}}</div>
         </div>
       </div>
@@ -128,7 +128,7 @@ export default {
   }
 
   .user_image_container {
-    margin-top: 4%;
+    margin-top: 14%;
     margin-left: 5%;
     width: 80px;
     height: 83px;
@@ -144,10 +144,9 @@ export default {
 
   .user_email {
   }
-
   .user_phone_container {
     margin-left: 7%;
-    display: flex;
+    display: block;
   }
 
   .meta_data_hint {
@@ -157,7 +156,7 @@ export default {
   .user_email_container {
     margin-top: 3%;
     margin-left: 7%;
-    display: flex;
+    display: block;
   }
 
   .user_last_name {

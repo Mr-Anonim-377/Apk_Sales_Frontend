@@ -71,16 +71,16 @@
               </div>
             <div class="image_header_conatiner image_header_conatiner_mmargin_left" v-on-clickaway="logInOutsideClick">
               <a>
-                <div @click="isUserPopUp = true">
+                <div @click="isUserPopUp = {}">
                   <img class="active_grayscale" src="https://mr-anonim-377.github.io/Sales/src/main/resources/static/CSS/pictures/log_in 1.png">
                 </div>
               </a>
-              <div class="logInPopUp_container" v-if="isUserPopUp">
+              <div class="logInPopUp_container" v-bind:style="isUserPopUp">
                 <LogInPopUp v-if="!isUserAuthorized"
-                            v-on:refreshUser="refreshUser($event)"></LogInPopUp>
+                            v-on:refreshUser="$emit('refreshUser', $event)"></LogInPopUp>
               <AutorizedUserData :user="user"
                                  v-if="isUserAuthorized"
-                                 v-on:refreshUser="refreshUser($event)"></AutorizedUserData>
+                                 v-on:refreshUser="$emit('refreshUser', $event)"></AutorizedUserData>
               </div>
             </div>
           </div>
@@ -102,12 +102,12 @@ export default {
     onClickaway: onClickaway
   },
   props: {
+    user: {},
     shopingCard: {}
   },
 
   data () {
     return {
-      user: {},
       filterClickColor: {
         background: '#9974fb'
       },
@@ -118,8 +118,7 @@ export default {
       searchResult: [],
       searchResultVisible: '',
       isVisible: false,
-      isUserPopUp: false,
-      isUserAuthorized: false
+      isUserPopUp: {visibility: 'collapse', top:'-100px'}
     }
   },
   component: {
@@ -139,7 +138,7 @@ export default {
       this.isVisible = false
     },
     logInOutsideClick () {
-      this.isUserPopUp = false
+      this.isUserPopUp = {visibility: 'collapse', top:'-100px'}
     },
     indexOfColored (number) {
       if (number === this.colorIsNumber) {
@@ -193,29 +192,25 @@ export default {
           this.errorSearch()
         }
       })
-    },
-    refreshUser(isRefresh) {
-      if (isRefresh) {
-        fetch(process.env.HOST + '/api/user', {
-          method: 'get',
-          credentials: 'include'
-        }).then(response => response.json())
-        // eslint-disable-next-line
-          .then(commits => {
-            if (commits.email !== null) {
-              this.isUserAuthorized = true;
-              this.user = commits;
-              this.$emit('refreshUser', this.user)
-            } else {
-              this.user = {};
-              this.isUserAuthorized = false;
-              this.$emit('refreshUser', this.user)
-            }
-          })
-      }
     }
-  },
+    },
   created: function init () {
+    fetch(process.env.HOST + '/api/user', {
+      method: 'get',
+      credentials: 'include'
+    }).then(response => response.json())
+    // eslint-disable-next-line
+      .then(commits => {
+        if (commits.email !== null) {
+          this.isUserAuthorized = true;
+          this.user = commits;
+          this.$emit('refreshUser', this.user)
+        } else {
+          this.user = {};
+          this.isUserAuthorized = false;
+          this.$emit('refreshUser', this.user)
+        }
+      })
   },
   watch: {
     searchStr: function () {
