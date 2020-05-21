@@ -77,10 +77,10 @@
               </a>
               <div class="logInPopUp_container" v-if="isUserPopUp">
                 <LogInPopUp v-if="!isUserAuthorized"
-                            v-on:refreshUser="refreshUser($event)"></LogInPopUp>
+                            v-on:refreshUser="refreshUser($event)"/>
               <AutorizedUserData :user="user"
                                  v-if="isUserAuthorized"
-                                 v-on:refreshUser="refreshUser($event)"></AutorizedUserData>
+                                 v-on:refreshUser="refreshUser($event)"/>
               </div>
             </div>
           </div>

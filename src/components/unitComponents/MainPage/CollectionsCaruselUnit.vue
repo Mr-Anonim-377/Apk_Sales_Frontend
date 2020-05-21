@@ -48,7 +48,6 @@ export default {
     height: 170px;
     position: absolute;
     overflow: hidden;
-
   }
 
   .main_good_collection h2 {

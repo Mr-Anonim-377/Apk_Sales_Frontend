@@ -6,27 +6,9 @@
           <div class="section_user">
             <div class="container_user">
               <br>
-              <span class="text_acc text_acc_size"><b>Персональные данные</b></span>
-                <div class="container_user_data">
-                  <img class="img_acc" src="static">
-                  <div class="container_user_FIO">
-                    <input class="inp_user" placeholder="Имя Фамилия">
-                    <input class="inp_user" placeholder="Номер телефона">
-                    <input class="inp_user" placeholder="Email">
-                  </div>
-                </div>
-              <div class="container_user_gender">
-                <span class="text_acc text_size_data">Дата рождения</span>
-                <span class="text_acc text_size_sex">Пол</span>
-              </div>
-              <br>
-              <div class="container_user_inp">
-                <input class="inp_date">
-                <input class="inp_men" type="radio" name="gender" value="Мужской">
-                <span class="text_acc">Мужской</span>
-                <input class="inp_girl" type="radio" name="gender" value="Женский">
-                <span class="text_acc">Женский</span>
-              </div>
+              <AccountUserData
+              :user="user"
+              />
             </div>
             <div class="section_password">
               <div class="container_password">
@@ -54,8 +36,31 @@
 </template>
 
 <script>
+  import AccountUserData from "./AccountUserData";
 export default {
-  name: 'AccountBody'
+  name: 'AccountBody',
+  components: {AccountUserData},
+  data () {
+    return {
+      user: {},
+      order: {}
+    }
+  },
+  created: function init() {
+    fetch(process.env.HOST + '/api/user', {
+      method: 'get',
+      credentials: 'include'
+    }) .then(response => response.json())
+      // eslint-disable-next-line
+      .then(commits => this.user = commits);
+
+    fetch(process.env.HOST + '/api/user/orders', {
+      method: 'get',
+      credentials: 'include'
+    }) .then(response => response.json())
+      // eslint-disable-next-line
+      .then(commits => this.order = commits);
+  }
 }
 </script>
 
@@ -141,7 +146,8 @@ export default {
   .container_user_inp{
     display: flex;
     padding-left: 27px;
-    padding-bottom: 40px;
+    padding-bottom: 16px;
+
   }
   .inp_men{
     margin-left: 64px;
