@@ -51,17 +51,21 @@
             <span class="text_acc_address">У вас нет новых заказов</span>
           </div>
         </div>
+          <AccountUserDelevery
+          :user="user"
+          />
       </div>
     </div>
   </section>
 </template>
 
 <script>
-import AccountUserData from './AccountUserData'
+  import AccountUserData from "./AccountUserData";
+  import AccountUserDelevery from "./AccountUserDelevery";
 
 export default {
   name: 'AccountBody',
-  components: {AccountUserData},
+  components: {AccountUserDelevery, AccountUserData},
   props: {
     user: {}
   },
