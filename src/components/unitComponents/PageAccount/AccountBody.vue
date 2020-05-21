@@ -24,12 +24,9 @@
               </div>
             </div>
           </div>
-          <div class="section_address">
-            <div class="container_address">
-              <span class="text_acc text_acc_size"><b>Данные о предыдущих заказах</b></span>
-              <span class="text_acc_address">У вас нет новых заказов</span>
-            </div>
-          </div>
+          <AccountUserDelevery
+          :user="user"
+          />
         </div>
     </div>
   </section>
@@ -37,13 +34,13 @@
 
 <script>
   import AccountUserData from "./AccountUserData";
+  import AccountUserDelevery from "./AccountUserDelevery";
 export default {
   name: 'AccountBody',
-  components: {AccountUserData},
+  components: {AccountUserDelevery, AccountUserData},
   data () {
     return {
       user: {},
-      order: {}
     }
   },
   created: function init() {
@@ -53,13 +50,6 @@ export default {
     }) .then(response => response.json())
       // eslint-disable-next-line
       .then(commits => this.user = commits);
-
-    fetch(process.env.HOST + '/api/user/orders', {
-      method: 'get',
-      credentials: 'include'
-    }) .then(response => response.json())
-      // eslint-disable-next-line
-      .then(commits => this.order = commits);
   }
 }
 </script>
@@ -172,6 +162,7 @@ export default {
     padding-left: 20px;
   }
   .text_acc_address{
+    padding-left: 7px;
     font-family: Roboto, serif;
     font-style: italic;
     font-weight: normal;
