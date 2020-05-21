@@ -24,7 +24,7 @@
                                @mouseover="mouseOverToCategory(category.childCategory)"
                                @mouseout="setColor(true,index)">
                             <a class="category_pop_up_main_unit text_unit_margin text_bold main_unit_text"
-                               v-bind:href="'http://localhost:8081/catalog/category=' + category.categoryId +
+                               v-bind:href="'/catalog/category=' + category.categoryId +
                               '&page=' + 1 +
                               '&collections=' +
                               '&price-min='+

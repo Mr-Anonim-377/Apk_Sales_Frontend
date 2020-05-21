@@ -26,6 +26,10 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       '/api': {
         target: 'http://localhost:8080',
         pathRewrite: { '^/api': '' },
+      },
+      '/kladr': {
+        target: 'http://kladr-api.ru',
+        pathRewrite: { '^/kladr': '' },
       }
     },
     clientLogLevel: 'warning',

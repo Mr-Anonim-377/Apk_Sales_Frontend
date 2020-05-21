@@ -470,7 +470,7 @@ main {
   position: relative;
   width: 170px;
   height: 170px;
-  border-radius: 32%;
+  border-radius: 23px;
   background: #C1CBEE;
   display: flex;
   align-items: center;
@@ -519,11 +519,22 @@ main {
   flex-wrap: wrap;
 }
 
+.section {
+  min-height: 600px;
+}
+
 .section_footer,
 .section {
   z-index: 80;
   position: relative;
-  padding-bottom: 32px;
+  padding-bottom: 64px;
+}
+
+.section_banner{
+  padding-top: 20px;
+  padding-bottom: 20px;
+  z-index: 80;
+  position: relative;
 }
 
 .section_nav {
@@ -978,7 +989,8 @@ main {
   padding-left: 15px;
   text-align: center;
   z-index: 90;
-  bottom: 47%;;
+  bottom: 25%;
+  left: 3%;
 }
 
 .main_back {
@@ -2343,6 +2355,7 @@ main {
 }
 
 .section_order {
+  min-height: 217px;
   display: block;
   margin-left: 178px;
   width: 34%;
@@ -2406,7 +2419,7 @@ main {
 .v-autocomplete-input {
   width: 400px;
   height: 50px;
-  margin-top: 30px;
+  margin-top: 15px;
   border-radius: 5px;
   background: #E2F2E2
 }
@@ -2467,6 +2480,7 @@ main {
 
 .container_input_mail,
 .container_input_address {
+  margin-top: 10px;
   display: flex;
   padding-top: 20px;
 }
@@ -2475,7 +2489,7 @@ main {
 .inp_home {
   width: 195px;
   height: 50px;
-  margin-right: 10px;
+  margin-right: 25px;
   border-radius: 5px;
   background: #E2F2E2
 }
@@ -2486,6 +2500,7 @@ main {
   font-weight: normal;
   font-size: 12px;
   text-align: left;
+margin-top: 1%;
 }
 
 .inp_radio {

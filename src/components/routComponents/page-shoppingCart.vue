@@ -5,6 +5,7 @@
     v-on:addProduct="refreshChopingCart($event)"/>
     <Navigation/>
     <ShoppingCart
+      :isPreloader="isPreloader"
     :shoppingCart = "cart"
     v-on:addMinus="refreshChopingCart($event)"
     v-on:addPlus="refreshChopingCart($event)"
@@ -29,6 +30,7 @@ export default {
   },
   data () {
     return {
+      isPreloader: true,
       cart: {}
     }
   },
@@ -50,7 +52,9 @@ export default {
       credentials: 'include'
     }).then(response => response.json())
     // eslint-disable-next-line
-      .then(commits => this.cart = commits);
+      .then(commits => {this.cart = commits;
+        this.isPreloader = false
+      })
   }
 }
 </script>

@@ -6,8 +6,7 @@
       <div class="mask_collection"
            @mouseover="setBlur(true)"
            @mouseout="setBlur(false)">
-<!--        <h2 class="mask_goods_name"></h2>-->
-        <a v-bind:href="'http://localhost:8081/collection/collectionId=' + collection.collectionId +
+        <a v-bind:href="'/collection/collectionId=' + collection.collectionId +
               '&page=1&categoryIds=&price-min=&price-max='" class="info">{{collection.collectionName}}</a>
       </div>
       <div class = "circle" v-bind:class="getBlur()">
@@ -37,12 +36,18 @@ export default {
     setBlur (isTrue) {
       this.isBlur = isTrue
     }
+  },
+  data () {
+    return {
+      isBlur: false
+    }
   }
 }
 
 </script>
 
 <style>
+  @import "../../../../static/CSS/CSS.css";
   .main_good_collection .mask_collection {
     width: 100%;
     height: 170px;
@@ -64,9 +69,15 @@ export default {
     padding: 0;
   }
   .main_good_collection a.info {
-    display: inline-block;
+    font-size: 13px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
     text-decoration: none;
-    padding: 7px 14px;
+    padding-left: 10px;
+    padding-right: 10px;
     background: rgb(147, 100, 251);
     color: #fff;
     font-family: Raleway, serif;
@@ -75,7 +86,7 @@ export default {
     box-shadow: 0 0 1px rgb(197, 186, 226);
     text-align: center;
     width: 100%;
-    height: 50px;
+    height: 40px;
     margin-top: 60px;
 
   }
@@ -86,7 +97,7 @@ export default {
   }
 
   .main_good_collection .mask_collection {
-    border-radius: 10px;
+    border-radius: 23px;
     z-index: 99;
     opacity: 0;
     background-color: rgba(58, 1, 132, 0.19);

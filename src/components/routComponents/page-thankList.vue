@@ -4,7 +4,7 @@
       :shopingCard="cart"
       v-on:addProduct="refreshChopingCart($event)"/>
     <Navigation/>
-    <ThanksBody/>
+    <ThanksBody :cod="cod"/>
     <Footer/>
   </div>
 </template>
@@ -15,7 +15,7 @@ import Navigation from '../unitComponents/MainPage/Navigation'
 import ThanksBody from '../unitComponents/ThanksBody'
 import Footer from '../unitComponents/MainPage/Footer'
 export default {
-  props: ['productId'],
+  props: ['productId', 'cod'],
   components: {
     Header,
     Navigation,

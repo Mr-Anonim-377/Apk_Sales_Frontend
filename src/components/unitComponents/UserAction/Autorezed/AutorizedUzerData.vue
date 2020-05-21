@@ -32,11 +32,11 @@
       </div>
       <div class="user_meta_container">
         <div class="user_phone_container">
-          <div class="meta_data_hint">тел -</div>
+          <div class="meta_data_hint">тел: </div>
           <div class="user_phone">{{getUserPhone(user.personPhone)}}</div>
         </div>
         <div class="user_email_container">
-          <div class="meta_data_hint">mail -</div>
+          <div class="meta_data_hint">mail: </div>
           <div class="user_email">{{user.email}}</div>
         </div>
       </div>

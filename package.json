@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "axios": "^0.19.0",
+    "bootstrap-vue": "^2.14.0",
     "kladrapi-for-node": "0.0.2",
     "nouislider": "^14.2.0",
     "v-autocomplete": "^1.8.2",

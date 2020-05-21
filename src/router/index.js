@@ -59,8 +59,9 @@ export default new Router({
     },
     {
       path: '/order/thanks',
-      component: thanks
-      // props: true
+      name: 'thanks',
+      component: thanks,
+      props: true
     },
     {
       path: '/order/create',

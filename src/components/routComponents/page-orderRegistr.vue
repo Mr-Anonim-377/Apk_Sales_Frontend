@@ -2,9 +2,12 @@
     <div class="page-orderRegistr">
       <Header
         :shopingCard="cart"
-        v-on:addProduct="refreshChopingCart($event)"/>
+        v-on:addProduct="refreshChopingCart($event)"
+        v-on:refreshUser="user = $event"/>
       <Navigation/>
       <OrderBody
+        v-on:refreshCart="refreshChopingCart($event)"
+        :user="user"
       :cart="cart"/>
       <Footer/>
     </div>
@@ -27,6 +30,7 @@ export default {
   },
   data () {
     return {
+      user: {},
       cart: {}
     }
   },

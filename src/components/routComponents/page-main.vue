@@ -45,7 +45,7 @@ export default {
           "banerId": 3,
           "image": {
             "imageId": "e9ee5032-e87a-4ab8-bdba-2ee521b0f349",
-            "imagePatch": "https://www.ridus.ru/images/2019/12/16/1022839/in_article_b8ebe3cc8b.jpg_large"
+            "imagePatch": "https://mr-anonim-377.github.io/Sales/src/main/resources/static/CSS/pictures/baner_small.png"
           },
           "title": "Банер банерный",
           "page": "MAIN",

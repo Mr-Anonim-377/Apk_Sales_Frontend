@@ -7,7 +7,7 @@
           <h1 class="thankList_etext_h">Спасибо!</h1>
           <br>
           <p class="thankList_text">Ваш заказ успешно оформлен. Админитсратор связется с вами в ближйщее время.</p>
-          <p class="thankList_text_p text_decoration">Номер вашего заказ - 333 </p>
+          <p class="thankList_text_p text_decoration">Номер вашего заказ - {{cod}} </p>
         </div>
       </div>
     </div>
@@ -16,7 +16,10 @@
 
 <script>
 export default {
-  name: 'ThanksBody'
+  name: 'ThanksBody',
+  props: {
+    cod: {}
+  }
 }
 </script>
 

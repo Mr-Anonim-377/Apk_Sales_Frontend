@@ -1,12 +1,12 @@
 <template>
   <section class = "section">
-    <div class="section_main_product">
+    <div class="section_main_product" >
       <div class = "main"></div>
-      <div class="error_empty_container" v-if="shoppingCart.products.length === 0">
+      <div class="error_empty_container" v-if="shoppingCart.products.length === 0 && !isPreloader">
         <div class="error_catalog" ></div>
         <div class="text_shoppingCart">Корзина пуста</div>
       </div>
-      <div class ="basket_container basket_container_section">
+      <div class ="basket_container basket_container_section" v-if="shoppingCart.products.length>0">
         <br>
         <H1 class="textCart" v-if="shoppingCart.products.length > 0">Корзина заказов</H1>
         <br>
@@ -27,13 +27,13 @@
                   <span class="main_goods_text">{{product.productName}}</span>
                   <br>
                   <a class="main_goods_text_pay">Цена: {{product.product.price}}₽</a>
-                  <div class="rating-resul">
-                    <span class="active"></span>
-                    <span class="active"></span>
-                    <span class="active"></span>
-                    <span></span>
-                    <span></span>
-                  </div>
+<!--                  <div class="rating-resul">-->
+<!--                    <span class="active"></span>-->
+<!--                    <span class="active"></span>-->
+<!--                    <span class="active"></span>-->
+<!--                    <span></span>-->
+<!--                    <span></span>-->
+<!--                  </div>-->
                 </div>
               </div>
             </div>
@@ -74,7 +74,8 @@ export default {
   name: 'ShoppingCardBody',
   components: {ShoppingCartPieces},
   props: {
-    shoppingCart: {}
+    shoppingCart: {},
+    isPreloader: {}
   },
   methods: {
     refreshShoppingCart (isRefresh) {
@@ -100,6 +101,7 @@ export default {
     margin-left: auto;
     max-width: 1140px;
     width: 100%;
+   min-height: 600px;
     z-index: 90;
   }
   .section_description{
