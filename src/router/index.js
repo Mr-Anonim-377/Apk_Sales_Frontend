@@ -9,6 +9,9 @@ import shoppingCart from '../components/routComponents/page-shoppingCart'
 import thanks from '../components/routComponents/page-thankList'
 import registOrder from '../components/routComponents/page-orderRegistr'
 import Account from '../components/routComponents/page-account'
+import AboutUs from '../components/routComponents/page-AboutUs'
+import Politics from '../components/routComponents/page-PoliticsConf'
+import Contact from '../components/routComponents/page-Contact'
 
 Vue.use(Router);
 
@@ -72,6 +75,22 @@ export default new Router({
       path: '/account',
       component: Account
       // props: true
+    },
+    {
+      path: '/aboutUs',
+      component: AboutUs,
+      // props: true
+    },
+    {
+      path: '/Contact',
+      component: Contact,
+      // props: true
+    },
+    {
+      path: '/Politics',
+      component: Politics,
+      // props: true
     }
+
   ]
 })

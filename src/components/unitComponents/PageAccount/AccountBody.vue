@@ -45,12 +45,6 @@
             </div>
           </div>
         </div>
-        <div class="section_address">
-          <div class="container_address">
-            <span class="text_acc text_acc_size"><b>Данные о предыдущих заказах</b></span>
-            <span class="text_acc_address">У вас нет новых заказов</span>
-          </div>
-        </div>
           <AccountUserDelevery
           :user="user"
           />

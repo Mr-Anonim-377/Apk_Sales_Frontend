@@ -14,9 +14,11 @@
           <a v-bind:href="'http://localhost:8081/card/'+productCategory.productId" v-bind:class="isOpacity(isReview)" class="info">Открыть карточку товара</a>
           <div class="CatalogItemProduct__btn" @click="setReviewTrue()" >
             <img class="pictures_catalog pictures_catalog_message" src="../../../../static/CSS/pictures/reviews.png"/></div>
-          <div class="CatalogItemProduct__btn"
+          <div class="CatalogItemProduct__btn "
+               onclick="change_image.src='https://avatars.mds.yandex.net/get-pdb/1964870/95301851-90a3-40e4-bfb4-9068a3a26d59/s1200'"
                @click="addProduct()">
-            <img class="pictures_catalog pictures_catalog_basked" src="../../../../static/CSS/pictures/basket.png"/></div>
+            <img class="pictures_catalog pictures_catalog_basked" src="../../../../static/CSS/pictures/basket.png"
+                 id="change_image"/></div>
         </div>
       <div class="main_goods">
         <img class="main_goods_img" :src="productCategory.image.imagePatch"/>

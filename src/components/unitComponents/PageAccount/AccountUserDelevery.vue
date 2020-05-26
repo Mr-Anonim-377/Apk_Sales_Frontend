@@ -7,7 +7,10 @@
         v-if="order.length === 0">
         У вас нет заказов
       </span>
-      <div v-if="order.length > 0" v-for="itemOrder in order" class="total_text_acc_container">
+      <div
+        v-if="order.length > 0"
+        v-for="itemOrder in order"
+        class="total_text_acc_container">
         <div class="text_acc_container">
           <span class="text_acc_address margin_right">Оплачен: <b>{{itemOrder.isPayment?'Да':'Нет'}}</b></span>
           <span class="text_acc_address">Тип оплаты: <b>{{itemOrder.paymentType === 'cash'? 'Наличные':'Картой'}}</b></span>

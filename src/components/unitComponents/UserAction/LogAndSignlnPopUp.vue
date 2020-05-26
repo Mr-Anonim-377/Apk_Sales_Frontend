@@ -130,7 +130,41 @@ export default {
       registerPass: '',
       isLogIn: false,
       phoneValue: '',
-      isSignIn: false
+      isSignIn: false,
+      images: [
+        'https://cdn.icon-icons.com/icons2/860/PNG/128/happy_icon-icons.com_67810.png',
+        'https://cdn.icon-icons.com/icons2/860/PNG/128/joy_icon-icons.com_67806.png',
+        'https://cdn.icon-icons.com/icons2/1017/PNG/128/biaoqing_012_icon-icons.com_75858.png',
+        'https://cdn.icon-icons.com/icons2/461/PNG/128/grimace_43851.png',
+        'https://cdn.icon-icons.com/icons2/1017/PNG/128/biaoqing_020_icon-icons.com_75866.png',
+        'https://cdn.icon-icons.com/icons2/229/PNG/128/boss_26023.png',
+        'https://cdn.icon-icons.com/icons2/347/PNG/128/128_(1)_35963.png' ,
+        'https://cdn.icon-icons.com/icons2/2000/PNG/128/cool_smiley_sunglasses_icon_123402.png',
+        'https://cdn.icon-icons.com/icons2/345/PNG/128/2_35873.png' ,
+        'https://cdn.icon-icons.com/icons2/229/PNG/128/spiderman_26006.png',
+        'https://cdn.icon-icons.com/icons2/1017/PNG/128/biaoqing_013_icon-icons.com_75859.png',
+        'https://cdn.icon-icons.com/icons2/461/PNG/128/big_smile_43859.png',
+        'https://cdn.icon-icons.com/icons2/345/PNG/128/40_35850.png',
+        'https://cdn.icon-icons.com/icons2/461/PNG/128/victory_43837.png',
+        'https://cdn.icon-icons.com/icons2/345/PNG/128/15_35877.png',
+        'https://cdn.icon-icons.com/icons2/345/PNG/128/32_35859.png',
+        'https://cdn.icon-icons.com/icons2/461/PNG/128/exciting_43862.png',
+        'https://cdn.icon-icons.com/icons2/345/PNG/128/4_35851.png',
+        'https://cdn.icon-icons.com/icons2/345/PNG/128/12_35880.png',
+        'https://cdn.icon-icons.com/icons2/345/PNG/128/39_35852.png',
+        'https://cdn.icon-icons.com/icons2/345/PNG/128/18_35844.png',
+        'https://cdn.icon-icons.com/icons2/345/PNG/128/24_35868.png',
+        'https://cdn.icon-icons.com/icons2/345/PNG/128/30_35861.png',
+        'https://cdn.icon-icons.com/icons2/347/PNG/128/128_(17)_35946.png',
+        'https://cdn.icon-icons.com/icons2/345/PNG/128/9_35845.png',
+        'https://cdn.icon-icons.com/icons2/347/PNG/128/128_(2)_35962.png',
+        'https://cdn.icon-icons.com/icons2/347/PNG/128/128_(36)_35927.png',
+        'https://cdn.icon-icons.com/icons2/347/PNG/128/128_35960.png',
+        'https://cdn.icon-icons.com/icons2/347/PNG/128/128_(37)_35926.png',
+        'https://cdn.icon-icons.com/icons2/347/PNG/128/128_(20)_35943.png',
+        'https://cdn.icon-icons.com/icons2/347/PNG/128/128_(18)_35945.png'
+      ],
+      selectedImage: ''
     }
   },
   methods: {
@@ -257,7 +291,7 @@ export default {
               var requestBody = {
                 email: this.email,
                 firstName: this.firstName,
-                imagePath: 'http://img0.joyreactor.cc/pics/post/ПеКа-кавайная-няка-42804.png',
+                imagePath: this.selectedImage,
                 lastName: this.lastName,
                 password: this.registerPass,
                 phone: '+7' + this.registerPhone
@@ -314,7 +348,9 @@ export default {
     }
 
   },
-  created: function init () {
+  created () {
+    var random = Math.floor(Math.random() * this.images.length);
+    this.selectedImage = this.images[random]
   }
 }
 </script>
