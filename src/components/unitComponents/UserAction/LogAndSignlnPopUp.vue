@@ -42,7 +42,7 @@
             <input type="password" v-model="password">
           </div>
           <div class="pop_up_error_container">
-            <div class="pop_up_error" v-if="logInError.length !== 0">{{logInError}}</div>
+            <div class="pop_up_error pop_up_error_marin_none" v-if="logInError.length !== 0">{{logInError}}</div>
           </div>
           <button type="submit" class="pop_up_button">Log In</button>
         </form>
@@ -260,7 +260,8 @@ export default {
                 imagePath: 'http://img0.joyreactor.cc/pics/post/ПеКа-кавайная-няка-42804.png',
                 lastName: this.lastName,
                 password: this.registerPass,
-                phone: '+7' + this.registerPhone
+                phone: '+7' + this.registerPhone,
+                cod: this.cod
               };
               fetch(process.env.HOST + '/api/user/register', {
                 method: 'post',
@@ -443,5 +444,9 @@ export default {
     padding-bottom: 2px;
     text-align: center;
     font-size: 25px;
+  }
+
+  .pop_up_error_marin_none {
+  margin-left: 0;
   }
 </style>

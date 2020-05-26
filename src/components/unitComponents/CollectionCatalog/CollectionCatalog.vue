@@ -37,7 +37,7 @@
             </div>
           </div>
           <CatalogProduct
-            v-for="productCategory in products"
+            v-for="(productCategory, index) in products" :key="index"
             :productCategory="productCategory"
             :user="user"
             v-on:addProduct="refreshProductCount($event)"
@@ -50,7 +50,7 @@
             v-if="!this.isError">
           <li v-bind:class="getPreviousClass()">
             <a v-if="page>1"
-               v-bind:href="'http://localhost:8081/collection/collectionId=' + collectionId +
+               v-bind:href="'/collection/collectionId=' + collectionId +
             '&page=' + (Number.parseInt(this.page)-1) +
             '&categoryIds=' +getStrByArray(categoryIdsArray) +
             '&price-min='+ currentPriceMin.toFixed(2) +
@@ -61,7 +61,7 @@
           <li v-for="(numPage) in pagesArray">
             <a
               v-bind:class=isLiActive(numPage+1)
-              v-bind:href="'http://localhost:8081/collection/collectionId=' + collectionId +
+              v-bind:href="'/collection/collectionId=' + collectionId +
             '&page=' + (numPage+1) +
             '&categoryIds=' +getStrByArray(categoryIdsArray) +
             '&price-min='+ currentPriceMin.toFixed(2) +
@@ -70,7 +70,7 @@
           <li v-bind:class="getNextClass()">
             <a
               v-if="Number.parseInt(page)<Number.parseInt(totalPage)"
-              v-bind:href="'http://localhost:8081/collection/collectionId=' + collectionId +
+              v-bind:href="'/collection/collectionId=' + collectionId +
             '&page=' + (Number.parseInt(this.page)+1) +
             '&categoryIds=' +getStrByArray(categoryIdsArray) +
             '&price-min='+ currentPriceMin.toFixed(2) +
@@ -195,7 +195,6 @@ export default {
       // eslint-disable-next-line no-return-assign
       .then(commits => {
         if (commits.type !== 'InternalServerError') {
-          this.collections = commits;
           this.currentPriceMin = Number.parseInt(this.priceMin);
           this.currentPriceMax = Number.parseInt(this.priceMax);
           if (this.priceMin === undefined) {

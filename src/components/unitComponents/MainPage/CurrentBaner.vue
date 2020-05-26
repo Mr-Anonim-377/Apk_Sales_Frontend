@@ -11,12 +11,12 @@
           controls
           indicators
           background="#ababab"
-          img-width="1100"
-          img-height="400"
+          img-width="1600"
+          img-height="600"
           @sliding-start="onSlideStart"
           @sliding-end="onSlideEnd"
         >
-          <b-carousel-slide v-for="item in banersBig" v-bind:img-src="item.image.imagePatch"></b-carousel-slide>
+          <b-carousel-slide v-for="(item, index) in banersBig" :key="index" v-bind:img-src="item.image.imagePatch"></b-carousel-slide>
         </b-carousel>
       </div>
     </div>

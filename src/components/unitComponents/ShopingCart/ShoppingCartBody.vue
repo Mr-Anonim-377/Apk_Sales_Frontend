@@ -2,7 +2,7 @@
   <section class = "section">
     <div class="section_main_product" >
       <div class = "main"></div>
-      <div class="error_empty_container" v-if="shoppingCart.products.length === 0 && !isPreloader">
+      <div class="error_empty_container" v-if="shoppingCart.products.length === 0">
         <div class="error_catalog" ></div>
         <div class="text_shoppingCart">Корзина пуста</div>
       </div>
@@ -15,25 +15,25 @@
         <div class="section_good_shop">
           <div class="section_goodItem"
                v-for="product in shoppingCart.products"
-               :product="product"
-          >
+               :product="product">
             <div class="main_good main_good_product">
               <div class="main_goods main_goods-shopping">
                 <img class="main_goods_img" :src="product.product.image.imagePatch"/>
               </div>
               <div class="section_description">
                 <div class="main_goods_shop"></div>
-                <div class="main_goods_section">
-                  <span class="main_goods_text">{{product.productName}}</span>
-                  <br>
-                  <a class="main_goods_text_pay">Цена: {{product.product.price}}₽</a>
-<!--                  <div class="rating-resul">-->
-<!--                    <span class="active"></span>-->
-<!--                    <span class="active"></span>-->
-<!--                    <span class="active"></span>-->
-<!--                    <span></span>-->
-<!--                    <span></span>-->
-<!--                  </div>-->
+                <div class="good_data_contaienr">
+                  <div class="main_goods_section_cart">
+                    <span class="main_goods_text_cart">{{product.productName}}</span>
+                  </div>
+                  <div class="main_goods_text_pay_container">
+                    <a class="main_goods_text_pay_cart">{{product.product.price}}₽</a>
+                    <div class="rating-result_cart">
+                    <span v-for="(index) in starArray"
+                          v-bind:class="isActivClass(index,product.product.averageMark)">
+                    </span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -58,7 +58,7 @@
             <a href="/">
               <div class="btn_return">НА ГЛАВНУЮ СТРАНИЦУ</div>
             </a>
-            <a href="/order/create">
+            <a @click="$router.push({path: '/order/create'})">
               <div class="btn_shop">ОФОРМИТЬ ЗАКАЗ</div>
             </a>
           </div>
@@ -74,10 +74,18 @@ export default {
   name: 'ShoppingCardBody',
   components: {ShoppingCartPieces},
   props: {
-    shoppingCart: {},
-    isPreloader: {}
+    shoppingCart: {}
+  },
+  data () {
+    return {
+      starArray: [0, 1, 2, 3, 4]
+    }
   },
   methods: {
+    isActivClass (index, mark) {
+      var currentMark = mark === null ? 1 : Math.round(Number.parseFloat(this.productCategory.averageMark))
+      return index < currentMark ? 'active' : ''
+    },
     refreshShoppingCart (isRefresh) {
       if (isRefresh) {
         this.$emit('addMinus', 'addPlus', 'addDelete', true)
@@ -88,6 +96,28 @@ export default {
 </script>
 
 <style >
+  .opacity{
+    opacity: 1 !important;
+    transform:none !important;
+  }
+  .rating-result_cart {
+    z-index: 90;
+  }
+  .rating-result_cart span {
+    padding: 0;
+    font-size: 60px;
+    line-height: 1;
+    color: #b7adbf;
+    text-shadow: 1px 1px #bbb;
+    margin-left: 10px;
+  }
+  .rating-result_cart > span:before {
+    content: '★';
+  }
+  .rating-result_cart > span.active {
+    color: gold;
+    text-shadow: 1px 1px #c60;
+  }
   .text_shoppingCart {
     font-family: Roboto, serif;
     font-style: normal;
@@ -248,5 +278,18 @@ export default {
   position: relative;
     /*margin-top: 10%;*/
     top: 40px;
+  }
+
+  .good_data_contaienr {
+  display: block;
+  }
+
+  .main_goods_text_pay_container {
+    position: relative;
+    z-index: 90;
+    width: fit-content;
+    display: flex;
+    margin-left: 13%;
+    margin-top: 4%;
   }
 </style>

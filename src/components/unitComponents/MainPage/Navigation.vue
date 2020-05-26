@@ -40,7 +40,7 @@
                         >
                           <div class="category_pop_up_main_unit_container_row unit_row_margin">
                             <a class="category_pop_up_main_unit sub_text_unit_margin text_bold"
-                               v-bind:href="'http://localhost:8081/catalog/category=' + category.categoryId +
+                               v-bind:href="'/catalog/category=' + category.categoryId +
                               '&page=' + 1 +
                               '&collections=' +
                               '&price-min='+
@@ -51,7 +51,7 @@
                           <div class="category_pop_up_main_unit_container_row"
                                v-for="subCategory in category.childCategory">
                             <a class="sub_text_unit_margin category_pop_up_main_unit"
-                               v-bind:href="'http://localhost:8081/catalog/category=' + subCategory.categoryId +
+                               v-bind:href="'/catalog/category=' + subCategory.categoryId +
                               '&page=' + 1 +
                               '&collections=' +
                               '&price-min='+
@@ -65,7 +65,7 @@
                   </div>
                 </div>
               </li>
-              <NavigationUnit v-for="(favoriteCategory,index) in navigtion.favoriteCategories"
+              <NavigationUnit v-for="(favoriteCategory,index) in navigtion.favoriteCategories" :key="index"
                               v-if="index<5" :favoriteCategory="favoriteCategory"></NavigationUnit>
             </ul>
           </nav>
@@ -150,15 +150,15 @@ export default {
 </script>
 <style>
   .category_pop_up__main_container_left_non {
-    margin: 4% 4% 4% 6%;
+    margin: 4% 4% 4% 3%;
     position: relative;
-    width: 36%;
+    width: 40%;
   }
 
   .category_pop_up__main_container_right_non {
     margin: 4% 0 4% 4%;
     position: relative;
-    width: 45%;
+    width: 47%;
   }
 
   .category_pop_up_main {
@@ -186,7 +186,7 @@ export default {
     font-size: 17px;
     position: relative;
     z-index: 72;
-    width: 80%;
+    width: 92%;
   }
 
   .category_pop_up_main_unit_container_row:hover {
@@ -221,7 +221,6 @@ export default {
   }
 
   .text_unit_margin {
-    margin-left: 9%;
   }
 
   .text_bold {

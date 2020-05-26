@@ -158,7 +158,7 @@ export default {
   }
 
   .main_good .mask {
-    width: 840px;
+    width: 825px;
     height: 100%;
     position: absolute;
     overflow: hidden;

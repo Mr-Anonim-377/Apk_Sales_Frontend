@@ -40,7 +40,10 @@ export default {
       credentials: 'include'
     }).then(response => response.json())
     // eslint-disable-next-line
-      .then(commits => this.cart = commits);
+      .then(commits => {
+        this.cart = commits
+        this.refreshUser(true)
+      });
   },
   methods: {
     refreshUser(isRefresh) {

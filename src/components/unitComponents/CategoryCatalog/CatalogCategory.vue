@@ -37,7 +37,7 @@
             </div>
           </div>
           <CatalogItemProduct
-            v-for="productCategory in products"
+            v-for="(productCategory, index) in products" :key="index"
             :productCategory="productCategory"
             :user="user"
             v-on:addProduct="refreshProductCount($event)"
@@ -50,7 +50,7 @@
             v-if="!this.isError">
           <li v-bind:class="getPreviousClass()">
             <a v-if="page>1"
-               v-bind:href="'http://localhost:8081/catalog/category=' + categoryId +
+               v-bind:href="'/catalog/category=' + categoryId +
           '&page=' + (Number.parseInt(this.page)-1) +
           '&collections=' +getStrByArray(collectionIdsArray) +
           '&price-min='+ currentPriceMin.toFixed(2) +
@@ -61,7 +61,7 @@
           <li v-for="(numPage) in pagesArray">
             <a
               v-bind:class=isLiActive(numPage+1)
-              v-bind:href="'http://localhost:8081/catalog/category=' + categoryId +
+              v-bind:href="'/catalog/category=' + categoryId +
           '&page=' + (numPage+1) +
           '&collections=' +getStrByArray(collectionIdsArray) +
           '&price-min='+ currentPriceMin.toFixed(2) +
@@ -70,7 +70,7 @@
           <li v-bind:class="getNextClass()">
             <a
               v-if="Number.parseInt(page)<Number.parseInt(totalPage)"
-              v-bind:href="'http://localhost:8081/catalog/category=' + categoryId +
+              v-bind:href="'/catalog/category=' + categoryId +
           '&page=' + (Number.parseInt(this.page)+1) +
           '&collections=' +getStrByArray(collectionIdsArray) +
           '&price-min='+ currentPriceMin.toFixed(2) +

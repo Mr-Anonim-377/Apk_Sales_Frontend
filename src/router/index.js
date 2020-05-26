@@ -16,10 +16,6 @@ export default new Router({
   mode: 'history',
   routes: [
     {
-      path: '/',
-      component: mainPageComponent
-    },
-    {
       path: '/catalog/category=:categoryId' +
         '&page=:page' +
         '&collections=:collectionIds?' +
@@ -30,22 +26,15 @@ export default new Router({
       props: true
     },
     {
-      path: '/card/:productId',
-      component: itemCard,
-      props: true
-    },
-    {
-      path: '/shoppingCart',
-      component: shoppingCart
-      // props: true
-    },
-    {
       path: '/search/page=:page&searchStr=:searchStr' +
         '&collectionsIds=:collectionIds?' +
         '&categoryIds=:categoryIds?' +
         '&price-min=:priceMin?' +
-        '&price-max=:priceMax?',
+        '&price-max=:priceMax?' +
+        '&totalMinPrice=:totalMinPrice' +
+        '&totalMaxPrice=:totalMaxPrice',
       component: searchResult,
+      name: 'searchResult',
       props: true
     },
     {
@@ -56,6 +45,22 @@ export default new Router({
         '&price-max=:priceMax?',
       component: collection,
       props: true
+    },
+    {
+      path: '/',
+      component: mainPageComponent
+    },
+    {
+      path: '/card/:productId',
+      name: 'card',
+      component: itemCard,
+      props: true
+    },
+    {
+      path: '/shoppingCart',
+      name: 'shoppingCart',
+      component: shoppingCart
+      // props: true
     },
     {
       path: '/order/thanks',
@@ -70,6 +75,7 @@ export default new Router({
     },
     {
       path: '/account',
+      name: 'account',
       component: Account
       // props: true
     }

@@ -22,12 +22,16 @@ const devWebpackConfig = merge(baseWebpackConfig, {
 
   // these devServer options should be customized in /config/index.js
   devServer: {
-      proxy: {
-        '/api': {
-          target: 'http://ec2-13-58-76-77.us-east-2.compute.amazonaws.com:8080',
-          pathRewrite: {'^/api': ''},
-        }
+    proxy: {
+      '/api': {
+        target: 'http://ec2-3-133-7-234.us-east-2.compute.amazonaws.com:8080',
+        pathRewrite: { '^/api': '' },
       },
+      '/kladr': {
+        target: 'http://kladr-api.ru',
+        pathRewrite: { '^/kladr': '' },
+      }
+    },
       clientLogLevel: 'warning',
       historyApiFallback: {
         rewrites: [

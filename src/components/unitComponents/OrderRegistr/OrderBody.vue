@@ -25,7 +25,7 @@
               <span class="text_good text_good_size"> {{cart.totalAmount}} ₽</span>
             </div>
             <div class="container_text">
-              <span class="text_good">Доставка курьером </span>
+              <span class="text_good">{{deliveryType}}</span>
               <span class="text_good text_good_size"> {{deliveryPrice}} ₽</span>
             </div>
             <br>
@@ -47,13 +47,27 @@
                             :auto-select-one-item="false">
             </v-autocomplete>
             <div class="loader" v-if="isCityInput">
-              <div class="ball one"><div class="inner"></div></div>
-              <div class="ball two"><div class="inner"></div></div>
-              <div class="ball three"><div class="inner"></div></div>
-              <div class="ball four"><div class="inner"></div></div>
-              <div class="ball five"><div class="inner"></div></div>
-              <div class="ball six"><div class="inner"></div></div>
-              <div class="ball center"><div class="inner"></div></div>
+              <div class="ball one">
+                <div class="inner"></div>
+              </div>
+              <div class="ball two">
+                <div class="inner"></div>
+              </div>
+              <div class="ball three">
+                <div class="inner"></div>
+              </div>
+              <div class="ball four">
+                <div class="inner"></div>
+              </div>
+              <div class="ball five">
+                <div class="inner"></div>
+              </div>
+              <div class="ball six">
+                <div class="inner"></div>
+              </div>
+              <div class="ball center">
+                <div class="inner"></div>
+              </div>
             </div>
           </div>
           <span class="text_order text_order_size"><b>Способ получения</b></span>
@@ -76,31 +90,62 @@
           </div>
           <span class="text_order text_order_size"><b>Адрес получателя</b></span>
           <div class="item_autocomplete_container">
-            <v-autocomplete :auto-select-one-item="false" placeholder="Улица" :items="itemsStreat" v-model="itemStreat" :get-label="getLabel" :component-item='template' @update-items="updateItemsStreat">
+            <v-autocomplete :auto-select-one-item="false" placeholder="Улица" :items="itemsStreat" v-model="itemStreat"
+                            :get-label="getLabel" :component-item='template' @update-items="updateItemsStreat">
             </v-autocomplete>
             <div class="loader" v-if="isStreatInput">
-              <div class="ball one"><div class="inner"></div></div>
-              <div class="ball two"><div class="inner"></div></div>
-              <div class="ball three"><div class="inner"></div></div>
-              <div class="ball four"><div class="inner"></div></div>
-              <div class="ball five"><div class="inner"></div></div>
-              <div class="ball six"><div class="inner"></div></div>
-              <div class="ball center"><div class="inner"></div></div>
+              <div class="ball one">
+                <div class="inner"></div>
+              </div>
+              <div class="ball two">
+                <div class="inner"></div>
+              </div>
+              <div class="ball three">
+                <div class="inner"></div>
+              </div>
+              <div class="ball four">
+                <div class="inner"></div>
+              </div>
+              <div class="ball five">
+                <div class="inner"></div>
+              </div>
+              <div class="ball six">
+                <div class="inner"></div>
+              </div>
+              <div class="ball center">
+                <div class="inner"></div>
+              </div>
             </div>
           </div>
           <div class="container_input_address">
             <div class="item_autocomplete_container">
-              <v-autocomplete :auto-select-one-item="false" placeholder="Дом" :items="itemsHomeNumber" :min-len="1" v-model="itemHomeNumber" :get-label="getLabel" :component-item='template' @update-items="updateItemsHomeNumber">
+              <v-autocomplete :auto-select-one-item="false" placeholder="Дом" :items="itemsHomeNumber" :min-len="1"
+                              v-model="itemHomeNumber" :get-label="getLabel" :component-item='template'
+                              @update-items="updateItemsHomeNumber">
               </v-autocomplete>
               <div class="loader_container">
                 <div class="loader" v-if="isHomeNumberInput">
-                  <div class="ball one"><div class="inner"></div></div>
-                  <div class="ball two"><div class="inner"></div></div>
-                  <div class="ball three"><div class="inner"></div></div>
-                  <div class="ball four"><div class="inner"></div></div>
-                  <div class="ball five"><div class="inner"></div></div>
-                  <div class="ball six"><div class="inner"></div></div>
-                  <div class="ball center"><div class="inner"></div></div>
+                  <div class="ball one">
+                    <div class="inner"></div>
+                  </div>
+                  <div class="ball two">
+                    <div class="inner"></div>
+                  </div>
+                  <div class="ball three">
+                    <div class="inner"></div>
+                  </div>
+                  <div class="ball four">
+                    <div class="inner"></div>
+                  </div>
+                  <div class="ball five">
+                    <div class="inner"></div>
+                  </div>
+                  <div class="ball six">
+                    <div class="inner"></div>
+                  </div>
+                  <div class="ball center">
+                    <div class="inner"></div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -108,7 +153,8 @@
           <div class="container_input_mail margin_top">
             <input class="inp_home" placeholder="Квартира" v-model="roomNumber">
             <input class="inp_mail" placeholder="Электронная почта" v-model="email">
-            <masked-input @input="phone = arguments[1]" mask="\+\7 (111) 111-11-11" placeholder="Телефон" class="inp_mail" />
+            <masked-input @input="phone = arguments[1]" mask="\+\7 (111) 111-11-11" placeholder="Телефон"
+                          class="inp_mail"/>
           </div>
           <br>
           <span class="text_good_inp">Полные фамилия и имя по паспорту могут потребоваться при получении заказа</span>
@@ -125,7 +171,15 @@
           <p><input class="mail_inp" type="checkbox" name="spice" value="Salt">Сообщать мне об акциях, скидках и
             рекомендациях</p>
           <div class="btn_order_container">
-            <div class="btn_orderReg" @click="createOrder()" >ПЕРЕЙТИ К ОПЛАТЕ</div>
+            <div class="create_order_btn_container">
+              <div class="btn_orderReg" @click="createOrder()">ЗАВЕРШИТЬ ОФОРМЛЕНИЕ</div>
+              <div class="error_text margin_bottom_none" v-if="emailError">
+                Не верный email
+              </div>
+              <div class="error_text margin_bottom_none" v-if="validationError">
+                Заполните поля
+              </div>
+            </div>
             <a href="/shoppingCart">
               <div class="btn_return">ВЕРНУТЬСЯ В КОРЗИНУ</div>
             </a>
@@ -139,6 +193,7 @@
 <script>
 import ItemTemplate from '../../utilsComponent/ItemTemplate'
 import MaskedInput from 'vue-masked-input'
+
 export default {
   components: {
     MaskedInput
@@ -166,7 +221,10 @@ export default {
       paymentType: '',
       numClick: 1,
       uuidDelivery: 'a8b81fcd-a7ad-4973-ae7a-255a65ee71c9',
-      cod: {}
+      cod: {},
+      deliveryType: 'Доставка курьером',
+      emailError: false,
+      validationError: false
     }
   },
   name: 'OrderBody',
@@ -175,42 +233,46 @@ export default {
     cart: {}
   },
   methods: {
+    validateEmail (email) {
+      var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      return re.test(email)
+    },
     getLabel (item) {
       return item.name
     },
     updateItemsCity (text) {
-      this.isCityInput = true;
-      const kladrApi = require('kladrapi-for-node');
-      const Kladr = new kladrApi();
-      let q = {query: text, contentType: 'city', withParent: 0};
+      this.isCityInput = true
+      const kladrApi = require('kladrapi-for-node')
+      const Kladr = new kladrApi()
+      let q = {query: text, contentType: 'city', withParent: 0}
       Kladr.getData(q, (err, result) => {
-        var items = result.result;
-        items.splice(0, 1);
-        this.isCityInput = false;
+        var items = result.result
+        items.splice(0, 1)
+        this.isCityInput = false
         this.itemsCity = items
       })
     },
     updateItemsStreat (text) {
-      this.isStreatInput = true;
-      const kladrApi = require('kladrapi-for-node');
-      const Kladr = new kladrApi();
-      let q = {query: text, contentType: 'street', withParent: this.itemCity.id, cityId: this.itemCity.id};
+      this.isStreatInput = true
+      const kladrApi = require('kladrapi-for-node')
+      const Kladr = new kladrApi()
+      let q = {query: text, contentType: 'street', withParent: this.itemCity.id, cityId: this.itemCity.id}
       Kladr.getData(q, (err, result) => {
-        this.isStreatInput = false;
-        var items = result.result;
-        items.splice(0, 1);
+        this.isStreatInput = false
+        var items = result.result
+        items.splice(0, 1)
         this.itemsStreat = items
       })
     },
     updateItemsHomeNumber (text) {
-      this.isHomeNumberInput = true;
-      const kladrApi = require('kladrapi-for-node');
-      const Kladr = new kladrApi();
-      let q = {query: text, contentType: 'building', withParent: this.itemStreat.id, streetId: this.itemStreat.id};
+      this.isHomeNumberInput = true
+      const kladrApi = require('kladrapi-for-node')
+      const Kladr = new kladrApi()
+      let q = {query: text, contentType: 'building', withParent: this.itemStreat.id, streetId: this.itemStreat.id}
       Kladr.getData(q, (err, result) => {
-        this.isHomeNumberInput = false;
-        var items = result.result;
-        items.splice(0, 1);
+        this.isHomeNumberInput = false
+        var items = result.result
+        items.splice(0, 1)
         this.itemsHomeNumber = items
       })
     },
@@ -220,62 +282,104 @@ export default {
       }
     },
     setNumClick (num) {
-      this.numClick = num;
+      this.numClick = num
       if (num === 1) {
-        this.uuidDelivery = 'a8b81fcd-a7ad-4973-ae7a-255a65ee71c9';
+        this.uuidDelivery = 'a8b81fcd-a7ad-4973-ae7a-255a65ee71c9'
         this.deliveryPrice = 250
+        this.deliveryType = 'Доставка курьером'
       }
       if (num === 2) {
-        this.uuidDelivery = 'a8b81fcd-a7ad-4973-ae7a-255a65ee71c9';
+        this.uuidDelivery = 'a8b81fcd-a7ad-4973-ae7a-255a65ee71c9'
         this.deliveryPrice = 99
+        this.deliveryType = 'Саомвывоз'
       }
       if (num === 3) {
-        this.uuidDelivery = 'baa8587b-7859-4b9a-948f-25906513c343';
+        this.uuidDelivery = 'baa8587b-7859-4b9a-948f-25906513c343'
         this.deliveryPrice = 149
+        this.deliveryType = 'Отправка почтой'
       }
     },
     createOrder () {
-      var productsIds = [];
-      this.cart.products.forEach(value => productsIds.push({
-        productCount: value.numberPieces,
-        productId: value.product.productId
-      }));
-      var requestData = {
-        adress: this.itemCity.name + ',' + this.itemStreat.name + ',' + this.itemHomeNumber.name + ',' + this.roomNumber,
-        deliveryId: this.uuidDelivery,
-        email: this.email,
-        firstName: this.fistAndLastName.split(' ')[1],
-        isPayment: false,
-        lastName: this.fistAndLastName.split(' ')[0],
-        paymentType: this.paymentType,
-        phone: '+7' + this.phone,
-        productIds: productsIds };
+      if (Object.keys(this.itemCity).length !== 0 &&
+        Object.keys(this.paymentType).length !== 0 &&
+        Object.keys(this.itemStreat).length !== 0 &&
+        Object.keys(this.itemHomeNumber).length !== 0) {
+        if (this.itemCity.name.length !== 0 && this.itemStreat.name.length !== 0 && this.itemHomeNumber.name.length !== 0 &&
+          this.roomNumber.length !== 0 && this.uuidDelivery.length !== 0 && this.fistAndLastName.length !== 0 &&
+          this.phone.length !== 0 && this.cart.products.length !== 0) {
+          this.validationError = false
+          if (this.validateEmail(this.email)) {
+            this.emailError = false
+            var productsIds = []
+            this.cart.products.forEach(value => productsIds.push({
+              productCount: value.numberPieces,
+              productId: value.product.productId
+            }))
+            this.emailError = false
+            var requestData = {
+              adress: this.itemCity.name + ',' + this.itemStreat.name + ',' + this.itemHomeNumber.name + ',' + this.roomNumber,
+              deliveryId: this.uuidDelivery,
+              email: this.email,
+              firstName: this.fistAndLastName.split(' ')[1],
+              isPayment: false,
+              lastName: this.fistAndLastName.split(' ')[0],
+              paymentType: this.paymentType,
+              phone: '+7' + this.phone,
+              productIds: productsIds
+            }
 
-      fetch(process.env.HOST + '/api/user/order/create', {
-        credentials: 'include',
-        method: 'post',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(requestData)
-      }).then(result => result.json()).then(commits => {
-        if (commits.cod.length !== 0) {
-          this.cod = commits.cod;
-          fetch(process.env.HOST + '/api/shoppingCart/clear', {
-            method: 'get',
-            credentials: 'include'
-          }).then(response => this.$emit('addProduct', true));
-          this.$router.push({name: 'thanks', params: {cod: this.cod}})
+            fetch(process.env.HOST + '/api/user/order/create', {
+              credentials: 'include',
+              method: 'post',
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(requestData)
+            }).then(result => result.json()).then(commits => {
+              if (commits.cod.length !== 0) {
+                this.cod = commits.cod
+                fetch(process.env.HOST + '/api/shoppingCart/clear', {
+                  method: 'get',
+                  credentials: 'include'
+                }).then(response => this.$emit('addProduct', true))
+                this.$router.push({name: 'thanks', params: {cod: this.cod}})
+              }
+            })
+          } else {
+            this.emailError = true
+          }
+        } else {
+          this.validationError = true
         }
-      })
+      } else {
+        this.validationError = true
+      }
+    }
+  },
+  watch: {
+    email: function () {
+      this.emailError = false
     }
   }
+
 }
 </script>
 
 <style>
   @import '../../../../static/CSS/CSS.css';
+
+  .error_text {
+    margin-bottom: 3%;
+    margin-left: 5%;
+    -webkit-filter: grayscale(30%) drop-shadow(0 0 5px rgb(255, 102, 138));
+    filter: grayscale(30%) drop-shadow(0 0 5px rgb(255, 102, 138));
+    color: red;
+    width: 90%;
+    height: fit-content;
+    position: relative;
+    top: 13px;
+  }
 
   .loader {
     position: absolute;
@@ -557,7 +661,7 @@ export default {
     }
   }
 
-  .v-autocomplete-list{
+  .v-autocomplete-list {
     z-index: 100;
     width: 400px;
     border-radius: 5px;
@@ -566,6 +670,7 @@ export default {
     background: #9bbbd0;
     text-align: left;
   }
+
   .v-autocomplete
   .v-autocomplete-input-group
   .v-autocomplete-input {
@@ -576,7 +681,8 @@ export default {
     cursor: pointer;
   }
 
-  .btn_return {font-family: Roboto, serif;
+  .btn_return {
+    font-family: Roboto, serif;
     width: 275px;
     height: 54px;
     color: #1E90FF;
@@ -656,6 +762,10 @@ export default {
   }
 
   .margin_top {
-  margin-top: 2%;
+    margin-top: 2%;
+  }
+
+  .create_order_btn_container {
+    display: block;
   }
 </style>

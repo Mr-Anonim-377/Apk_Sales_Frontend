@@ -8,10 +8,11 @@
       <div class="main_filter_unit">
         <ul class="main_category_list text_color">
           <li class="category_list_item"
-              v-for="(collection, index) in collections"
-              @click="providerCollectionInFilter(index)"
-              v-bind:style="collectionIsColor(index)">
-            <span class="category_list_link">{{collection.collectionName}}</span>
+              v-for="(collection, index) in collections">
+            <div  v-bind:style="collectionIsColor(index)" class="filter_point">▲</div>
+            <div class="category_list_link_item">
+              <span class="category_list_link" @click="providerCollectionInFilter(index)">{{collection.collectionName}}</span>
+            </div>
           </li>
         </ul>
       </div>
@@ -21,25 +22,31 @@
       <div class="main_filter_unit">
         <ul class="main_category_list text_color">
           <li class="category_list_item"
-              v-for="(category, index) in categories"
-              @click="providerCategoryInFilter(index)"
-              v-bind:style="categoryIsColor(index)">
-            <span class="category_list_link">{{category.categoryName}}</span>
+              v-for="(category, index) in categories">
+            <div  v-bind:style="categoryIsColor(index)" class="filter_point">▲</div>
+            <div class="category_list_link_item">
+              <span class="category_list_link" @click="providerCategoryInFilter(index)">{{category.categoryName}}</span>
+            </div>
           </li>
         </ul>
       </div>
       <div class="filter-range">
         <div class="filter-range-title"><a class="text_prise">Цена(₽):</a></div>
         <div class="price-controls">
-          <input type="text" class="min-price" v-bind:placeholder="'от ' + totalMinPrice" v-model.number="minPrice">
-          <input type="text" class="max-price" v-bind:placeholder="'от ' + totalMaxPrice" v-model.number="maxPrice">
+          <input type="text" class="min-price" v-bind:placeholder="'от ' + Number.parseFloat(totalMinPrice).toFixed(2)" v-model="minPrice">
+          <input type="text" class="max-price" v-bind:placeholder="'от ' + Number.parseFloat(totalMaxPrice).toFixed(2)" v-model="maxPrice">
         </div>
       </div>
       <div class="btn_border">
         <a class="btn_search"
-           v-bind:href="'http://localhost:8081/search/page=1&searchStr=' + searchStr +
+           v-bind:href="'/search/page=1&searchStr=' + searchStr +
            '&collectionsIds=' + getStrByArray(getIds()) +
-           '&categoryIds=' + getStrByArray(getCategoryIds()) + '&price-min=' + minPrice.toFixed(2) + '&price-max=' + maxPrice.toFixed(2)">Начать поиск</a>
+           '&categoryIds=' + getStrByArray(getCategoryIds()) +
+           '&price-min=' + minPriceUrl +
+           '&price-max=' + maxPriceUrl +
+           '&totalMinPrice='+Number.parseFloat(totalMinPrice).toFixed(2)+
+           '&totalMaxPrice='+Number.parseFloat(totalMaxPrice).toFixed(2)">Начать
+          поиск</a>
       </div>
     </div>
   </div>
@@ -52,6 +59,8 @@ export default {
   name: 'CatalogItemFilter',
   components: {CatalogItem},
   props: {
+    totalMaxPrice: {},
+    totalMinPrice: {},
     searchStr: {},
     priceMin: {},
     priceMax: {},
@@ -61,8 +70,6 @@ export default {
   },
   data () {
     return {
-      totalMinPrice: 0,
-      totalMaxPrice: 10000,
       ids: [],
       collectionColorIsNumber: -1,
       filterClickColor: {
@@ -71,18 +78,20 @@ export default {
       mouseMoveColor: {
         background: 'rgba(153,116,251,0.61)'
       },
-      minPrice: Number.parseFloat(this.priceMin),
-      maxPrice: Number.parseFloat(this.priceMax),
+      minPrice: '',
+      maxPrice: '',
       collections: [],
       categories: [],
       collectionFilters: [],
       categoryFilters: [],
-      categoryColorIsNumber: -1
+      categoryColorIsNumber: -1,
+      minPriceUrl: '',
+      maxPriceUrl: ''
     }
   },
   methods: {
     getStrByArray (array) {
-      var str = '';
+      var str = ''
       if (array !== 0 || array !== null) {
         for (let i = 0; i < array.length; i++) {
           if (i === 0) {
@@ -104,29 +113,29 @@ export default {
     collectionIsColor (index) {
       for (let i = 0; i < this.collectionFilters.length; i++) {
         if (this.collectionFilters[i].index === index) {
-          return this.filterClickColor
+          return {visibility: 'inherit'}
         }
       }
       if (index === this.collectionColorIsNumber) {
-        return this.mouseMoveColor
+        return {visibility: 'inherit'}
       }
-      return ''
+      return {visibility: 'collapse'}
     },
     categoryIsColor (index) {
       for (let i = 0; i < this.categoryFilters.length; i++) {
         if (this.categoryFilters[i].index === index) {
-          return this.filterClickColor
+          return {visibility: 'inherit'}
         }
       }
       if (index === this.categoryColorIsNumber) {
-        return this.mouseMoveColor
+        return {visibility: 'inherit'}
       }
-      return ''
+      return {visibility: 'collapse'}
     },
     providerCollectionInFilter (index) {
       for (let i = 0; i < this.collectionFilters.length; i++) {
         if (this.collectionFilters[i].index === index) {
-          this.collectionFilters.splice(i, 1);
+          this.collectionFilters.splice(i, 1)
           return
         }
       }
@@ -135,45 +144,53 @@ export default {
     providerCategoryInFilter (index) {
       for (let i = 0; i < this.categoryFilters.length; i++) {
         if (this.categoryFilters[i].index === index) {
-          this.categoryFilters.splice(i, 1);
+          this.categoryFilters.splice(i, 1)
           return
         }
       }
       this.categoryFilters.push({index: index, categoryId: this.categories[index].categoryId})
     },
-    setMaxWidth () {
-      this.tmpMinInpWidth = this.minInpWidth;
-      this.tmpMaxPrice = this.maxPrice;
-      this.maxInpWidth = (this.absRange - this.minPrice) * (100 / this.absRange)
-    },
-    setMinWidth () {
-      this.tmpMaxInpWidth = this.maxInpWidth;
-      this.tmpMinPrice = this.minPrice;
-      this.minInpWidth = (this.absRange - (this.absRange - this.maxPrice)) * (100 / this.absRange)
-    },
     setCollectionIdsArray () {
-      this.ids = [];
+      this.ids = []
       this.collectionFilters.forEach(item => this.ids.push(item.collectionId))
     },
     getIds () {
-      this.setCollectionIdsArray();
+      this.setCollectionIdsArray()
       return this.ids
     },
     getCategoryIds () {
-      var categoryIds = [];
-      this.categoryFilters.forEach(item => categoryIds.push(item.categoryId));
-      return categoryIds;
+      var categoryIds = []
+      this.categoryFilters.forEach(item => categoryIds.push(item.categoryId))
+      return categoryIds
     }
   },
   watch: {
     minPrice: function () {
-      this.setMaxWidth()
+      this.minPrice = this.minPrice.replace(/\D/, '')
+      this.minPriceUrl = this.minPrice === ''
+        ? this.totalMinPrice
+        : Number.parseInt(this.minPrice).toFixed(2)
     },
     maxPrice: function () {
-      this.setMinWidth()
+      this.maxPrice = this.maxPrice.replace(/\D/, '')
+      this.maxPriceUrl = this.maxPrice === ''
+        ? this.totalMaxPrice
+        : Number.parseInt(this.maxPrice).toFixed(2)
     }
   },
   created: function init () {
+    this.minPrice = Number.parseInt(this.priceMin)
+    this.maxPrice = Number.parseInt(this.priceMax)
+    this.minPriceUrl = Number.parseFloat(this.priceMin).toFixed(2)
+    this.maxPriceUrl = Number.parseFloat(this.priceMax).toFixed(2)
+    if (this.priceMin === this.totalMinPrice) {
+      this.minPrice = ''
+      this.minPriceUrl = Number.parseFloat(this.totalMinPrice).toFixed(2)
+    }
+    if (this.priceMax === this.totalMaxPrice) {
+      this.maxPrice = ''
+      this.maxPriceUrl = Number.parseFloat(this.totalMaxPrice).toFixed(2)
+    }
     fetch(process.env.HOST + '/api/collection/all', {
       method: 'get'
     })
@@ -190,7 +207,7 @@ export default {
           }
           this.collections = commits
         }
-      });
+      })
     fetch(process.env.HOST + '/api/category/all', {
       method: 'get'
     })

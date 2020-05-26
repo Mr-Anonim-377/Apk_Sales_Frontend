@@ -27,10 +27,14 @@ const webpackConfig = merge(baseWebpackConfig, {
   devServer: {
     proxy: {
       '/api': {
-        target: 'http://ec2-13-58-76-77.us-east-2.compute.amazonaws.com:8080',
-        pathRewrite: {'^/api': ''},
+        target: 'http://ec2-3-133-7-234.us-east-2.compute.amazonaws.com:8080',
+        pathRewrite: { '^/api': '' },
+      },
+      '/kladr': {
+        target: 'http://kladr-api.ru',
+        pathRewrite: { '^/kladr': '' },
       }
-    }
+    },
   },
   output: {
     path: config.build.assetsRoot,
@@ -56,7 +60,7 @@ const webpackConfig = merge(baseWebpackConfig, {
       filename: utils.assetsPath('css/[name].[contenthash].css'),
       // Setting the following option to `false` will not extract CSS from codesplit chunks.
       // Their CSS will instead be inserted dynamically with style-loader when the codesplit chunk has been loaded by webpack.
-      // It's currently set to `true` because we are seeing that sourcemaps are included in the codesplit bundle as well when it's `false`, 
+      // It's currently set to `true` because we are seeing that sourcemaps are included in the codesplit bundle as well when it's `false`,
       // increasing file size: https://github.com/vuejs-templates/webpack/issues/1110
       allChunks: true,
     }),

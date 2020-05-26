@@ -8,10 +8,12 @@
       <div class="main_filter_unit">
         <ul class="main_category_list text_color">
           <li class="category_list_item"
-              v-for="(category, index) in categories"
-              @click="providerCollectionInFilter(index)"
-              v-bind:style="collectionIsColor(index)">
-            <span class="category_list_link">{{category.category_name}}</span>
+              v-for="(category, index) in categories">
+            <div  v-bind:style="collectionIsColor(index)" class="filter_point">▲</div>
+            <div class="category_list_link_item">
+              <span class="category_list_link"  @click="providerCollectionInFilter(index)">{{category.category_name}}</span>
+            </div>
+
           </li>
         </ul>
       </div>
@@ -24,7 +26,7 @@
       </div>
       <div class="btn_border">
         <a class="btn_search"
-           v-bind:href="'http://localhost:8081/collection/collectionId=' + collectionId +
+           v-bind:href="'/collection/collectionId=' + collectionId +
             '&page=' + 1 +
             '&categoryIds=' +getStrByArray(getIds()) +
             '&price-min='+ minPriceUrl +
@@ -91,13 +93,13 @@ export default {
     collectionIsColor (index) {
       for (let i = 0; i < this.categoriesFilters.length; i++) {
         if (this.categoriesFilters[i].index === index) {
-          return this.filterClickColor
+          return {visibility: 'inherit'}
         }
       }
       if (index === this.categoryColorIsNumber) {
-        return this.mouseMoveColor
+        return {visibility: 'inherit'}
       }
-      return ''
+      return {visibility: 'collapse'}
     },
     providerCollectionInFilter (index) {
       for (let i = 0; i < this.categoriesFilters.length; i++) {

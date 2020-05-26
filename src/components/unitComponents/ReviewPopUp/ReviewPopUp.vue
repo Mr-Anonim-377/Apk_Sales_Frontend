@@ -5,11 +5,17 @@
       <div class="mark_container">
         <div class="input_container">
           <div class="input_lable">Оценка:</div>
-          <masked-input v-model="mark" mask="1" placeholder="5" class="input_mark"/>
-          <!--          <input maxlength="1" type="text" class="input_mark">-->
+          <input maxlength="1" v-model="mark" placeholder="5" class="input_mark"/>
         </div>
-        <div class="create_review_btn_container">
-          <div @click="addReview" class="create_review_btn delete">Отправить Отзыв</div>
+        <div style="display: block">
+          <div class="error_container" >
+            <div v-if="discriptionError">
+            Отзыв не модет быть пустым
+            </div>
+          </div>
+          <div class="create_review_btn_container">
+            <div @click="addReview" class="create_review_btn delete">Отправить Отзыв</div>
+          </div>
         </div>
       </div>
       <div class="text_review_container">
@@ -17,7 +23,7 @@
 
         <textarea v-model="discription" id="story" name="story"
                   rows="5" cols="33" placeholder="Отзыв о товаре">
-</textarea>
+        </textarea>
       </div>
     </div>
     <div class="pop_up_error pop_up_error_container" v-if="userEmail === undefined">
@@ -40,27 +46,40 @@ export default {
   comments: {
     MaskedInput
   },
+  watch: {
+    mark: function () {
+      this.mark = this.mark.replace(/\D/, '')
+      if (this.mark > 5) {
+        this.mark = ''
+      }
+    }
+  },
   name: 'ReviewPopUp',
   data () {
     return {
       isCreated: false,
-      mark: null,
+      mark: '',
       request: {},
-      discription: null
+      discription: '',
+      discriptionError: false
     }
   },
   methods: {
     addReview () {
-      this.isCreated = true;
-      this.request = {
-        discription: this.discription,
-        mark: this.mark === '' ? 5 : Number.parseInt(this.mark),
-        productId: this.product.productId,
-        reviewType: 'PRODUCT',
-        title: 'Новый отзвыв о товаре ' + this.product.nameProduct,
-        userEmail: this.userEmail
-      };
-      this.$emit('addReview', this.request)
+      if (this.discription.length > 0) {
+        this.isCreated = true
+        this.request = {
+          discription: this.discription,
+          mark: this.mark === '' ? 5 : Number.parseInt(this.mark),
+          productId: this.product.productId,
+          reviewType: 'PRODUCT',
+          title: 'Новый отзвыв о товаре ' + this.product.nameProduct,
+          userEmail: this.userEmail
+        }
+        this.$emit('addReview', this.request)
+      } else {
+        this.discriptionError = true
+      }
     }
   }
 }
@@ -196,10 +215,11 @@ export default {
   }
 
   .create_review_btn_container {
+    position: relative;
     height: fit-content;
     width: fit-content;
-    margin-left: 1%;
-    margin-top: 33px;
+    top: 10px;
+    left: 11%;
   }
 
   .create_review_btn {
@@ -235,4 +255,19 @@ export default {
     padding-bottom: 2px;
     width: 208px;
     text-align: center;
-  }</style>
+  }
+
+  .error_container {
+    margin-top: 7%;
+  border-radius: 30px;
+    -webkit-filter: grayscale(30%) drop-shadow(0 0 5px rgb(255, 102, 138));
+    filter: grayscale(30%) drop-shadow(0 0 5px rgb(255, 102, 138));
+    color: red;
+    height: 22px;
+    width: 208px;
+    text-align: center;
+    position: relative;
+    bottom: 5px;
+    right: 22px;
+  }
+</style>

@@ -4,7 +4,7 @@
       <div class="main"></div>
       <div class="main_container">
         <div class="row_custom">
-          <div class="row_carousel">
+          <div class="row_carousel min_size">
             <CollectionsCarusel/>
           </div>
           <div class="main_container_also">
@@ -27,5 +27,9 @@ export default {
   components: { CollectionsCarusel, BanersBodyPage, FavoriteCategoriesCarusel }
 }
 </script>
-<style scoped>
+<style>
+  .min_size {
+    min-width: 200px;
+    min-height: 1400px;
+  }
 </style>

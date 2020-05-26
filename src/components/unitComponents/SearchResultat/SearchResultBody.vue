@@ -4,6 +4,8 @@
       <div class="main_back main"></div>
       <div class="main_border">
         <SearchResultFilter
+          :totalMaxPrice="totalMaxPrice"
+          :totalMinPrice="totalMinPrice"
           :searchStr="searchStr"
           :priceMin="currentPriceMin"
           :priceMax="currentPriceMax"
@@ -39,7 +41,7 @@
             </div>
             <CatalogItemProduct
               :user="user"
-              v-for="productCategory in products"
+              v-for="(productCategory,index) in products" :key="index"
               :productCategory="productCategory"
               v-on:addProduct="refreshProductCount($event)"></CatalogItemProduct>
           </div>
@@ -51,7 +53,7 @@
             v-if="!isError">
           <li v-bind:class="getPreviousClass()">
             <a v-if="page>1"
-               v-bind:href="'http://localhost:8081/search/page='+(Number.parseInt(page)-1)+'&searchStr=' + searchStr +
+               v-bind:href="'/search/page='+(Number.parseInt(page)-1)+'&searchStr=' + searchStr +
                 '&collectionsIds=' + getStrByArray(getCollectionIds()) +
                 '&categoryIds=' + getStrByArray(getCategoryIds()) +
                  '&price-min=' + priceMin
@@ -61,7 +63,7 @@
           <li v-for="(numPage) in pagesArray">
             <a
               v-bind:class=isLiActive(numPage+1)
-              v-bind:href="'http://localhost:8081/search/page='+Number.parseInt(numPage+1)+'&searchStr=' + searchStr +
+              v-bind:href="'/search/page='+Number.parseInt(numPage+1)+'&searchStr=' + searchStr +
                 '&collectionsIds=' + getStrByArray(getCollectionIds()) +
                 '&categoryIds=' + getStrByArray(getCategoryIds()) +
                  '&price-min=' + priceMin
@@ -70,7 +72,7 @@
           <li v-bind:class="getNextClass()">
             <a
               v-if="Number.parseInt(page)<Number.parseInt(totalPage)"
-              v-bind:href="'http://localhost:8081/search/page='+(Number.parseInt(this.page)+1)+'&searchStr=' + searchStr +
+              v-bind:href="'/search/page='+(Number.parseInt(this.page)+1)+'&searchStr=' + searchStr +
                 '&collectionsIds=' + getStrByArray(getCollectionIds()) +
                 '&categoryIds=' + getStrByArray(getCategoryIds()) +
                  '&price-min=' + priceMin
@@ -90,6 +92,8 @@
 
 export default {
   props: {
+    totalMaxPrice: {},
+    totalMinPrice: {},
     user: {},
     searchStr: {},
     page: {},
@@ -193,8 +197,8 @@ export default {
     SearchResultFilter
   },
   created: function init () {
-    this.currentPriceMin = 0.00;
-    this.currentPriceMax = 10000.00;
+    this.currentPriceMin = this.totalMinPrice;
+    this.currentPriceMax = this.totalMaxPrice;
     if (this.priceMin !== undefined) {
       this.currentPriceMin = this.priceMin
     }

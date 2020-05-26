@@ -2,7 +2,12 @@
   <section class="section">
     <div class="section_main_product">
       <div class="main"></div>
-      <div class="section_main_acc">
+      <div class="error_user_null" v-if="user.email === undefined">
+        <div class="login_cotainer">
+          <LogInPopUp v-on:refreshUser="$emit('refreshUser', $event)"></LogInPopUp>
+        </div>
+      </div>
+      <div class="section_main_acc" v-if="user.email !== undefined">
         <div class="section_user">
           <div class="container_user">
             <br>
@@ -39,33 +44,32 @@
                         @click="dataUserCode">
                   Отправить
                 </button>
+                <button class="btn_code"
+                        @click="cancel()">
+                  Отменить
+                </button>
               </div>
               <button v-if="isChangeBtn" class="btn_password" @click="passChangeRequest()">Изменить пароль</button>
               <br>
             </div>
           </div>
         </div>
-        <div class="section_address">
-          <div class="container_address">
-            <span class="text_acc text_acc_size"><b>Данные о предыдущих заказах</b></span>
-            <span class="text_acc_address">У вас нет новых заказов</span>
-          </div>
-        </div>
-          <AccountUserDelevery
+        <AccountUserDelevery
           :user="user"
-          />
+        />
       </div>
     </div>
   </section>
 </template>
 
 <script>
-  import AccountUserData from "./AccountUserData";
-  import AccountUserDelevery from "./AccountUserDelevery";
+import LogInPopUp from '../UserAction/LogAndSignlnPopUp'
+import AccountUserData from './AccountUserData'
+import AccountUserDelevery from './AccountUserDelevery'
 
 export default {
   name: 'AccountBody',
-  components: {AccountUserDelevery, AccountUserData},
+  components: {AccountUserDelevery, LogInPopUp, AccountUserData},
   props: {
     user: {}
   },
@@ -89,92 +93,112 @@ export default {
       method: 'get',
       credentials: 'include'
     }).then(response => response.json())
-      // eslint-disable-next-line
+    // eslint-disable-next-line
         .then(commits => this.order = commits);
   },
   watch: {
     currentPass: function () {
       if (this.currentPass.length > 0) {
-        this.errors=[];
+        this.errors = []
         this.isChangeBtn = true
       } else {
-        this.errors=[];
+        this.errors = []
         this.isChangeBtn = false
       }
     }
   },
-  methods: {
-    passChangeRequest () {
-      this.errors = [];
-      if ((this.currentPass.length + this.newPassOne.length + this.newPassOne.length) > 0) {
-        if (this.newPassOne.length !== this.newPassTwo.length) {
-          this.errors.push('Новые пароли не совпадают')
-        } else {
-          if (this.currentPass === this.newPassOne) {
-            this.errors.push('Новый пароль не доен совпадать со старым')
-          }
-          if (this.newPassOne.length < 8) {
-            this.errors.push('Пароль менее 8 символов')
-          }
-          if (this.newPassOne.length > 16) {
-            this.errors.push('Пароль более 16 символов')
-          }
-          if (!/[A-Z]+/.test(this.newPassOne)) {
-            this.errors.push('Пароль должен содержать символы верхнего регистра')
-          }
-          if (!/[a-z]+/.test(this.newPassOne) || /[а-я]+/.test(this.newPassOne)) {
-            this.errors.push('Пароль должен содержать символы латиницы')
-          }
-        }
-        if (this.errors.length === 0) {
-          this.isDisabled = true;
-          fetch(process.env.HOST + '/api/user/change/request', {
-            method: 'get',
-            credentials: 'include'
-          }).then(response => {
-            // if (response.status === 200) {
-            this.isCodBtn = true;
-            this.isChangeBtn = false
-            // }
-          })
-        }
+  methods: { cancel () {
+    this.isDisabled = false
+    this.isCodBtn = false
+    this.isChangeBtn = true
+    this.cod = ''
+    this.error = false
+    this.errors = []
+  },
+  passChangeRequest () {
+    this.errors = []
+    if ((this.newPassOne.length + this.newPassOne.length) > 0) {
+      if (this.newPassOne.length !== this.newPassTwo.length) {
+        this.errors.push('Новые пароли не совпадают')
       } else {
-        this.errors.push('Заполните поля')
+        if (this.currentPass === this.newPassOne) {
+          this.errors.push('Новый пароль не должен совпадать со старым')
+        }
+        if (this.newPassOne.length < 8) {
+          this.errors.push('Пароль менее 8 символов')
+        }
+        if (this.newPassOne.length > 16) {
+          this.errors.push('Пароль более 16 символов')
+        }
+        if (!/[A-Z]+/.test(this.newPassOne)) {
+          this.errors.push('Пароль должен содержать символы верхнего регистра')
+        }
+        if (!/[a-z]+/.test(this.newPassOne) || /[а-я]+/.test(this.newPassOne)) {
+          this.errors.push('Пароль должен содержать символы латиницы')
+        }
       }
-    },
-    dataUserCode () {
-      this.inputCodDisable = true;
-      if (this.cod.length > 0) {
-        fetch(process.env.HOST + '/api/user/change/password', {
-          method: 'post',
-          credentials: 'include',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            cod: this.cod,
-            passwordNew: this.newPassOne,
-            passwordOld: this.currentPass
-          })
+      if (this.errors.length === 0) {
+        this.isDisabled = true
+        fetch(process.env.HOST + '/api/user/change/request', {
+          method: 'get',
+          credentials: 'include'
         }).then(response => {
-          if (response.status === 200) {
-            this.isDisabled = false;
-            this.errors = [];
-            this.isCodBtn = false;
-            this.currentPass = '';
-            this.newPassOne = '';
-            this.newPassTwo = '';
-            this.access = true;
-            this.$emit('refreshUser', true)
-          } else {
-            this.cod = '';
-            this.errors = [];
-            this.errors.push('Не верный код подтверждения')
-          }
+          // if (response.status === 200) {
+          this.isCodBtn = true
+          this.isChangeBtn = false
+          // }
         })
       }
+    } else {
+      this.errors.push('Заполните поля')
     }
+  },
+  dataUserCode () {
+    this.inputCodDisable = true
+    if (this.cod.length > 0) {
+      let error = false
+      fetch(process.env.HOST + '/api/user/change/password', {
+        method: 'post',
+        credentials: 'include',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          cod: this.cod,
+          passwordNew: this.newPassOne,
+          passwordOld: this.currentPass
+        })
+      }).then(response => {
+        if (response.status === 200) {
+          this.isDisabled = false
+          this.errors = []
+          this.isCodBtn = false
+          this.currentPass = ''
+          this.newPassOne = ''
+          this.newPassTwo = ''
+          this.cod = ''
+          this.access = true
+          this.$emit('refreshUser', true)
+        } else {
+          error = true
+        }
+        return response.json()
+      }).then(commit => {
+        if (error) {
+          if (commit.type === 'PasswordNotValidate') {
+            this.errors = []
+            this.errors.push('Не верный старый пароль')
+          } else {
+            this.isCodBtn = true
+            this.cod = ''
+            this.errors = []
+            this.errors.push('Не верный код подтверждения')
+          }
+        }
+      })
+    }
+  }
 
   }
 }
@@ -202,6 +226,7 @@ export default {
   }
 
   .btn_code {
+   margin-right: 2%;
     font-family: Roboto, serif;
     width: 140px;
     height: 54px;
@@ -397,6 +422,7 @@ export default {
   }
 
   .btn_password {
+    position: relative;
     font-family: Roboto, serif;
     width: 240px;
     height: 54px;
@@ -411,6 +437,37 @@ export default {
     margin: auto;
   }
 
+  .login_cotainer .pop_up__blur {
+    background: none;
+    filter: blur(0px);
+    box-shadow: none;
+  }
+
+  .login_cotainer .pop_up_registration {
+    width: 324px;
+  }
+
+  .login_cotainer .pop_up_button {
+    margin-left: 34%;
+  }
+
+  .login_cotainer .action_container {
+    text-align: center;
+    padding-bottom: 2px;
+    margin-top: 5px;
+    margin-right: 21px;
+    padding-top: 2px;
+  }
+
+  .login_cotainer .use_pop_up_container {
+    margin-left: 3%;
+  }
+
+  .login_cotainer .users_choice_action {
+    height: fit-content;
+    width: 88%;
+  }
+
   .btn_password:hover {
     background: rgb(65, 105, 225);
   }
@@ -418,5 +475,24 @@ export default {
   .btn_password:active {
     background: rgb(65, 105, 225);
     box-shadow: 0 3px rgb(0, 0, 255) inset;
+  }
+
+  .error_user_null {
+    position: relative;
+    z-index: 90;
+    width: fit-content;
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 15px;
+    padding-left: 15px;
+    max-width: 1140px;
+    padding-bottom: 2%;
+    min-height: 300px;
+  }
+
+  .login_cotainer {
+    margin: 0 auto 0 70px;
+    width: fit-content;
+    padding: 20% 2% 0 2%;
   }
 </style>

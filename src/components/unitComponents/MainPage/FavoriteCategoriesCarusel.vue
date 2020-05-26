@@ -1,6 +1,6 @@
 <template>
   <div class="main_container_product">
-    <FavoriteCategoriesUnit v-for="favoriteCategory in favoriteCategoryProducts"
+    <FavoriteCategoriesUnit v-for="(favoriteCategory, index) in favoriteCategoryProducts" :key="index"
                             :favoriteCategory="favoriteCategory"/>
   </div>
 </template>

@@ -6,19 +6,19 @@
         <img class="img_acc" :src=user.image.imagePatch>
       </div>
       <div class="container_user_FIO">
-        <input class="inp_user"
+        <input class="inp_user" :disabled="isDisable"
                v-bind:placeholder="user.firstName"
                v-model="dateFirstName"
         >
-        <input class="inp_user"
+        <input class="inp_user" :disabled="isDisable"
                v-bind:placeholder="user.lastName"
                v-model="dateLastName"
         >
-        <input class="inp_user"
+        <input class="inp_user" :disabled="isDisable"
                v-bind:placeholder="user.personPhone"
                v-model="datePersonPhone"
         >
-        <input class="inp_user"
+        <input class="inp_user" :disabled="isDisable"
                v-bind:placeholder="user.email"
                v-model="dateEmail"
         >
@@ -36,6 +36,9 @@
       <input class="inp_girl" type="radio" name="gender" value="Женский">
       <span class="text_acc">Женский</span>
     </div>
+    <div class="error_text margin_bottom_none" v-if="emailError">
+      Не верный email
+    </div>
     <div class="btn_account_container"
          v-if="isChangeBtn">
       <button class="btn_password"
@@ -51,12 +54,16 @@
     </div>
     <div class="btn_account_container" v-if="isCodBtn">
       <input type="password"
-      class="inp_code"
+      class="inp_code margin_left"
              placeholder="введите код"
              v-model="cod">
       <button class="btn_code"
               @click="dataUserCode">
         Отправить
+      </button>
+      <button class="btn_code"
+              @click="cancel()">
+        Отменить
       </button>
     </div>
   </div>
@@ -78,25 +85,43 @@ export default {
       isChangeBtn: false,
       isCodBtn: false,
       error: false,
-      access: false
+      access: false,
+      isDisable: false,
+      emailError: false
     }
   },
   methods: {
+    validateEmail (email) {
+      var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      return re.test(email)
+    },
     dateUser () {
       if ((this.dateFirstName.length +
           this.dateLastName.length +
           this.dateEmail.length +
           this.datePersonPhone.length) > 0) {
-        fetch(process.env.HOST + '/api/user/change/request', {
-          method: 'get',
-          credentials: 'include'
-        }).then(response => {
-          // if (response.status === 200) {
-            this.isCodBtn = true;
+        if (this.validateEmail(this.dateEmail)) {
+          fetch(process.env.HOST + '/api/user/change/request', {
+            method: 'get',
+            credentials: 'include'
+          }).then(response => {
+            // if (response.status === 200) {
+            this.isDisable = true
+            this.isCodBtn = true
             this.isChangeBtn = false
-          // }
-        })
+            // }
+          })
+        } else {
+          this.emailError = true
+        }
       }
+    },
+    cancel () {
+      this.isDisable = false
+      this.isCodBtn = false
+      this.isChangeBtn = true
+      this.cod = ''
+      this.error = false
     },
     dataUserCode () {
       fetch(process.env.HOST + '/api/user/change/data', {
@@ -116,15 +141,16 @@ export default {
         })
       }).then(response => {
         if (response.status === 200) {
-          this.isCodBtn = false;
-          this.dateFirstName = '';
-            this.dateLastName = '';
-            this.dateEmail = '';
-            this.datePersonPhone = '';
-          this.access = true;
+          this.isCodBtn = false
+          this.dateFirstName = ''
+          this.cod = ''
+          this.dateLastName = ''
+          this.dateEmail = ''
+          this.datePersonPhone = ''
+          this.access = true
           this.$emit('refreshUser', true)
         } else {
-          this.isCodBtn = false;
+          this.cod = ''
           this.error = true
         }
       })
@@ -136,9 +162,12 @@ export default {
         this.dateLastName.length +
         this.dateEmail.length +
         this.datePersonPhone.length) > 0) {
-        this.isChangeBtn = true;
+        this.isChangeBtn = true
         this.access = false
+        this.emailError = false
       } else {
+        this.cod = ''
+        this.isCodBtn = false
         this.isChangeBtn = false
       }
     },
@@ -147,8 +176,9 @@ export default {
         this.dateLastName.length +
         this.dateEmail.length +
         this.datePersonPhone.length) > 0) {
-        this.isChangeBtn = true;
+        this.isChangeBtn = true
         this.access = false
+        this.emailError = false
       } else {
         this.isChangeBtn = false
       }
@@ -158,8 +188,9 @@ export default {
         this.dateLastName.length +
         this.dateEmail.length +
         this.datePersonPhone.length) > 0) {
-        this.isChangeBtn = true;
+        this.isChangeBtn = true
         this.access = false
+        this.emailError = false
       } else {
         this.isChangeBtn = false
       }
@@ -169,8 +200,9 @@ export default {
         this.dateLastName.length +
         this.dateEmail.length +
         this.datePersonPhone.length) > 0) {
-        this.isChangeBtn = true;
+        this.isChangeBtn = true
         this.access = false
+        this.emailError = false
       } else {
         this.isChangeBtn = false
       }
@@ -257,6 +289,7 @@ export default {
   }
 
   .inp_code {
+    margin-right: 2%;
     width: 150px;
     height: 40px;
     background: #E2F2E2;
@@ -305,5 +338,13 @@ export default {
     padding-bottom: 2px;
     font-size: x-large;
     margin-left: 35%;
+  }
+
+  .margin_left {
+    margin-left: 29%;
+  }
+
+  .margin_bottom_none {
+  margin-bottom: 0;
   }
 </style>

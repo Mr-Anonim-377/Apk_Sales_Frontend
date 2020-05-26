@@ -36,12 +36,12 @@
           <div class="user_phone">{{getUserPhone(user.personPhone)}}</div>
         </div>
         <div class="user_email_container">
-          <div class="meta_data_hint">mail:</div>
+          <div class="email_title">mail:</div>
           <div class="user_email">{{user.email}}</div>
         </div>
       </div>
       <div class="all_user_data_btn_container">
-        <a class="all_user_data_btn">Вся информация</a>
+        <a @click="$router.push({name: 'account'})" class="all_user_data_btn">Вся информация</a>
       </div>
     </div>
   </div>
@@ -49,7 +49,7 @@
 
 <script>
 export default {
-  name: 'LogInPopUp',
+  name: 'AytoRizetDataPopUp',
   props: {
     user: {}
   },
@@ -92,7 +92,7 @@ export default {
   }
 
   .pop_up_registration {
-    width: 200px;
+    width: 253px;
     min-height: 70px;
   }
 
@@ -110,11 +110,13 @@ export default {
   }
 
   .user_pop_up_card_container {
+    margin-left: 8%;
     position: relative;
     z-index: 90;
     height: fit-content;
     display: block;
     padding-bottom: 5%;
+    width: fit-content;
   }
 
   .user_data_container {
@@ -168,6 +170,7 @@ export default {
   }
 
   .all_user_data_btn_container {
+    margin-left: 15%;
     padding-bottom: 4px;
     margin-top: 4%;
   }
@@ -214,4 +217,9 @@ export default {
     border: 2px solid rgb(133, 193, 79);
   }
 
+  .email_title {
+    width: fit-content;
+    margin-left: auto;
+    margin-right: 41%;
+  }
 </style>

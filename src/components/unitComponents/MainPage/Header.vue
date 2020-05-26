@@ -5,7 +5,7 @@
       <div class="container">
         <div class="row_news">
           <a class="row_logo"
-             href="http://localhost:8081/">
+             @click="$router.push({path: '/'})">
             <img
               class="logo_pictures active_grayscale"
               src="https://mr-anonim-377.github.io/Sales/src/main/resources/static/CSS/pictures/Logotip.png"
@@ -49,9 +49,8 @@
                            src="../../../../static/CSS/pictures/basket.png" alt=""/></div>
                   </div>
                 </div>
-                <a
-                  v-bind:href="'http://localhost:8081/search/page=1&searchStr=' + searchStr.split(' ').join('%20') +
-                  '&collectionsIds=&categoryIds=&price-min=&price-max='">
+                <a v-bind:href="'/search/page=1&searchStr=' + searchStr.split(' ').join('%20') +
+                '&collectionsIds=&categoryIds=&price-min=&price-max=&totalMinPrice='+totalMinPrice+'&totalMaxPrice='+totalMaxPrice">
                   <div class="show_more" v-if="searchResult.length >= 4">Показать все</div>
                 </a>
               </div>
@@ -59,28 +58,30 @@
           </div>
           <div class="basket_regist">
 
-              <div class="image_header_conatiner">
-                <div class="basket_product_count">
-                  {{shopingCard.countProducts === null || shopingCard.countProducts === "0"
-                  ?0
-                  :shopingCard.countProducts}}
-                </div>
-                <a href="/shoppingCart">
-                  <img class="active_grayscale" src="https://mr-anonim-377.github.io/Sales/src/main/resources/static/CSS/pictures/Korzina.png">
-                </a>
+            <div class="image_header_conatiner">
+              <div class="basket_product_count">
+                {{shopingCard.countProducts === null || shopingCard.countProducts === "0"
+                ?0
+                :shopingCard.countProducts}}
               </div>
+              <a @click="$router.push({name: 'shoppingCart'})">
+                <img class="active_grayscale"
+                     src="https://mr-anonim-377.github.io/Sales/src/main/resources/static/CSS/pictures/Korzina.png">
+              </a>
+            </div>
             <div class="image_header_conatiner image_header_conatiner_mmargin_left" v-on-clickaway="logInOutsideClick">
               <a>
                 <div @click="isUserPopUp = {}">
-                  <img class="active_grayscale" src="https://mr-anonim-377.github.io/Sales/src/main/resources/static/CSS/pictures/log_in 1.png">
+                  <img class="active_grayscale"
+                       src="https://mr-anonim-377.github.io/Sales/src/main/resources/static/CSS/pictures/log_in 1.png">
                 </div>
               </a>
               <div class="logInPopUp_container" v-bind:style="isUserPopUp">
                 <LogInPopUp v-if="!isUserAuthorized"
                             v-on:refreshUser="$emit('refreshUser', $event)"></LogInPopUp>
-              <AutorizedUserData :user="user"
-                                 v-if="isUserAuthorized"
-                                 v-on:refreshUser="$emit('refreshUser', $event)"></AutorizedUserData>
+                <AutorizedUserData :user="user"
+                                   v-if="isUserAuthorized"
+                                   v-on:refreshUser="$emit('refreshUser', $event)"></AutorizedUserData>
               </div>
             </div>
           </div>
@@ -96,18 +97,23 @@ import AutorizedUserData from '../UserAction/Autorezed/AutorizedUzerData'
 import {directive as onClickaway} from 'vue-clickaway'
 
 export default {
-  components: {LogInPopUp,
-    AutorizedUserData},
+  components: {
+    LogInPopUp,
+    AutorizedUserData
+  },
   directives: {
     onClickaway: onClickaway
   },
   props: {
     user: {},
-    shopingCard: {}
+    shopingCard: {},
+    isUserAuthorized: {}
   },
 
   data () {
     return {
+      totalMaxPrice: {},
+      totalMinPrice: {},
       filterClickColor: {
         background: '#9974fb'
       },
@@ -118,7 +124,7 @@ export default {
       searchResult: [],
       searchResultVisible: '',
       isVisible: false,
-      isUserPopUp: {visibility: 'collapse', top:'-100px'}
+      isUserPopUp: {visibility: 'collapse', top: '-100px'}
     }
   },
   component: {
@@ -138,7 +144,7 @@ export default {
       this.isVisible = false
     },
     logInOutsideClick () {
-      this.isUserPopUp = {visibility: 'collapse', top:'-100px'}
+      this.isUserPopUp = {visibility: 'collapse', top: '-100px'}
     },
     indexOfColored (number) {
       if (number === this.colorIsNumber) {
@@ -153,13 +159,13 @@ export default {
       }
     },
     errorSearch () {
-      this.errorSearchStr = 'нет результатов поиска';
+      this.errorSearchStr = 'нет результатов поиска'
       this.searchResult = []
     },
     getSearhcResult () {
-      let searchStrOld = '';
-      this.searchResult = [];
-      searchStrOld = this.searchStr;
+      let searchStrOld = ''
+      this.searchResult = []
+      searchStrOld = this.searchStr
       fetch(process.env.HOST + '/api/search/onProducts', {
         method: 'post',
         headers: {
@@ -178,11 +184,13 @@ export default {
             response.json().then(commits => {
               for (let i = 0; i < commits.products.length; i++) {
                 if (searchStrOld === this.searchStr) {
-                  this.errorSearchStr = 'поиск по товарам';
+                  this.errorSearchStr = 'поиск по товарам'
                   this.searchResult.push(commits.products[i])
+                  this.totalMaxPrice = commits.maxPrice
+                  this.totalMinPrice = commits.minPrice
                 } else {
-                  this.searchResult = [];
-                  this.errorSearchStr = 'поиск по товарам';
+                  this.searchResult = []
+                  this.errorSearchStr = 'поиск по товарам'
                   break
                 }
               }
@@ -192,35 +200,39 @@ export default {
           this.errorSearch()
         }
       })
-    }
     },
-  created: function init () {
-    fetch(process.env.HOST + '/api/user', {
-      method: 'get',
-      credentials: 'include'
-    }).then(response => response.json())
-    // eslint-disable-next-line
-      .then(commits => {
-        if (commits.email !== null) {
-          this.isUserAuthorized = true;
-          this.user = commits;
-          this.$emit('refreshUser', this.user)
-        } else {
-          this.user = {};
-          this.isUserAuthorized = false;
-          this.$emit('refreshUser', this.user)
-        }
-      })
+    toCard (product) {
+      this.$router.push({path: '/card/' + product.productId, params: [product.productId]})
+      location.reload()
+    }
   },
+  // created: function init () {
+  //   fetch(process.env.HOST + '/api/user', {
+  //     method: 'get',
+  //     credentials: 'include'
+  //   }).then(response => response.json())
+  //   // eslint-disable-next-line
+  //     .then(commits => {
+  //       if (commits.email !== null) {
+  //         this.isUserAuthorized = true;
+  //         this.user = commits;
+  //         this.$emit('refreshUser', this.user)
+  //       } else {
+  //         this.user = {};
+  //         this.isUserAuthorized = false;
+  //         this.$emit('refreshUser', this.user)
+  //       }
+  //     })
+  // },
   watch: {
     searchStr: function () {
       if (this.searchStr.length > 3) {
-        this.errorSearchStr = 'поиск по товарам';
+        this.errorSearchStr = 'поиск по товарам'
         this.getSearhcResult()
       } else if (this.searchStr.length === 0) {
         this.errorSearchStr = 'введите поисковый запрос'
       } else {
-        this.errorSearchStr = 'дополните строку поиска';
+        this.errorSearchStr = 'дополните строку поиска'
         this.searchResult = []
       }
     }
@@ -228,7 +240,7 @@ export default {
 }
 </script>
 
-<style >
+<style>
   .image_header_conatiner_mmargin_left {
     margin-left: 11%;
   }
@@ -237,8 +249,9 @@ export default {
     position: absolute;
     min-height: 70px;
     top: 76%;
-    left: 76.5%;
+    left: 74%;
   }
+
   .active_grayscale:active {
     filter: grayscale(50%)
   }

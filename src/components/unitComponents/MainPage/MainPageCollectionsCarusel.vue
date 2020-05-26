@@ -6,7 +6,7 @@
         <ul>
           <li >
             <CollectionsCaruselUnit
-              v-for = "collection in collections"
+              v-for = "(collection, index) in collections" :key="index"
               :collection="collection"
             />
           </li>

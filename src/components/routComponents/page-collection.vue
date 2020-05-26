@@ -1,9 +1,11 @@
 <template>
   <div id="main-catalog">
     <Header
+      :isUserAuthorized="isUserAuthorized"
+      :user="user"
       :shopingCard="cart"
       v-on:addProduct="refreshChopingCart($event)"
-      v-on:refreshUser="user = $event"/>
+      v-on:refreshUser="refreshUser($event)"/>
     <Navigation/>
     <CollectionCatalog
       :user="user"
@@ -36,19 +38,8 @@ export default {
   data () {
     return {
       user: {},
-      cart: {}
-    }
-  },
-  methods: {
-    refreshChopingCart (isRefresh) {
-      if (isRefresh) {
-        fetch(process.env.HOST + '/api/shoppingCart/cart', {
-          method: 'get',
-          credentials: 'include'
-        }).then(response => response.json())
-          // eslint-disable-next-line
-            .then(commits => this.cart = commits);
-      }
+      cart: {},
+      isUserAuthorized: false
     }
   },
   created: function init () {
@@ -57,11 +48,38 @@ export default {
       credentials: 'include'
     }).then(response => response.json())
       // eslint-disable-next-line
-        .then(commits => this.cart = commits);
+      .then(commits => this.cart = commits);
+  },
+  methods: {
+    refreshUser(isRefresh) {
+      if (isRefresh) {
+        fetch(process.env.HOST + '/api/user', {
+          method: 'get',
+          credentials: 'include'
+        }).then(response => response.json())
+          // eslint-disable-next-line
+          .then(commits => {
+            if (commits.email !== null) {
+              this.isUserAuthorized = true;
+              this.user = commits;
+            } else {
+              this.user = {};
+              this.isUserAuthorized = false;
+            }
+          })
+      }
+    },
+    refreshChopingCart(isRefresh) {
+      if (isRefresh) {
+        fetch(process.env.HOST + '/api/shoppingCart/cart', {
+          method: 'get',
+          credentials: 'include'
+        }).then(response => response.json())
+          // eslint-disable-next-line
+          .then(commits => this.cart = commits);
+      }
+    }
   }
-  // created: function init () {
-  //
-  // }
 }
 </script>
 

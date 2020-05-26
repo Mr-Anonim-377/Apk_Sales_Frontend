@@ -52,6 +52,15 @@
                   </a>
                   <img class="image_show" v-bind:src="currentImage.imagePatch"/>
                 </div>
+                 <a class="exit_catalog_container"
+                    v-bind:href="'/catalog/category=' + product.productCategory.categoryId +
+          '&page=' + 1 +
+          '&collections=' +
+          '&price-min='+
+          '&price-max='">
+                   <a href="#" class="to-top"></a>
+                   <div class="exit_catalog">Назад в каталог</div>
+                 </a>
                 <div class="product_card_product_name">
                   {{product.nameProduct}}
                 </div>
@@ -180,7 +189,38 @@ export default {
 
 <style>
   @import '../../../../static/CSS/CSS.css';
+  .to-top{
+    padding-top: 1.5em;
+    display: inline-block;
+    position: relative;
+    text-decoration: none;
+    transition: all .3s ease-out;
+    transform: rotate(270deg);
+    left: 11px;
+  }
+  .to-top:before{
+    content:'▲';
+    font-size:.9em;
+    position:absolute;
+    top:0;
+    left:50%;
+    margin-left:-.7em;
+    border-radius:10em;
+    width: 24px;
+    height: 24px;
+    line-height:1.3em;
+    border-color:inherit;
+    transition:transform .5s ease-in;
+  }
+  .exit_catalog_container:hover .to-top,
+  .exit_catalog_container:hover .exit_catalog{
+    color: #4a84d4;
+    border-color:#4a84d4;
+  }
 
+  .exit_catalog_container:hover .to-top:before{
+    transform: rotate(360deg);
+  }
   .rating-result {
    margin-bottom: 60px;
     position: relative;
@@ -244,6 +284,7 @@ export default {
     font-size: 40px;
     line-height: 80px;
     margin-right: 28px;
+    margin-top: 6%;
   }
 
   .section_z-index {
@@ -251,6 +292,7 @@ export default {
   }
 
   .image_show_container {
+    left: 49.5%;
     top: 50px;
     z-index: 100;
     position: absolute;
@@ -290,5 +332,18 @@ export default {
   .preloader_container {
     top: 202px;
     position: relative;
+  }
+
+  .exit_catalog {
+  position: relative;
+    left: 19%;
+  }
+
+  .exit_catalog_container {
+    cursor: pointer;
+    top: 27px;
+    font-size: 21px;
+    display: flex;
+    position: absolute;
   }
 </style>
