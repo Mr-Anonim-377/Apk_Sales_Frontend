@@ -341,9 +341,10 @@ export default {
 
   .exit_catalog_container {
     cursor: pointer;
-    top: 27px;
+    top: 10px;
     font-size: 21px;
     display: flex;
     position: absolute;
+    left: 40%;
   }
 </style>

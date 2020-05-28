@@ -8,7 +8,7 @@
              @click="$router.push({path: '/'})">
             <img
               class="logo_pictures active_grayscale"
-              src="https://mr-anonim-377.github.io/Sales/src/main/resources/static/CSS/pictures/Logotip.png"
+              src="/static/CSS/pictures/LOGOTIP.png"
             >
           </a>
           <div class="input" v-on-clickaway="onClickOutside">
@@ -44,9 +44,13 @@
                       <img class="search_product_cart_img search_product_cart_img_message"
                            src="../../../../static/CSS/pictures/reviews.png" alt=""/></div>
                     <div class="search_product_cart_interactions"
+                         onclick="change_image.src='https://avatars.mds.yandex.net/get-pdb/1964870/95301851-90a3-40e4-bfb4-9068a3a26d59/s1200'"
                          @click="addProduct(product)">
                       <img class="search_product_cart_img search_product_cart_img_basked"
-                           src="../../../../static/CSS/pictures/basket.png" alt=""/></div>
+                           src="../../../../static/CSS/pictures/basket.png"
+                           alt=""
+                           id="change_image"/>
+                    </div>
                   </div>
                 </div>
                 <a v-bind:href="'/search/page=1&searchStr=' + searchStr.split(' ').join('%20') +

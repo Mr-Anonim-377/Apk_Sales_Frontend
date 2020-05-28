@@ -16,7 +16,19 @@
             <img class="pictures_catalog pictures_catalog_message" src="../../../../static/CSS/pictures/reviews.png"/></div>
           <div class="CatalogItemProduct__btn"
                @click="addProduct()">
-            <img class="pictures_catalog pictures_catalog_basked" src="../../../../static/CSS/pictures/basket.png"/></div>
+            <div class="banter-loader_product" v-if="isLoader" >
+              <div class="banter-loader__box"></div>
+              <div class="banter-loader__box"></div>
+              <div class="banter-loader__box"></div>
+              <div class="banter-loader__box"></div>
+              <div class="banter-loader__box"></div>
+              <div class="banter-loader__box"></div>
+              <div class="banter-loader__box"></div>
+              <div class="banter-loader__box"></div>
+              <div class="banter-loader__box"></div>
+            </div>
+            <img class="pictures_catalog pictures_catalog_basked" v-if="!isLoader" :src="isAddProductinCart(this.isClick)"/>
+          </div>
         </div>
       <div class="main_goods">
         <img class="main_goods_img" :src="productCategory.image.imagePatch"/>
@@ -67,12 +79,21 @@ export default {
       isReview: false,
       isBlur: false,
       mark: 0,
-      starArray: [0, 1, 2, 3, 4]
+      starArray: [0, 1, 2, 3, 4],
+      isClick: false,
+      isLoader: false
     }
   },
   methods: {
     isActivClass (index) {
       return index < this.mark ? 'active' : ''
+    },
+    isAddProductinCart () {
+      if (this.isClick) {
+        return '../../../../static/CSS/pictures/galka.png'
+      } else {
+        return '../../../../static/CSS/pictures/basket.png'
+      }
     },
     addProduct () {
       fetch(process.env.HOST + '/api/shoppingCart?numberPieces=1&' + 'productId=' + this.productCategory.productId, {
@@ -81,7 +102,14 @@ export default {
           'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
         }
       })
-        .then(response => this.$emit('addProduct', true))
+        .then(response => {
+          this.isLoader = true
+          setTimeout(() => {
+            this.isLoader = false
+            this.isClick = true
+            this.$emit('addProduct', true)
+          }, 400)
+        })
     },
     getBlur () {
       if (this.isBlur === true) {
@@ -104,11 +132,11 @@ export default {
       }
     },
     isReviewFalse () {
-      this.isReview = false;
+      this.isReview = false
       this.isBlur = false
     },
     setReviewTrue () {
-      this.isBlur = true;
+      this.isBlur = true
       this.isReview = true
     },
     addReview ($event) {
@@ -268,5 +296,11 @@ export default {
 
   .product_description {
   font-size: 21px;
+  }
+
+  .banter-loader_product {
+    width: 72px;
+    height: 72px;
+    margin-right: 8px;
   }
 </style>

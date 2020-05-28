@@ -49,7 +49,22 @@ export default {
       // eslint-disable-next-line
       .then(commits => {
         this.cart = commits
-        this.isPreloader = false
+        fetch(process.env.HOST + '/api/user', {
+          method: 'get',
+          credentials: 'include'
+        }).then(response => response.json())
+          // eslint-disable-next-line
+          .then(commits => {
+            if (commits.email !== null) {
+              this.isUserAuthorized = true;
+              this.user = commits;
+              this.isPreloader = false
+            } else {
+              this.user = {};
+              this.isUserAuthorized = false;
+              this.isPreloader = false
+            }
+          })
       })
   },
   methods: {

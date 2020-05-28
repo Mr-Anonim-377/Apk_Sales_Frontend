@@ -39,11 +39,23 @@ export default {
       method: 'get',
       credentials: 'include'
     }).then(response => response.json())
-    // eslint-disable-next-line
+      // eslint-disable-next-line
       .then(commits => {
-        this.cart = commits
-        this.refreshUser(true)
-      });
+        fetch(process.env.HOST + '/api/user', {
+          method: 'get',
+          credentials: 'include'
+        }).then(response => response.json())
+          // eslint-disable-next-line
+          .then(commits => {
+            if (commits.email !== null) {
+              this.isUserAuthorized = true;
+              this.user = commits;
+            } else {
+              this.user = {};
+              this.isUserAuthorized = false;
+            }
+          })
+        this.cart = commits});
   },
   methods: {
     refreshUser(isRefresh) {

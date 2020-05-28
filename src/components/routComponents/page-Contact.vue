@@ -1,21 +1,10 @@
 <template>
-  <div id="main-catalog">
+  <div class="page-Contact">
     <Header
-      :isUserAuthorized="isUserAuthorized"
-      :user="user"
       :shopingCard="cart"
-      v-on:addProduct="refreshChopingCart($event)"
-      v-on:refreshUser="refreshUser($event)"/>
+      v-on:addProduct="refreshChopingCart($event)"/>
     <Navigation/>
-    <CatalogItem
-      :user="user"
-      :categoryId="categoryId"
-      :page="page"
-      :collectionIds="collectionIds"
-      :priceMin="priceMin"
-      :priceMax="priceMax"
-      v-on:addProduct="refreshChopingCart($event)"
-    />
+    <Contact/>
     <Footer/>
   </div>
 </template>
@@ -23,16 +12,14 @@
 <script>
 import Header from '../unitComponents/MainPage/Header'
 import Navigation from '../unitComponents/MainPage/Navigation'
-import CatalogItem from '../unitComponents/CategoryCatalog/CatalogCategory'
 import Footer from '../unitComponents/MainPage/Footer'
-
+import Contact from '../unitComponents/AboutUs/Contact'
 export default {
-  props: ['categoryId', 'page', 'collectionIds', 'priceMin', 'priceMax'],
-  name: 'main-catalog',
+  name: 'page-Contact',
   components: {
+    Contact,
     Header,
     Navigation,
-    CatalogItem,
     Footer
   },
   data () {
@@ -47,51 +34,52 @@ export default {
       method: 'get',
       credentials: 'include'
     }).then(response => response.json())
-      // eslint-disable-next-line
-      .then(commits => {
+    // eslint-disable-next-line
+          .then(commits => {
         fetch(process.env.HOST + '/api/user', {
           method: 'get',
           credentials: 'include'
         }).then(response => response.json())
-          // eslint-disable-next-line
-          .then(commits => {
+        // eslint-disable-next-line
+              .then(commits => {
             if (commits.email !== null) {
-              this.isUserAuthorized = true;
-              this.user = commits;
+              this.isUserAuthorized = true
+              this.user = commits
             } else {
-              this.user = {};
-              this.isUserAuthorized = false;
+              this.user = {}
+              this.isUserAuthorized = false
             }
           })
-        this.cart = commits});
+        this.cart = commits
+      })
   },
   methods: {
-    refreshUser(isRefresh) {
+    refreshUser (isRefresh) {
       if (isRefresh) {
         fetch(process.env.HOST + '/api/user', {
           method: 'get',
           credentials: 'include'
         }).then(response => response.json())
-          // eslint-disable-next-line
-          .then(commits => {
+        // eslint-disable-next-line
+              .then(commits => {
             if (commits.email !== null) {
-              this.isUserAuthorized = true;
-              this.user = commits;
+              this.isUserAuthorized = true
+              this.user = commits
             } else {
-              this.user = {};
-              this.isUserAuthorized = false;
+              this.user = {}
+              this.isUserAuthorized = false
             }
           })
       }
     },
-    refreshChopingCart(isRefresh) {
+    refreshChopingCart (isRefresh) {
       if (isRefresh) {
         fetch(process.env.HOST + '/api/shoppingCart/cart', {
           method: 'get',
           credentials: 'include'
         }).then(response => response.json())
-          // eslint-disable-next-line
-          .then(commits => this.cart = commits);
+        // eslint-disable-next-line
+              .then(commits => this.cart = commits);
       }
     }
   }

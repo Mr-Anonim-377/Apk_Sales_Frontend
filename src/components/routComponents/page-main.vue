@@ -22,14 +22,13 @@ export default {
   data () {
     return {
       user: {},
-      cart: {},
       isUserAuthorized: false,
       baners: [
         {
           'banerId': 1,
           'image': {
             'imageId': 'e9ee5032-e87a-4ab8-bdba-2ee521b0f349',
-            'imagePatch': 'https://mr-anonim-377.github.io/Sales/src/main/resources/static/CSS/pictures/Rick and Morty.png'
+            'imagePatch': '/static/CSS/pictures/baners/Ukhod_za_sadom.jpg'
           },
           'title': 'Банер банерный',
           'page': 'MAIN',
@@ -40,7 +39,7 @@ export default {
           'banerId': 2,
           'image': {
             'imageId': 'e9ee5032-e87a-4ab8-bdba-2ee521b0f349',
-            'imagePatch': 'https://img08.rl0.ru/afisha/c1200x600/daily.afisha.ru/uploads/images/5/cd/5cd921a30fd7f4e6b82f6602493fc787.jpg'
+            'imagePatch': 'static/CSS/pictures/baners/PilyEl.jpg'
           },
           'title': 'Банер банерный',
           'page': 'MAIN',
@@ -51,7 +50,7 @@ export default {
           'banerId': 3,
           'image': {
             'imageId': 'e9ee5032-e87a-4ab8-bdba-2ee521b0f349',
-            'imagePatch': 'https://mr-anonim-377.github.io/Sales/src/main/resources/static/CSS/pictures/baner_small.png'
+            'imagePatch': 'static/CSS/pictures/baners/Gazon.jpg'
           },
           'title': 'Банер банерный',
           'page': 'MAIN',
@@ -62,7 +61,7 @@ export default {
           'banerId': 4,
           'image': {
             'imageId': 'e9ee5032-e87a-4ab8-bdba-2ee521b0f349',
-            'imagePatch': 'https://mr-anonim-377.github.io/Sales/src/main/resources/static/CSS/pictures/Banner_red.png'
+            'imagePatch': 'static/CSS/pictures/baners/kultivatory.jpg'
           },
           'title': 'Банер банерный',
           'page': 'MAIN',
@@ -73,7 +72,7 @@ export default {
           'banerId': 5,
           'image': {
             'imageId': 'e9ee5032-e87a-4ab8-bdba-2ee521b0f349',
-            'imagePatch': 'https://mr-anonim-377.github.io/Sales/src/main/resources/static/CSS/pictures/baner_small.png'
+            'imagePatch': 'static/CSS/pictures/baners/Sneg.jpg'
           },
           'title': 'Банер банерный',
           'page': 'MAIN',
@@ -84,7 +83,7 @@ export default {
           'banerId': 6,
           'image': {
             'imageId': 'e9ee5032-e87a-4ab8-bdba-2ee521b0f349',
-            'imagePatch': 'https://mr-anonim-377.github.io/Sales/src/main/resources/static/CSS/pictures/product.png'
+            'imagePatch': 'static/CSS/pictures/baners/Grabli.jpg'
           },
           'title': 'Банер банерный',
           'page': 'MAIN',
@@ -95,7 +94,7 @@ export default {
           'banerId': 7,
           'image': {
             'imageId': 'e9ee5032-e87a-4ab8-bdba-2ee521b0f349',
-            'imagePatch': 'https://mr-anonim-377.github.io/Sales/src/main/resources/static/CSS/pictures/product.png'
+            'imagePatch': 'static/CSS/pictures/baners/baner.png'
           },
           'title': 'Банер банерный',
           'page': 'MAIN',
@@ -106,7 +105,7 @@ export default {
           'banerId': 8,
           'image': {
             'imageId': 'e9ee5032-e87a-4ab8-bdba-2ee521b0f349',
-            'imagePatch': 'https://mr-anonim-377.github.io/Sales/src/main/resources/static/CSS/pictures/product.png'
+            'imagePatch': 'static/CSS/pictures/baners/Poliv.jpg'
           },
           'title': 'Банер банерный',
           'page': 'MAIN',
@@ -131,7 +130,22 @@ export default {
       credentials: 'include'
     }).then(response => response.json())
       // eslint-disable-next-line
-      .then(commits => this.cart = commits);
+      .then(commits => {
+        fetch(process.env.HOST + '/api/user', {
+          method: 'get',
+          credentials: 'include'
+        }).then(response => response.json())
+          // eslint-disable-next-line
+          .then(commits => {
+            if (commits.email !== null) {
+              this.isUserAuthorized = true;
+              this.user = commits;
+            } else {
+              this.user = {};
+              this.isUserAuthorized = false;
+            }
+          })
+        this.cart = commits});
   },
   methods: {
     refreshUser(isRefresh) {

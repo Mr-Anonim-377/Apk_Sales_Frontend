@@ -36,6 +36,9 @@
               </div>
             </div>
           </div>
+          <div class="product-description_title product-description_title_new" v-if="products.length > 0">
+            Все товары категории "{{collectionName}}" :
+          </div>
           <CatalogProduct
             v-for="(productCategory, index) in products" :key="index"
             :productCategory="productCategory"
@@ -180,7 +183,8 @@ export default {
       currentRequestJson: {},
       pagesArray: [],
       products: [],
-      isError: false
+      isError: false,
+      collectionName: ''
     }
   },
   components: {
@@ -232,6 +236,7 @@ export default {
                 this.isError = true
               } else {
                 commits.products.forEach(item => this.products.push(item));
+                this.collectionName = commits.collectionName;
                 this.totalMinPrice = Math.floor(Number.parseFloat(totalMinPrice));
                 this.totalMaxPrice = Math.round(Number.parseFloat(totalMaxPrice));
                 this.totalPage = Number.parseInt(commits.pageCount);

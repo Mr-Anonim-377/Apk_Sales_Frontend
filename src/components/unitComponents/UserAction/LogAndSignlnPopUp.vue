@@ -49,38 +49,37 @@
       </div>
       <div class="use_pop_up_container" v-if="colorIsNumber === 2">
         <form v-on:submit="signIn" action="#" method="post">
-
           <div v-if="!isValideData">
             <div class="log_in_container_block">
               <p>
                 E-mail
               </p>
-              <input type="text" v-model="email">
+              <input autocomplete="off" type="text" v-model="email">
             </div>
             <div class="logIn_input_container log_in_container_block">
               <p>
                 Phone
               </p>
-              <masked-input @input="registerPhone = arguments[1]" v-model="phoneValue"
+              <masked-input autocomplete="off" @input="registerPhone = arguments[1]" v-model="phoneValue"
                             mask="\+\7 (111) 111-11-11" placeholder=""/>
             </div>
             <div class="logIn_input_container log_in_container_block">
               <p>
                 Last name
               </p>
-              <input type="text" v-model="lastName">
+              <input autocomplete="off" type="text" v-model="lastName">
             </div>
             <div class="logIn_input_container log_in_container_block">
               <p>
                 First name
               </p>
-              <input type="text" v-model="firstName">
+              <input required="required" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" type="text" v-model="firstName">
             </div>
             <div class="logIn_input_container log_in_container_block">
               <p>
                 Password
               </p>
-              <input type="password" v-model="registerPass">
+              <input autocomplete="off" type="password" v-model="registerPass">
             </div>
           </div>
           <div class="pop_up_error_container">
@@ -130,7 +129,20 @@ export default {
       registerPass: '',
       isLogIn: false,
       phoneValue: '',
-      isSignIn: false
+      isSignIn: false,
+      images: [
+        '../../../../static/CSS/pictures/register/42804.png',
+        '../../../../static/CSS/pictures/register/happy-35164_1280.png',
+        '../../../../static/CSS/pictures/register/smiley-304294_1280.png',
+        '../../../../static/CSS/pictures/register/smiley-559124_1280.png',
+        '../../../../static/CSS/pictures/register/smiley-clip-art-141.png',
+        '../../../../sstatic/CSS/pictures/register/smiley-clip-art-176.png',
+        '../../../../static/CSS/pictures/register/smiley-clip-art-184.png',
+        '../../../../static/CSS/pictures/register/sun-32198_960_720.png',
+        '../../../../static/CSS/pictures/register/sunflower-1801284_1280.png',
+        '../../../../static/CSS/pictures/register/wink-98461_1280.png'
+      ],
+      selectedImage: ''
     }
   },
   methods: {
@@ -257,7 +269,7 @@ export default {
               var requestBody = {
                 email: this.email,
                 firstName: this.firstName,
-                imagePath: 'http://img0.joyreactor.cc/pics/post/ПеКа-кавайная-няка-42804.png',
+                imagePath: this.selectedImage,
                 lastName: this.lastName,
                 password: this.registerPass,
                 phone: '+7' + this.registerPhone,
@@ -315,7 +327,9 @@ export default {
     }
 
   },
-  created: function init () {
+  created () {
+    var random = Math.floor(Math.random() * this.images.length);
+    this.selectedImage = this.images[random]
   }
 }
 </script>

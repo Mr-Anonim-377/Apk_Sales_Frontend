@@ -10,7 +10,7 @@
         <div style="display: block">
           <div class="error_container" >
             <div v-if="discriptionError">
-            Отзыв не модет быть пустым
+            Отзыв не может быть пустым
             </div>
           </div>
           <div class="create_review_btn_container">

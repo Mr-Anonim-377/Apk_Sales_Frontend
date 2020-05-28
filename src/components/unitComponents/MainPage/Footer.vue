@@ -5,8 +5,7 @@
       <div class = "footer_size">
         <div class="footer_section">
           <span class="text_footer_h"><b>Tech Shop</b></span><br><br>
-          <span class="text_footer">Сайт создан для продажи товаров сельско-хозяйственной направленности,
-            которые прослужат долгие годы и станут незаменимыми помошником, как для обычного дачника, так и для профессионала </span>
+          <span class="text_footer">Сайт создан для продажи товаров сельхоз назначения в котором каждый может найти что-то для своей дачи или предприятия</span>
         </div>
         <div class="footer_line"></div>
         <div class="footer_section footer_section_menu">
@@ -21,16 +20,20 @@
           <span class="text_footer">Корзина</span></a>
         </div>
         <div class="footer_section footer_section_size"><br>
+          <a v-bind:href="'/aboutUs'">
           <span class="text_footer">О нас</span><br>
-          <span class="text_footer">Контакты</span><br>
-          <span class="text_footer">Политика конфенденциальности</span><br>
+          </a>
+          <a v-bind:href="'/contact'">
+            <span class="text_footer">Контакты</span><br>
+          </a>
+          <a v-bind:href="'/politicsSave'">
+            <span class="text_footer">Политика конфенденциальности</span><br>
+          </a>
         </div>
         <div class="footer_line"></div>
         <div class="footer_section">
           <span class="text_footer_h"><b>Мы в социальных сетях</b></span><br><br>
-          <span class="text_footer">Вконтакте</span><br>
-          <span class="text_footer">Twitter</span><br>
-          <span class="text_footer">Instagram</span><br>
+          <span class="text_footer">В разработке</span><br>
         </div>
       </div>
     </div>

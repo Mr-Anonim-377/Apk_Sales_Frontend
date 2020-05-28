@@ -11,6 +11,7 @@ body {
   cursor: default;
 }
 
+
 a:hover {
   -webkit-filter: drop-shadow(0 0 5px rgba(178, 38, 205, 0.81));
   filter: drop-shadow(0 0 5px rgba(178, 38, 205, 0.81));
@@ -32,43 +33,44 @@ input {
 }
 
 input::-webkit-input-placeholder {
+  color: #767086;
   opacity: 1;
-  transition: opacity 0.1s ease;
+  transition: opacity 0.3s ease;
 }
 
 input::-moz-placeholder {
   opacity: 1;
-  transition: opacity 0.1s ease;
+  transition: opacity 0.3s ease;
 }
 
 input:-moz-placeholder {
   opacity: 1;
-  transition: opacity 0.1s ease;
+  transition: opacity 0.3s ease;
 }
 
 input:-ms-input-placeholder {
   opacity: 1;
-  transition: opacity 0.1s ease;
+  transition: opacity 0.3s ease;
 }
 
 input:focus::-webkit-input-placeholder {
   opacity: 0;
-  transition: opacity 0.1s ease;
+  transition: opacity 0.3s ease;
 }
 
 input:focus::-moz-placeholder {
   opacity: 0;
-  transition: opacity 0.1s ease;
+  transition: opacity 0.3s ease;
 }
 
 input:focus:-moz-placeholder {
   opacity: 0;
-  transition: opacity 0.1s ease;
+  transition: opacity 0.3s ease;
 }
 
 input:focus:-ms-input-placeholder {
   opacity: 0;
-  transition: opacity 0.1s ease;
+  transition: opacity 0.3s ease;
 }
 
 a, img {
@@ -408,6 +410,10 @@ ul::-webkit-scrollbar, div::-webkit-scrollbar {
 }
 
 .nav_category {
+  min-height: 74px;
+  max-height: 75px;
+  min-width: 166px;
+  max-width: 241px;
   text-decoration: none;
   font-family: Roboto, serif;
   font-size: 25px;
@@ -458,8 +464,8 @@ main {
   display: block;
   margin: auto;
   text-align: center;
-  width: 120px;
-  height: 120px;
+  width: 140px;
+  height: 140px;
 }
 
 /*.article img {*/
@@ -507,10 +513,12 @@ main {
 
 .carousel,
 .row_new {
-  width: 1140px;
+  width: 1096px;
   height: 360px;
   display: flex;
+  -webkit-box-sizing: inherit;
   box-sizing: inherit;
+  margin-left: 16px;
 }
 
 .row_nav {
@@ -552,7 +560,7 @@ main {
   height: fit-content;
   display: flex;
   margin-left: auto;
-  margin-right: 24px;
+  margin-right: 20px;
 }
 
 .main_border,
@@ -643,7 +651,7 @@ main {
 }
 
 .main_container_banner img {
-  border-radius: 50px;
+  border-radius: 22px;
 }
 
 .product_container,
@@ -765,7 +773,7 @@ main {
 .article_pictures {
   width: 100%;
   height: 100%;
-  border-radius: 24%;
+  border-radius:12%;
 }
 
 .gallery {
@@ -794,6 +802,8 @@ main {
   margin-right: 0;
   margin-bottom: auto;
   transition: 1s;
+  position: relative;
+  right: 20px;
 }
 
 .nav_list:hover {

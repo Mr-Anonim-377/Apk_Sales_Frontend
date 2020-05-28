@@ -229,6 +229,7 @@ export default {
 
   .main_unit_text {
     font-size: 21px;
+    padding-left: 14px;
   }
 
   .sub_text_unit_margin {

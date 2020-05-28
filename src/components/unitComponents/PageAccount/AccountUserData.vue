@@ -24,18 +24,7 @@
         >
       </div>
     </div>
-    <div class="container_user_gender">
-      <span class="text_acc text_size_data">Дата рождения</span>
-      <span class="text_acc text_size_sex">Пол</span>
-    </div>
     <br>
-    <div class="container_user_inp">
-      <input class="inp_date">
-      <input class="inp_men" type="radio" name="gender" value="Мужской">
-      <span class="text_acc">Мужской</span>
-      <input class="inp_girl" type="radio" name="gender" value="Женский">
-      <span class="text_acc">Женский</span>
-    </div>
     <div class="error_text margin_bottom_none" v-if="emailError">
       Не верный email
     </div>
@@ -346,5 +335,8 @@ export default {
 
   .margin_bottom_none {
   margin-bottom: 0;
+  }
+  .inp_user::-webkit-input-placeholder {
+    color: #1d1c21;
   }
 </style>

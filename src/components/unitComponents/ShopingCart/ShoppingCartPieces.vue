@@ -97,13 +97,14 @@ export default {
     padding-left: 40px;
   }
   .number{
-    padding-left: 37px;
-    padding-right: 35px;
+    padding-left: 8px;
+    padding-right: 8px;
     padding-top: 10px;
     text-decoration: none;
     font-family: Roboto, serif;
     font-size: 42px;
     color: #08303D;
+    width: 103px;
   }
   .section_btn{
     height: 39px;
@@ -115,7 +116,7 @@ export default {
   }
   .delete {
     font-family: Roboto, serif;
-    margin-left: 80px;
+    margin-left: 82px;
   }
   .delete:hover,
   .delete:focus,
