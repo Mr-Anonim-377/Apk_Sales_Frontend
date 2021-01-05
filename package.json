@@ -19,7 +19,7 @@
     "lintfix": "eslint --fix --ext .js,.vue src test/unit test/e2e/specs"
   },
   "dependencies": {
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "kladrapi-for-node": "0.0.2",
     "nouislider": "^14.2.0",
     "v-autocomplete": "^1.8.2",
